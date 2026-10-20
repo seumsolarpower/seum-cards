@@ -8,6 +8,8 @@ lib/cards.mjs             카드 디자인 (검정·흰색·포인트 1색, Pret
 render.mjs                카드 → out/날짜/세트-번호.jpg (Playwright)
 publish.mjs               인스타·스레드·X 게시, "approved": true 일 때만
 .github/workflows/post.yml 평일 08:10 KST 자동 실행
+insights.mjs              게시물 반응 수집 → media 브랜치 stats/ (insights 워크플로, 매일 07:40·22:00)
+notes/                    피드백 기록: playbook.md(누적 결론), feedback/날짜.md
 jjal/                     한국 짤 사전(catalog.json) + 짤봇 후보 수집(jjalbot.py) + 확정(pick/autopick)
 ```
 
