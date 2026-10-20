@@ -9,7 +9,7 @@
   "sets": [
     {
       "id": "kospi-drop",
-      "approved": false,
+      "approved": true,
       "caption": {
         "instagram": "외국인·기관 다 팔 때 개미 혼자 9천억 샀어요 😵\n\n코스피 -3.73%, 5,552 마감. 코스닥도 -3.3%.\n미국 반도체는 올랐는데 하이닉스는 -4.2%.\n15일 폭락 뒤 이틀 반등한 걸 오늘 다 반납했어요.\n\n저장해 두고 회의 때 아는 척 👀\n\n#코스피 #주식 #하이닉스 #삼성전자 #개미 #직장인 #경제 #세움",
         "threads": "외국인·기관 다 팔 때 개미 혼자 9천억 샀대요 😵\n코스피 -3.73%, 미국은 올랐는데 하이닉스는 -4.2%.\n15일 폭락 → 이틀 반등 → 오늘 다 반납.",
@@ -172,7 +172,8 @@
           "pos": "50% 40%",
           "credit": "Nielsoncaetanosalmeron, CC BY 4.0"
         }
-      ]
+      ],
+      "approved": false
     },
     {
       "id": "imf-potential",
@@ -253,7 +254,8 @@
           "pos": "50% 55%",
           "credit": "mauveine.kim, CC0"
         }
-      ]
+      ],
+      "approved": false
     }
   ]
 }
