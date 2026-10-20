@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-20",
+  "approved": false,
+  "palette": "mint",
+  "brand": {
+    "logo": "seum",
+    "handle": "@seum.now"
+  },
+  "sets": [
+    {
+      "id": "semi-rebound",
+      "caption": {
+        "instagram": "8일 내리 빠지던 미국 반도체가 드디어 반등했어요 😮‍💨\n\n필라델피아 반도체지수 +1.6%, 나스닥 +1%.\n근데 하루 반등은 추세 전환이 아니라는 거, 4장에서 확인하세요.\n\n저장해 두고 회의 때 아는 척 👀\n\n#경제 #미국주식 #반도체 #엔비디아 #직장인 #재테크 #세움",
+        "threads": "8일 내리 빠지던 미국 반도체, 오늘 드디어 +1.6% 반등 😮‍💨\n\n근데 8일 빠진 걸 하루에 다 찾은 건 아님. 물린 분들은 일단 숨부터 쉬기.",
+        "x": "8일 내리 빠지던 미국 반도체, 오늘 +1.6% 반등 😮‍💨\n하루 반등은 추세 전환 아님. 물린 분들 일단 숨부터."
+      },
+      "cards": [
+        {
+          "type": "cover",
+          "photo": "jensen.jpg",
+          "pos": "50% 22%",
+          "credit": "Anderseidesvik, CC BY-SA 4.0",
+          "bubble": {
+            "side": "l",
+            "top": 13,
+            "text": "8일 동안<br>숨 참고 있었음"
+          },
+          "say": {
+            "side": "r",
+            "top": 60,
+            "text": "하… <em>살았다</em>ㅠ"
+          },
+          "tags": [
+            {
+              "side": "l",
+              "top": 64,
+              "text": "엔비디아 CEO"
+            }
+          ],
+          "small": "SOX +1.6% · 나스닥 +1%",
+          "title": "8일 연속 떨어지던<br>미국 반도체,<br>오늘 <em>드디어 반등</em>"
+        },
+        {
+          "type": "facts",
+          "kick": "무슨 일이었냐면",
+          "big": "8일 내리 빠지다가<br><mk>오늘 처음 빨간불</mk>",
+          "body": "나스닥도 1%, S&P 500도 0.4% 같이 올랐고 다우만 제자리였어요. 많이 빠졌으니 싸게 사자는 사람들이 들어온 거예요.",
+          "source": "출처: SBS 글로벌 마켓시황",
+          "photo": "nasdaq.jpg",
+          "pos": "50% 72%",
+          "credit": "ajay_suresh, CC BY 2.0",
+          "bubble": {
+            "side": "r",
+            "top": 12,
+            "text": "8일 만에<br>웃어 봄"
+          },
+          "hero": {
+            "value": "+1.6%",
+            "dir": "up",
+            "label": "미국 반도체지수 (필라델피아)"
+          }
+        },
+        {
+          "type": "jjal",
+          "jjal": "double",
+          "top": "8일 물린 개미,<br>반등 보자마자",
+          "bottom": "묻고 <em>더블로</em> 가!"
+        },
+        {
+          "type": "meme",
+          "kick": "그래서 내 계좌는?",
+          "meme": "panik",
+          "texts": [
+            "8일 연속<br>하락",
+            "오늘 +1.6%<br>반등",
+            "근데 내일도<br>오를까…?"
+          ],
+          "body": "<b>하루 반등이 추세 전환은 아니에요.</b> 며칠 더 지켜보고 판단해도 안 늦어요."
+        },
+        {
+          "type": "summary",
+          "kick": "출근길 3초 요약",
+          "items": [
+            "미국 반도체, <mk>8일 만에 반등</mk>",
+            "이유는 <b>저가 매수세</b>",
+            "하루짜리인지는 <b>더 봐야 함</b>"
+          ],
+          "quote": "개미들 일단 숨 쉬는 중",
+          "photo": "nasdaq-tower.jpg",
+          "pos": "50% 40%",
+          "credit": "Nielsoncaetanosalmeron, CC BY 4.0"
+        }
+      ]
+    },
+    {
+      "id": "imf-potential",
+      "caption": {
+        "instagram": "IMF가 한국 경제를 칭찬했어요 🇰🇷\n\n잠재성장률이 올해·내년 2년 연속 오를 거라는 전망에 대통령은 \"40여 년 만의 반전\"이라고 했어요.\n그래서 내 월급은? 4장에 있어요.\n\n저장해 두고 회의 때 아는 척 👀\n\n#경제 #IMF #잠재성장률 #직장인 #월급 #경제뉴스 #세움",
+        "threads": "IMF: 한국 잠재성장률 2년 연속 상승 전망\n대통령: \"40여 년 만의 반전\"\n나: 그래서 내 월급은…?\n\n당장은 그대로. 근데 분위기는 좋음.",
+        "x": "IMF: 한국 잠재성장률 2년 연속 ↑ 전망\n대통령: \"40여 년 만의 반전\"\n나: 그래서 내 월급은…? (당장은 그대로)"
+      },
+      "cards": [
+        {
+          "type": "cover",
+          "photo": "lee.jpg",
+          "pos": "50% 10%",
+          "credit": "The White House, PD",
+          "bubble": {
+            "side": "r",
+            "top": 13,
+            "text": "엄마 나 IMF한테<br>칭찬받았어"
+          },
+          "say": {
+            "side": "l",
+            "top": 46,
+            "text": "<em>40년</em> 만이래 <em>40년</em>!!"
+          },
+          "tags": [
+            {
+              "side": "l",
+              "top": 64,
+              "text": "IMF 잠재성장률 2년 연속 ↑"
+            }
+          ],
+          "small": "IMF 전망 · 대통령 SNS",
+          "title": "IMF 전망 보고<br>대통령이 <em>'40년 만의 반전'</em><br>이라고 한 이유"
+        },
+        {
+          "type": "define",
+          "kick": "잠재성장률이 뭔데?",
+          "big": "무리 안 하고 낼 수 있는<br><mk>나라의 기초 체력</mk>",
+          "term": "잠재성장률",
+          "def": "물가 안 올리고, 사람과 공장을 정상적으로 돌렸을 때 경제가 낼 수 있는 성장률",
+          "body": "IMF가 한국의 이 체력이 <b>올해와 내년 2년 연속 오를 것</b>으로 봤어요. 오랫동안 내리막이던 지표라 대통령이 \"40여 년 만의 반전\"이라고 반겼어요.",
+          "source": "출처: 대통령 SNS 보도(위키트리)",
+          "photo": "imf.jpg",
+          "pos": "50% 45%",
+          "credit": "International Monetary Fund, PD",
+          "bubble": {
+            "side": "r",
+            "top": 12,
+            "text": "한국아<br>잘했다"
+          }
+        },
+        {
+          "type": "jjal",
+          "jjal": "mooyaho",
+          "top": "IMF한테 40년 만에<br>칭찬받은 한국",
+          "bottom": "(오늘 대통령 심정)"
+        },
+        {
+          "type": "meme",
+          "kick": "그래서 내 월급은?",
+          "meme": "monkey",
+          "texts": [
+            "나: 나라 경제 좋아졌대요!<br>그럼 연봉도…?",
+            "팀장님"
+          ],
+          "body": "<b>당장은 그대로예요.</b> 기초 체력은 천천히 효과가 나서 몇 년 뒤 기업 실적과 채용에 반영돼요. 연봉 협상 땐 분위기 카드로 써 보기."
+        },
+        {
+          "type": "summary",
+          "kick": "출근길 3초 요약",
+          "items": [
+            "IMF, <mk>한국 잠재성장률 2년 연속 ↑</mk> 전망",
+            "대통령 <b>\"40여 년 만의 반전\"</b>",
+            "내 월급엔 <b>아직 영향 없음</b>"
+          ],
+          "quote": "나라는 체력 회복, 나는 월요일 방전",
+          "photo": "seoul-night.jpg",
+          "pos": "50% 55%",
+          "credit": "mauveine.kim, CC0"
+        }
+      ]
+    }
+  ]
+}

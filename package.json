@@ -1,0 +1,13 @@
+{
+  "name": "wollu",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "publish:dry": "DRY=1 FORCE=1 node publish.mjs",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.48.2"
+  }
+}

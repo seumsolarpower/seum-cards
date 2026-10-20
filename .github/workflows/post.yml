@@ -1,0 +1,67 @@
+# 평일 08:10(한국 시각) 그날 카드를 찍어서 인스타·스레드·X에 올림.
+# content/날짜.json 이 "approved": true 일 때만 게시. 아니면 카드만 찍어서 Artifacts(cards-날짜)로 남김 → 폰으로 확인 후 승인.
+# 인스타·스레드는 공개 이미지 주소가 필요해서 카드 JPG를 media 브랜치에 올리고 raw.githubusercontent 주소를 씀 (저장소가 공개여야 함).
+name: post
+on:
+  schedule:
+    - cron: "10 23 * * 0-4"
+  workflow_dispatch:
+    inputs:
+      date: { description: "날짜 YYYY-MM-DD (비우면 오늘)", required: false, default: "" }
+      platforms: { description: "올릴 곳", required: false, default: "instagram,threads,x" }
+      dry: { description: "1이면 올리지 않고 확인만", required: false, default: "0" }
+permissions:
+  contents: write
+concurrency: post
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: 날짜
+        run: |
+          D="${{ inputs.date }}"; [ -n "$D" ] || D=$(TZ=Asia/Seoul date +%F)
+          echo "D=$D" >> $GITHUB_ENV
+          if [ -f "content/$D.json" ]; then echo "HAS=1" >> $GITHUB_ENV; else echo "content/$D.json 없음 → 오늘은 쉼"; fi
+      - uses: actions/setup-node@v4
+        if: env.HAS == '1'
+        with: { node-version: 22 }
+      - if: env.HAS == '1'
+        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium && node test.mjs
+      - name: 카드 찍기
+        if: env.HAS == '1'
+        run: node render.mjs "$D" && node preview.mjs "$D" && node profile.mjs
+      - uses: actions/upload-artifact@v4
+        if: env.HAS == '1'
+        with: { name: "cards-${{ env.D }}", path: "out/${{ env.D }}/*.jpg\nout/${{ env.D }}/preview.html\nout/profile.png" }
+      - name: 이미지를 media 브랜치에 올리기 (+ 지난 게시 기록 가져오기)
+        if: env.HAS == '1'
+        run: |
+          git config user.name "seum-bot"; git config user.email "bot@seum.invalid"
+          if git ls-remote --exit-code --heads origin media >/dev/null; then git fetch -q origin media && git worktree add -q -B media media FETCH_HEAD
+          else git worktree add -q --orphan -b media media; fi
+          mkdir -p "media/$D" && cp out/"$D"/*.jpg "media/$D/"
+          [ -d "media/$D/posted" ] && cp -r "media/$D/posted" "out/$D/" || true
+          cd media && git add -A && (git diff --cached --quiet || git commit -qm "cards $D") && git push -q origin media
+      - name: 게시
+        if: env.HAS == '1'
+        env:
+          MEDIA_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/media
+          PLATFORMS: ${{ inputs.platforms || 'instagram,threads,x' }}
+          DRY: ${{ inputs.dry || '0' }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: node publish.mjs "$D"
+      - name: 게시 기록 저장 (두 번 안 올리게)
+        if: always() && env.HAS == '1'
+        run: |
+          [ -d "out/$D/posted" ] || exit 0
+          mkdir -p "media/$D" && cp -r "out/$D/posted" "media/$D/"
+          cd media && git add -A && (git diff --cached --quiet || git commit -qm "posted $D") && git push -q origin media
