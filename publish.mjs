@@ -12,12 +12,15 @@ const DRY = process.env.DRY === "1", base = (process.env.MEDIA_BASE_URL || "").r
 const want = (process.env.PLATFORMS || "instagram,threads,x").split(",").map(s => s.trim()).filter(Boolean);
 const NEED = { instagram: ["IG_USER_ID", "IG_TOKEN"], threads: ["THREADS_USER_ID", "THREADS_TOKEN"], x: ["X_API_KEY", "X_API_SECRET", "X_ACCESS_TOKEN", "X_ACCESS_SECRET"] };
 
-if (!C.approved && process.env.FORCE !== "1") { console.log(`${date}: 아직 승인 안 됨 ("approved": true 로 바꾸면 올라감). 건너뜀`); process.exit(0) }
+// 승인: 파일 전체("approved": true) 또는 세트별(sets[].approved: true)
+const ok = s => C.approved || s.approved || process.env.FORCE === "1";
+if (!C.sets.some(ok)) { console.log(`${date}: 아직 승인 안 됨 ("approved": true 로 바꾸면 올라감). 건너뜀`); process.exit(0) }
 if (!DRY && !base && want.some(p => p !== "x")) throw new Error("MEDIA_BASE_URL 이 없음 (인스타·스레드는 공개 이미지 주소가 필요)");
 mkdirSync(new URL("posted/", dir), { recursive: true });
 
 let fail = 0;
 for (const s of C.sets) {
+  if (!ok(s)) { console.log("승인 안 된 세트 건너뜀:", s.id); continue }
   const files = s.cards.map((_, i) => `${s.id}-${i + 1}.jpg`);
   const urls = files.map(f => `${base}/${date}/${f}`), paths = files.map(f => new URL(f, dir).pathname);
   // X는 사진 4장까지: 5장 이상이면 앞 3장 + 마지막(요약) 장
