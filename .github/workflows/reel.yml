@@ -6,6 +6,7 @@ on:
     inputs:
       date: { description: "날짜 YYYY-MM-DD", required: true }
       set: { description: "세트 id (비우면 전부)", required: false, default: "" }
+      cutbg: { description: "누끼 짤 바탕 (panel | none)", required: false, default: "panel" }
       voices: { description: "목소리 (예: ko-KR-SunHiNeural,ko-KR-InJoonNeural). 비우면 무음", required: false, default: "" }
 jobs:
   reel:
@@ -20,6 +21,7 @@ jobs:
       - name: 릴스 만들기
         env:
           VOICES: ${{ inputs.voices }}
+          CUTBG: ${{ inputs.cutbg }}
         run: node reel.mjs "${{ inputs.date }}" "${{ inputs.set }}"
       - uses: actions/upload-artifact@v4
-        with: { name: "reels-${{ inputs.date }}", path: "out/${{ inputs.date }}/*.mp4\nout/${{ inputs.date }}/reel-stills/" }
+        with: { name: "reels-${{ inputs.date }}-${{ inputs.cutbg }}", path: "out/${{ inputs.date }}/*.mp4\nout/${{ inputs.date }}/reel-stills/" }

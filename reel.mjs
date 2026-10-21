@@ -6,9 +6,10 @@
 // 음악은 안 넣음: 유행 음원은 인스타 앱에서 직접 고름. 목소리가 없으면 무음 트랙 (오디오 없는 영상을 거부하는 경우 대비)
 // 짤 릴스: 세트에 "jreel": [장면…] 이 있으면 카드 대신 장면을 이어 붙임 (전체 화면, 진행 막대 없음). 장면 종류:
 //   {type:"hook", text}  검정 바탕 큰 한 줄 | {type:"jjal", jjal:id, top}  위 자막 + 짤 | {type:"card", n}  세트 n번째 카드 | {type:"end", text}
+//   짤은 assets/jjal/cut/<id>.png(누끼, jjal/cutout.py)가 있으면 화면 대신 인물+자막만 얹음. 바탕: 장면 "cutbg" 또는 CUTBG= → panel(민트 판 위로 튀어나옴, 기본) | none
 //   길이는 "dur"(초), 기본 2초씩(카드 4초) — 2초 = 120BPM 한 마디라 어떤 음원을 붙여도 컷이 박자에 대충 맞음
 // 장 길이는 카드에 "reel": {"dur": 3} 로 바꿀 수 있음. 없으면 종류별 기본값, 마지막 등장 뒤 1.3초, 대사 끝 0.5초 중 가장 긴 것.
-import { readFileSync, mkdirSync } from "fs";
+import { readFileSync, mkdirSync, existsSync } from "fs";
 import { spawn, execFileSync } from "child_process";
 import { cardInner, cardCss } from "./lib/cards.mjs";
 
@@ -108,6 +109,10 @@ html,body{margin:0;background:#0e0f10;overflow:hidden;font-family:Pretendard,san
 .cap{margin:330px 64px 0;min-height:250px;display:flex;align-items:flex-end;justify-content:center;font:800 66px/1.35 Pretendard;letter-spacing:-.035em;text-align:center;word-break:keep-all}
 .ph{margin-top:48px;width:1080px;max-height:1000px;overflow:hidden;display:flex;justify-content:center}
 .ph img{width:1080px;height:auto;max-height:1000px;object-fit:cover;display:block}
+.cut{position:absolute;left:0;right:0;top:640px;height:860px}
+.cut .pn{position:absolute;left:54px;right:54px;bottom:0;height:560px;border-radius:44px;background:#1fd8a4}
+.cut img{position:absolute;left:50%;bottom:0;max-width:972px;max-height:860px;translate:-50% 0;display:block}
+.cut.none img{max-width:1080px}
 .en{margin:auto 72px;text-align:center;font:800 76px/1.35 Pretendard;letter-spacing:-.035em;word-break:keep-all}
 .en small{display:block;margin-top:40px;font:800 56px/1 Pretendard}.en small i{color:#1fd8a4;font-style:normal}
 mk{background:#1fd8a4;color:#0e0f10;padding:0 .12em;border-radius:.08em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
@@ -122,7 +127,11 @@ function sceneHtml(sc, dur) {
   else if (sc.type === "end") body = `<div class="sc"><div class="en" data-a="in .45s .05s">${sc.text}<small>seum<i>.</i></small></div></div>`;
   else if (sc.type === "jjal") {
     const m = CAT.find(x => x.id === sc.jjal); if (!m?.image) throw new Error("짤 없음: " + sc.jjal);
-    body = `<div class="sc">${LOGO}<div class="cap" data-a="in .4s .05s"><span>${sc.top || ""}</span></div><div class="ph" data-a="pop .45s .2s"><img src="${b64(m.image)}" data-a="kb ${dur}s 0s linear"></div></div>`;
+    const cut = `jjal/cut/${m.id}.png`, bg = sc.cutbg || process.env.CUTBG || "panel";
+    const pic = sc.cut !== false && existsSync(new URL("assets/" + cut, import.meta.url))
+      ? `<div class="cut ${bg}">${bg === "panel" ? '<div class="pn" data-a="pop .4s .1s"></div>' : ""}<img src="${b64(cut)}" data-a="in .45s .22s"></div>`
+      : `<div class="ph" data-a="pop .45s .2s"><img src="${b64(m.image)}" data-a="kb ${dur}s 0s linear"></div>`;
+    body = `<div class="sc">${LOGO}<div class="cap" data-a="in .4s .05s"><span>${sc.top || ""}</span></div>${pic}</div>`;
   } else throw new Error("모르는 장면: " + sc.type);
   return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><style>${cardCss(C.palette)}${SCSS}</style></head><body>${body}<script>(() => {
 document.querySelectorAll("[data-a]").forEach(el => { const [k, d, at, ease] = el.dataset.a.split(" "); el.style.animation = k + " " + d + " " + (ease || "cubic-bezier(.2,.8,.2,1)") + " " + at + " both" });
