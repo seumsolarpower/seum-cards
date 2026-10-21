@@ -959,24 +959,6 @@
    "burned": true
   },
   {
-   "id": "mudo-exhausted",
-   "name": "바닥에 뻗음 (무기력)",
-   "source": "무한도전 (정준하)",
-   "meaning": "지쳐서 다 내려놓음",
-   "use": [
-    "연속 하락",
-    "야근",
-    "월요일"
-   ],
-   "kw": [
-    "무기력 지쳤다 지침"
-   ],
-   "query": "무기력 지쳤다 지침",
-   "image": "jjal/mudo-exhausted.jpg",
-   "from": "https://r2.jjalbot.com/2026/03/KjMf3TDXF.jpg",
-   "burned": true
-  },
-  {
    "id": "mudo-earth",
    "name": "이러다가 진짜 지구 망하겠다",
    "source": "무한도전 (박명수)",
@@ -1027,42 +1009,6 @@
    "query": "오늘은 여기까지 그만 끝",
    "image": "jjal/mudo-enough.jpg",
    "from": "https://r2.jjalbot.com/2023/03/bI8F8-i4SW.jpeg",
-   "burned": true
-  },
-  {
-   "id": "mudo-notthis",
-   "name": "이건 아니다",
-   "source": "무한도전 (정형돈)",
-   "meaning": "실망, 납득 불가",
-   "use": [
-    "실망스러운 정책",
-    "연봉 협상",
-    "세금"
-   ],
-   "kw": [
-    "이건 아니다 이건아니다"
-   ],
-   "query": "이건 아니다 이건아니다",
-   "image": "jjal/mudo-notthis.jpg",
-   "from": "https://r2.jjalbot.com/2023/03/KP1jJJRMoS.jpeg",
-   "burned": true
-  },
-  {
-   "id": "mudo-whythere",
-   "name": "형이 왜 거기서 나와",
-   "source": "무한도전 (정형돈)",
-   "meaning": "예상 못한 등장",
-   "use": [
-    "의외의 1위",
-    "뜻밖의 종목",
-    "예상 밖 상승"
-   ],
-   "kw": [
-    "형이 왜 거기서 나와"
-   ],
-   "query": "형이 왜 거기서 나와",
-   "image": "jjal/mudo-whythere.jpg",
-   "from": "https://r2.jjalbot.com/2023/03/8A5-0_3VB_.jpeg",
    "burned": true
   },
   {
@@ -1120,39 +1066,402 @@
    "burned": true
   },
   {
-   "id": "mudo-payback",
-   "name": "한두 달만 시간을 주세요, 갚을게요",
-   "source": "무한도전 무한상사 (정준하)",
-   "meaning": "돈 갚을 시간 애원",
+   "id": "yoo-finally",
+   "name": "드디어 기분 좋은 바로 그날이 왔습니다",
+   "source": "무한도전 (유재석)",
+   "meaning": "기다리던 좋은 날",
    "use": [
-    "카드값",
-    "대출 상환",
-    "할부"
+    "월급날",
+    "성과급",
+    "환급일"
    ],
    "kw": [
-    "한두 달만 시간을 주세요"
+    "드디어 기분 좋은 바로 그날"
    ],
-   "query": "한두 달만 시간을 주세요",
-   "image": "jjal/mudo-payback.jpg",
-   "from": "https://r2.jjalbot.com/2023/07/2Jl1_kZTm.jpeg",
+   "query": "유재석",
+   "image": "jjal/yoo-finally.jpg",
+   "from": "https://r2.jjalbot.com/2026/03/A0epfPZ8k.jpg",
    "burned": true
   },
   {
-   "id": "mudo-coffee",
-   "name": "저는 커피 곱빼기입니다",
-   "source": "무한도전 무한상사 (노홍철)",
-   "meaning": "피곤해서 커피 수혈",
+   "id": "yoo-thisday",
+   "name": "살다 보니 이런 날도 오는구나",
+   "source": "무한도전 (유재석)",
+   "meaning": "감격, 드디어",
    "use": [
-    "월요일",
-    "커피값",
-    "출근"
+    "역대 최고치",
+    "수익 전환",
+    "환급"
    ],
    "kw": [
-    "커피 곱빼기"
+    "살다 보니 이런 날도"
    ],
-   "query": "커피 곱빼기",
-   "image": "jjal/mudo-coffee.jpg",
-   "from": "https://r2.jjalbot.com/2023/12/--wXCZgno.jpeg",
+   "query": "유재석",
+   "image": "jjal/yoo-thisday.webp",
+   "from": "https://r2.jjalbot.com/2026/07/5hQB1nR0H.webp",
+   "burned": true
+  },
+  {
+   "id": "yoo-bigtrouble",
+   "name": "우와 큰일났네",
+   "source": "무한도전 (유재석)",
+   "meaning": "큰일 났다",
+   "use": [
+    "급락",
+    "카드값",
+    "마감 임박"
+   ],
+   "kw": [
+    "우와 큰일났네"
+   ],
+   "query": "유재석 짤",
+   "image": "jjal/yoo-bigtrouble.jpeg",
+   "from": "https://r2.jjalbot.com/2023/12/y1KaztTnN.jpeg",
+   "burned": true
+  },
+  {
+   "id": "yoo-shock",
+   "name": "충격을 금할 수가 없었습니다",
+   "source": "무한도전 (유재석)",
+   "meaning": "믿기 힘든 충격",
+   "use": [
+    "예상 밖 숫자",
+    "역대급 하락"
+   ],
+   "kw": [
+    "충격을 금할 수가"
+   ],
+   "query": "유재석 무한도전 반응",
+   "image": "jjal/yoo-shock.jpeg",
+   "from": "https://r2.jjalbot.com/2023/03/1RRM03dLQG.jpeg",
+   "burned": true
+  },
+  {
+   "id": "yoo-doit",
+   "name": "하면 되네요",
+   "source": "무한도전 (유재석)",
+   "meaning": "해 보니 되더라",
+   "use": [
+    "절약 성공",
+    "목표 달성"
+   ],
+   "kw": [
+    "하면 되네요"
+   ],
+   "query": "유재석 무한도전 반응",
+   "image": "jjal/yoo-doit.jpeg",
+   "from": "https://r2.jjalbot.com/2023/08/ji7weOdqB.jpeg",
+   "burned": true
+  },
+  {
+   "id": "yoo-happy",
+   "name": "나의 가슴을 이렇게 짜릿하게 만들어 주는 너",
+   "source": "무한도전 (유재석, 선비 분장)",
+   "meaning": "짜릿하게 좋음",
+   "use": [
+    "좋은 소식",
+    "급등",
+    "환급"
+   ],
+   "kw": [
+    "기분 좋아 웃음 행복"
+   ],
+   "query": "유재석 무한도전 반응",
+   "image": "jjal/yoo-happy.jpeg",
+   "from": "https://r2.jjalbot.com/2023/03/Y7qWb4y-DM.jpeg",
+   "burned": true
+  },
+  {
+   "id": "yoo-likeit",
+   "name": "맘에 쏙 들어",
+   "source": "런닝맨 (유재석)",
+   "meaning": "마음에 듦",
+   "use": [
+    "좋은 정책",
+    "혜택"
+   ],
+   "kw": [
+    "맘에 쏙 좋아"
+   ],
+   "query": "유재석",
+   "image": "jjal/yoo-likeit.webp",
+   "from": "https://r2.jjalbot.com/2026/06/NrfmC5GA1.webp",
+   "burned": true
+  },
+  {
+   "id": "yoo-allbad",
+   "name": "그냥 다 안 좋아요",
+   "source": "무한도전 (유재석)",
+   "meaning": "전부 별로",
+   "use": [
+    "실적 부진",
+    "다 떨어진 장"
+   ],
+   "kw": [
+    "그냥 다 안 좋아요"
+   ],
+   "query": "유재석",
+   "image": "jjal/yoo-allbad.jpg",
+   "from": "https://r2.jjalbot.com/2026/06/F4NjeruIN.jpg",
+   "burned": true
+  },
+  {
+   "id": "yoo-zero",
+   "name": "빵점 맞은 친구가 있어요",
+   "source": "무한도전 (유재석)",
+   "meaning": "결과가 0점",
+   "use": [
+    "수익률 0",
+    "예측 실패"
+   ],
+   "kw": [
+    "빵점 맞은 친구가"
+   ],
+   "query": "유재석",
+   "image": "jjal/yoo-zero.jpeg",
+   "from": "https://r2.jjalbot.com/2023/12/iwHX0yqA9.jpeg",
+   "burned": true
+  },
+  {
+   "id": "yoo-workday",
+   "name": "너 내일 근무한다는 거 잊지 마",
+   "source": "무한도전 (유재석)",
+   "meaning": "휴일 끝, 출근 현실",
+   "use": [
+    "연휴 끝",
+    "일요일 밤"
+   ],
+   "kw": [
+    "너 내일 근무한다는거"
+   ],
+   "query": "유재석",
+   "image": "jjal/yoo-workday.jpeg",
+   "from": "https://r2.jjalbot.com/2024/01/EtdhIw6ZY.jpeg",
+   "burned": true
+  },
+  {
+   "id": "park-offwork",
+   "name": "저 퇴근 시간 된 것 같은데",
+   "source": "무한도전 (박명수)",
+   "meaning": "칼퇴 눈치",
+   "use": [
+    "퇴근",
+    "워라밸"
+   ],
+   "kw": [
+    "퇴근 시간 직장인 눈치"
+   ],
+   "query": "박명수",
+   "image": "jjal/park-offwork.jpg",
+   "from": "https://r2.jjalbot.com/2026/06/RUNo6Rb45.jpg",
+   "burned": true
+  },
+  {
+   "id": "park-holdon",
+   "name": "좀만 더 버티다가 쓰러져야 되겠다",
+   "source": "무한도전 (박명수)",
+   "meaning": "버티는 중",
+   "use": [
+    "존버",
+    "하락장",
+    "연말 업무"
+   ],
+   "kw": [
+    "좀만 더 버티다가"
+   ],
+   "query": "박명수",
+   "image": "jjal/park-holdon.jpg",
+   "from": "https://r2.jjalbot.com/2026/03/eOggwRSiBa.jpg",
+   "burned": true
+  },
+  {
+   "id": "park-joy",
+   "name": "인생의 즐거움을 또 찾았네",
+   "source": "무한도전 (박명수)",
+   "meaning": "새 즐거움 발견",
+   "use": [
+    "새 혜택",
+    "새 취미 소비"
+   ],
+   "kw": [
+    "인생의 즐거움을 또"
+   ],
+   "query": "박명수",
+   "image": "jjal/park-joy.webp",
+   "from": "https://r2.jjalbot.com/2026/05/OSMaMAnp6.webp",
+   "burned": true
+  },
+  {
+   "id": "park-yummy",
+   "name": "세상 살다 이렇게 맛있는 게 없네",
+   "source": "무한도전 (박명수)",
+   "meaning": "너무 좋음(먹방)",
+   "use": [
+    "외식",
+    "배달",
+    "소비"
+   ],
+   "kw": [
+    "세상살다 이렇게 맛있는게"
+   ],
+   "query": "박명수",
+   "image": "jjal/park-yummy.jpg",
+   "from": "https://r2.jjalbot.com/2026/05/vlb9NS4eQ.jpg",
+   "burned": true
+  },
+  {
+   "id": "park-thumbs",
+   "name": "엄지척, 배우신 분",
+   "source": "무한도전 (박명수)",
+   "meaning": "칭찬",
+   "use": [
+    "현명한 선택",
+    "절세"
+   ],
+   "kw": [
+    "엄지척 칭찬"
+   ],
+   "query": "박명수 짤",
+   "image": "jjal/park-thumbs.jpeg",
+   "from": "https://r2.jjalbot.com/2023/03/7Lkd7WbgHI.jpeg",
+   "burned": true
+  },
+  {
+   "id": "park-workhard",
+   "name": "열심히 일해서 그걸로 먹고 살란 말이야",
+   "source": "무한도전 (박명수)",
+   "meaning": "근로소득 팩폭",
+   "use": [
+    "투자 실패",
+    "월급의 소중함"
+   ],
+   "kw": [
+    "열심히 일해서 그걸로"
+   ],
+   "query": "박명수 짤",
+   "image": "jjal/park-workhard.jpeg",
+   "from": "https://r2.jjalbot.com/2023/03/JwXSdALWgW.jpeg",
+   "burned": true
+  },
+  {
+   "id": "park-ruined",
+   "name": "야! 큰일났다 오늘 아름다운 일이 없네",
+   "source": "무한도전 (박명수)",
+   "meaning": "망한 하루",
+   "use": [
+    "폭락",
+    "월요일"
+   ],
+   "kw": [
+    "오늘 아름다운 일이 없네"
+   ],
+   "query": "박명수",
+   "image": "jjal/park-ruined.jpg",
+   "from": "https://r2.jjalbot.com/2026/03/j_0op_wFcY.jpg",
+   "burned": true
+  },
+  {
+   "id": "park-expect",
+   "name": "왕기대",
+   "source": "무한도전 (박명수)",
+   "meaning": "잔뜩 기대",
+   "use": [
+    "성과급 발표",
+    "실적 발표 전"
+   ],
+   "kw": [
+    "기대 왕기대"
+   ],
+   "query": "박명수 짤",
+   "image": "jjal/park-expect.jpeg",
+   "from": "https://r2.jjalbot.com/2023/03/8uu8x_Moxt.jpeg",
+   "burned": true
+  },
+  {
+   "id": "park-freeman",
+   "name": "나는 자유인이다",
+   "source": "무한도전 (박명수)",
+   "meaning": "해방",
+   "use": [
+    "퇴근",
+    "퇴사",
+    "연휴"
+   ],
+   "kw": [
+    "나는 자유인이다"
+   ],
+   "query": "무도짤",
+   "image": "jjal/park-freeman.jpeg",
+   "from": "https://r2.jjalbot.com/2024/01/D52KIEA8b.jpeg",
+   "burned": true
+  },
+  {
+   "id": "park-travel",
+   "name": "여행에 남는 건 사진뿐",
+   "source": "무한도전 (박명수)",
+   "meaning": "여행 기분",
+   "use": [
+    "여행",
+    "환율"
+   ],
+   "kw": [
+    "여행에 남는건 사진뿐"
+   ],
+   "query": "무도짤",
+   "image": "jjal/park-travel.jpeg",
+   "from": "https://r2.jjalbot.com/2024/01/0za4qSkYm.jpeg",
+   "burned": true
+  },
+  {
+   "id": "park-nervous",
+   "name": "불안한 시선 타는 입술",
+   "source": "무한도전 (박명수)",
+   "meaning": "긴장",
+   "use": [
+    "발표 직전",
+    "계좌 열기 전"
+   ],
+   "kw": [
+    "불안한 시선 타는 입술"
+   ],
+   "query": "무도 박명수",
+   "image": "jjal/park-nervous.jpg",
+   "from": "https://r2.jjalbot.com/2026/05/39cLmT3mW.jpg",
+   "burned": true
+  },
+  {
+   "id": "park-run",
+   "name": "일단 뛰자",
+   "source": "무한도전 (박명수)",
+   "meaning": "일단 도망",
+   "use": [
+    "손절",
+    "탈출"
+   ],
+   "kw": [
+    "일단 뛰자 도망"
+   ],
+   "query": "박명수",
+   "image": "jjal/park-run.jpg",
+   "from": "https://r2.jjalbot.com/2026/03/8FJDgcT6eP.jpg",
+   "burned": true
+  },
+  {
+   "id": "haha-cantread",
+   "name": "그냥 읽는데 머리에 안 들어와",
+   "source": "무한도전 (하하)",
+   "meaning": "어려워서 이해 안 됨",
+   "use": [
+    "세법",
+    "약관",
+    "어려운 정책"
+   ],
+   "kw": [
+    "머리에 안들어와"
+   ],
+   "query": "하하 짤",
+   "image": "jjal/haha-cantread.jpeg",
+   "from": "https://r2.jjalbot.com/2023/03/afxRgqd4YO.jpeg",
    "burned": true
   }
  ]
