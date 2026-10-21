@@ -2,7 +2,8 @@
 # 올릴 게 없으면 카드도 안 찍고 바로 끝남. 수동 실행(workflow_dispatch)은 올릴 게 없어도 카드를 찍어 Artifacts(cards-날짜)에 남김 → 폰으로 확인.
 # GitHub 예약 실행은 늦게 돌 때가 많아서, 실제 게시는 "at" 보다 몇 분~30분 정도 늦을 수 있음.
 # 인스타·스레드는 공개 이미지 주소가 필요해서 카드 JPG를 media 브랜치에 올리고 raw.githubusercontent 주소를 씀 (저장소가 공개여야 함).
-# 릴스 영상은 reel 워크플로로 따로 만듦 (유행 음원은 인스타 앱에서 직접 붙여 올림).
+# 릴스: 인스타에 올라간 세트는 게시 뒤 mp4를 media 브랜치에도 올림 → 다른 폰에서 raw 주소로 받아 앱에서 유행 음원 붙여 올림.
+# (시안·목소리 시험용 릴스는 reel 워크플로)
 name: post
 on:
   schedule:
@@ -72,3 +73,15 @@ jobs:
           [ -d "out/$D/posted" ] || exit 0
           mkdir -p "media/$D" && cp -r "out/$D/posted" "media/$D/"
           cd media && git add -A && (git diff --cached --quiet || git commit -qm "posted $D") && git push -q origin media
+      - name: 게시된 세트의 릴스를 media 브랜치에 올리기 (다른 폰에서 주소로 받아 앱에서 음원 붙여 올림)
+        if: env.GO == '1' && inputs.dry != '1'
+        continue-on-error: true
+        run: |
+          ids=""; for f in out/"$D"/posted/*.instagram; do [ -e "$f" ] || continue
+            id=$(basename "$f" .instagram); [ -f "media/$D/$id-reel.mp4" ] || ids="$ids $id"; done
+          [ -n "$ids" ] || exit 0
+          sudo apt-get install -y -qq ffmpeg >/dev/null
+          for id in $ids; do node reel.mjs "$D" "$id" && cp "out/$D/$id-reel.mp4" "media/$D/" && echo "릴스: $MEDIA_BASE_URL/$D/$id-reel.mp4"; done
+          cd media && git add -A && (git diff --cached --quiet || git commit -qm "reels $D") && git push -q origin media
+        env:
+          MEDIA_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/media
