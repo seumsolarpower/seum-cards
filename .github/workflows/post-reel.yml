@@ -1,0 +1,49 @@
+# 릴스를 만들어서 인스타에 바로 올림 (수동 실행). 음원은 세트의 "music"(assets/music, CC0)을 영상에 깔아서 올림.
+# mp4는 media 브랜치에 올려 공개 주소로 넘기고, 게시 기록은 media/날짜/posted/세트.reel
+name: post-reel
+on:
+  workflow_dispatch:
+    inputs:
+      date: { description: "날짜 YYYY-MM-DD", required: true }
+      set: { description: "세트 id", required: true }
+      dry: { description: "1이면 만들기만 하고 안 올림", required: false, default: "0" }
+permissions:
+  contents: write
+concurrency: post
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      D: ${{ inputs.date }}
+      S: ${{ inputs.set }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium && sudo apt-get install -y -qq ffmpeg >/dev/null
+      - name: 릴스 만들기
+        run: node reel.mjs "$D" "$S"
+      - uses: actions/upload-artifact@v4
+        with: { name: "reel-${{ inputs.date }}-${{ inputs.set }}", path: "out/${{ inputs.date }}/*.mp4\nout/${{ inputs.date }}/reel-stills/", overwrite: true }
+      - name: media 브랜치에 mp4 올리기 (+ 지난 게시 기록 가져오기)
+        if: inputs.dry != '1'
+        run: |
+          git config user.name "seum-bot"; git config user.email "bot@seum.invalid"
+          git fetch -q origin media && git worktree add -q -B media media FETCH_HEAD
+          mkdir -p "media/$D" "out/$D"; [ -d "media/$D/posted" ] && cp -r "media/$D/posted" "out/$D/" || true
+          cp "out/$D/$S-reel.mp4" "media/$D/"
+          cd media && git add -A && (git diff --cached --quiet || git commit -qm "reel $D $S") && git push -q origin media
+          sleep 20
+      - name: 인스타 릴스 게시
+        if: inputs.dry != '1'
+        env:
+          MEDIA_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/media
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+        run: node publish-reel.mjs "$D" "$S"
+      - name: 게시 기록 저장
+        if: always() && inputs.dry != '1'
+        run: |
+          [ -d "out/$D/posted" ] || exit 0
+          cp -r "out/$D/posted" "media/$D/" && cd media && git add -A && (git diff --cached --quiet || git commit -qm "posted reel $D $S") && git push -q origin media
