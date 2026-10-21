@@ -1,0 +1,25 @@
+# 릴스 시안만 따로 만들어 봄 (게시 안 함). 목소리 비교용: voices 에 edge-tts 목소리를 쉼표로.
+# 결과: Artifacts(reels-날짜) 에 mp4 + 정지 화면
+name: reel
+on:
+  workflow_dispatch:
+    inputs:
+      date: { description: "날짜 YYYY-MM-DD", required: true }
+      set: { description: "세트 id (비우면 전부)", required: false, default: "" }
+      voices: { description: "목소리 (비우면 무음)", required: false, default: "ko-KR-SunHiNeural,ko-KR-InJoonNeural" }
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+      - run: sudo apt-get install -y -qq ffmpeg >/dev/null && pipx install edge-tts >/dev/null
+      - name: 릴스 만들기
+        env:
+          VOICES: ${{ inputs.voices }}
+        run: node reel.mjs "${{ inputs.date }}" "${{ inputs.set }}"
+      - uses: actions/upload-artifact@v4
+        with: { name: "reels-${{ inputs.date }}", path: "out/${{ inputs.date }}/*.mp4\nout/${{ inputs.date }}/reel-stills/" }
