@@ -14,11 +14,11 @@ mkdirSync(new URL("reel-stills/", dir), { recursive: true });
 const FPS = 30, W = 1080, H = 1920;
 const BASE = { cover: 2.4, jjal: 2.8, meme: 3.6, summary: 3.4 }, INFO = 3.2;
 
-// 화면: 위 190px(진행 막대) + 카드 92% 크기(994×1242) + 아래 약 490px는 인스타 캡션·버튼 자리라 비움
+// 화면: 카드를 90%(972×1215, 정수 픽셀이라 가장자리 틈 없음)로 가운데보다 조금 위에. 아래 약 400px는 인스타 캡션·버튼 자리라 비움
 const STAGE = `
 html,body{background:#0e0e10;overflow:hidden}
-.stage{position:absolute;left:43px;top:190px;width:1080px;height:1350px;transform:scale(.92);transform-origin:0 0;border-radius:30px;overflow:hidden}
-.prog{position:absolute;left:43px;right:43px;top:150px;display:flex;gap:10px}
+.stage{position:absolute;left:54px;top:300px;width:1080px;height:1350px;transform:scale(.9);transform-origin:0 0;border-radius:30px;overflow:hidden}
+.prog{position:absolute;left:54px;right:54px;top:258px;display:flex;gap:10px}
 .prog i{flex:1;height:6px;border-radius:3px;background:rgb(255 255 255/.22);overflow:hidden}
 .prog i b{display:block;height:100%;background:#fff;transform-origin:0 0}
 .top>span:last-child,.top2>span:last-child{visibility:hidden}
