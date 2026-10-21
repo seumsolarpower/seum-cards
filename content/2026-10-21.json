@@ -265,20 +265,26 @@
         {
           "type": "jjal",
           "jjal": "yoo-shock",
-          "top": "서울 아파트 월세 평균<br><mk>166만원</mk> 됐대",
-          "dur": 2
+          "top": "서울 아파트 월세 평균<br><mk>166만원</mk> 됐대"
         },
         {
           "type": "jjal",
           "jjal": "park-ruined",
-          "top": "1년 새 22만원 오른 월세<br>이체한 나",
-          "dur": 2
+          "top": "1년 새 22만원 오른 월세<br>이체한 나"
         },
         {
           "type": "jjal",
           "jjal": "yoo-thisday",
-          "top": "근데 연말정산 때<br><em>최대 170만원</em> 돌려받는 거 앎?",
-          "dur": 3
+          "top": "근데 월세도 연말정산 때<br><em>돌려받을 수 있다고?</em>"
+        },
+        {
+          "type": "card",
+          "n": 4,
+          "dur": 4
+        },
+        {
+          "type": "end",
+          "text": "저장해 두고<br>연말정산 때 꺼내 보기"
         }
       ]
     }
