@@ -130,17 +130,17 @@ em{color:#1fd8a4;font-style:normal}
 .bd mk{background:none;color:inherit;padding:0;border-radius:0;box-shadow:inset 0 -.3em 0 #1fd8a4}
 .bend .kk{top:200px;font-size:84px;text-align:center}.bend .kk span{display:block;margin-top:40px;font:800 52px/1 Pretendard}.bend .kk span i{color:#1fd8a4;font-style:normal}
 .ch{position:absolute;left:64px;bottom:440px;width:380px;height:auto;transform-origin:50% 100%}
-.bub{position:absolute;left:480px;top:1170px;max-width:420px;background:#fff;color:#0e0f10;font:800 54px/1.25 Pretendard;letter-spacing:-.03em;padding:30px 38px;border-radius:40px;word-break:keep-all;transform-origin:0 50%}
-.bub::before{content:"";position:absolute;left:-22px;top:50px;border:18px solid transparent;border-right:26px solid #fff;border-left:0}
-.jj{position:absolute;left:30px;bottom:440px;width:640px;height:420px;object-fit:contain;object-position:0 100%;transform-origin:50% 100%}
+.rb{position:absolute;left:480px;top:1170px;max-width:420px;background:#fff;color:#0e0f10;font:800 54px/1.25 Pretendard;letter-spacing:-.03em;padding:30px 38px;border-radius:40px;word-break:keep-all;transform-origin:0 50%}
+.rb::before{content:"";position:absolute;left:-22px;top:50px;border:18px solid transparent;border-right:26px solid #fff;border-left:0}
+.rj{position:absolute;left:30px;bottom:440px;width:640px;height:420px;object-fit:contain;object-position:0 100%;transform-origin:50% 100%}
 .cht{position:absolute;left:64px;top:250px;width:844px;height:420px}
-.cht .b{position:absolute;bottom:70px;width:220px;border-radius:16px 16px 0 0;transform-origin:50% 100%;background:#d3d6d9}.cht .b.now{background:#1fd8a4}
-.cht .v{position:absolute;width:220px;text-align:center;font:800 54px/1 Pretendard;letter-spacing:-.03em}
-.cht .x{position:absolute;bottom:14px;width:220px;text-align:center;font:700 36px/1 Pretendard;color:#6b7077}
-.cht .lvl{position:absolute;left:70px;width:560px;border-top:4px dashed #9aa0a6}
-.cht .br{position:absolute;left:650px;width:22px;border:6px solid #0e0f10;border-left:0;border-radius:0 8px 8px 0}
-.cht .bl{position:absolute;left:690px;font:900 56px/1 Pretendard;letter-spacing:-.03em;white-space:nowrap}
-.cht .src{position:absolute;left:0;bottom:-40px;font:500 26px/1 Pretendard;color:#6b7077}
+.cht .cb{position:absolute;bottom:70px;width:220px;border-radius:16px 16px 0 0;transform-origin:50% 100%;background:#d3d6d9}.cht .cb.now{background:#1fd8a4}
+.cht .cv{position:absolute;width:220px;text-align:center;font:800 54px/1 Pretendard;letter-spacing:-.03em}
+.cht .cx{position:absolute;bottom:14px;width:220px;text-align:center;font:700 36px/1 Pretendard;color:#6b7077}
+.cht .clv{position:absolute;left:70px;width:560px;border-top:4px dashed #9aa0a6}
+.cht .cbr{position:absolute;left:650px;width:22px;border:6px solid #0e0f10;border-left:0;border-radius:0 8px 8px 0}
+.cht .cbl{position:absolute;left:690px;font:900 56px/1 Pretendard;letter-spacing:-.03em;white-space:nowrap}
+.cht .csrc{position:absolute;left:0;bottom:-40px;font:500 26px/1 Pretendard;color:#6b7077}
 @keyframes boing{0%{opacity:0;scale:.3}55%{opacity:1;scale:1.12}75%{scale:.94}100%{opacity:1;scale:1}}
 @keyframes grow{from{scale:1 0}to{scale:1 1}}
 @keyframes fade{from{opacity:0}to{opacity:1}}`;
@@ -148,17 +148,17 @@ const LOGO = `<div class="lg">seum<i>.</i></div>`;
 // 보드형 장면: 막대 비교. 0부터 값에 비례, 앞 막대 높이를 점선으로 긋고 차이를 괄호로 가리킴
 function chartHtml(c) {
   const [[k0, v0, l0], [k1, v1, l1]] = c.bars, H = 250, h0 = Math.round(H * v0 / Math.max(v0, v1)), h1 = Math.round(H * v1 / Math.max(v0, v1));
-  return `<div class="cht"><div class="lvl" style="bottom:${70 + h0}px" data-a="fade .3s 1s"></div>
-<div class="b" style="left:70px;height:${h0}px" data-a="grow .6s .3s"></div><div class="b now" style="left:410px;height:${h1}px" data-a="grow .7s .45s"></div>
-<div class="v" style="left:70px;bottom:${70 + h0 + 16}px" data-a="fade .3s 1s">${l0}</div><div class="v" style="left:410px;bottom:${70 + h1 + 16}px" data-a="fade .3s 1s">${l1}</div>
-<div class="x" style="left:70px">${k0}</div><div class="x" style="left:410px">${k1}</div>
-<div class="br" style="bottom:${70 + h0 - 3}px;height:${h1 - h0}px" data-a="fade .3s 1.3s"></div><div class="bl" style="bottom:${70 + h0 - 12}px" data-a="fade .3s 1.3s">${c.delta}</div>
-${c.src ? `<div class="src">${c.src}</div>` : ""}</div>`;
+  return `<div class="cht"><div class="clv" style="bottom:${70 + h0}px" data-a="fade .3s 1s"></div>
+<div class="cb" style="left:70px;height:${h0}px" data-a="grow .6s .3s"></div><div class="cb now" style="left:410px;height:${h1}px" data-a="grow .7s .45s"></div>
+<div class="cv" style="left:70px;bottom:${70 + h0 + 16}px" data-a="fade .3s 1s">${l0}</div><div class="cv" style="left:410px;bottom:${70 + h1 + 16}px" data-a="fade .3s 1s">${l1}</div>
+<div class="cx" style="left:70px">${k0}</div><div class="cx" style="left:410px">${k1}</div>
+<div class="cbr" style="bottom:${70 + h0 - 3}px;height:${h1 - h0}px" data-a="fade .3s 1.3s"></div><div class="cbl" style="bottom:${70 + h0 - 12}px" data-a="fade .3s 1.3s">${c.delta}</div>
+${c.src ? `<div class="csrc">${c.src}</div>` : ""}</div>`;
 }
 function react(sc) {
   if (sc.jjal) { const m = CAT.find(x => x.id === sc.jjal); if (!m) throw new Error("짤 없음: " + sc.jjal);
-    const cut = `jjal/cut/${m.id}.png`; return `<img class="jj" src="${b64(existsSync(new URL("assets/" + cut, import.meta.url)) ? cut : m.image)}" data-a="boing .6s .35s">` }
-  return (sc.char ? CHAR(sc.char).replace('class="ch"', 'class="ch" data-a="boing .6s .35s"') : "") + (sc.bub ? `<div class="bub" data-a="boing .5s .7s">${sc.bub}</div>` : "");
+    const cut = `jjal/cut/${m.id}.png`; return `<img class="rj" src="${b64(existsSync(new URL("assets/" + cut, import.meta.url)) ? cut : m.image)}" data-a="boing .6s .35s">` }
+  return (sc.char ? CHAR(sc.char).replace('class="ch"', 'class="ch" data-a="boing .6s .35s"') : "") + (sc.bub ? `<div class="rb" data-a="boing .5s .7s">${sc.bub}</div>` : "");
 }
 function sceneHtml(sc, dur) {
   let body;
