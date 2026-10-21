@@ -6,7 +6,7 @@ on:
     inputs:
       date: { description: "날짜 YYYY-MM-DD", required: true }
       set: { description: "세트 id (비우면 전부)", required: false, default: "" }
-      voices: { description: "목소리 (비우면 무음)", required: false, default: "ko-KR-SunHiNeural,ko-KR-InJoonNeural" }
+      voices: { description: "목소리 (예: ko-KR-SunHiNeural,ko-KR-InJoonNeural). 비우면 무음", required: false, default: "" }
 jobs:
   reel:
     runs-on: ubuntu-latest
