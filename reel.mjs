@@ -84,7 +84,7 @@ const page = await browser.newPage({ viewport: { width: W, height: H }, deviceSc
 const css = cardCss(C.palette) + STAGE;
 
 // 대사 한 마디를 읽혀서 wav + 길이(초). edge-tts mp3는 길이 정보가 부정확해서 wav로 바꾸고 앞뒤 무음도 잘라냄
-const RATE = process.env.VOICE_RATE || "+12%";
+const RATE = process.env.VOICE_RATE || "+20%";
 const TRIM = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse";
 function say(voice, text, file) {
   const mp3 = file.replace(/\.wav$/, ".mp3");
