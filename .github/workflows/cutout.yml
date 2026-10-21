@@ -1,0 +1,25 @@
+# 짤 누끼 따기 (jjal/cutout.py). 결과 PNG는 assets/jjal/cut/ 에 커밋, 확인용 이미지는 Artifacts(cut-debug)
+name: cutout
+on:
+  workflow_dispatch:
+    inputs:
+      ids: { description: "짤 id (공백으로 구분)", required: true }
+      model: { description: "rembg 모델", required: false, default: "birefnet-portrait" }
+permissions:
+  contents: write
+jobs:
+  cut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -q "rembg[cpu]" pillow
+      - env: { MODEL: "${{ inputs.model }}" }
+        run: python jjal/cutout.py ${{ inputs.ids }}
+      - uses: actions/upload-artifact@v4
+        with: { name: cut-debug, path: out/cut-debug/ }
+      - run: |
+          git config user.name "seum-bot"; git config user.email "bot@seum.invalid"
+          git add assets/jjal/cut && (git diff --cached --quiet || git commit -qm "짤 누끼: ${{ inputs.ids }}") && git pull -q --rebase && git push -q
