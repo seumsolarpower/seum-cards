@@ -240,7 +240,7 @@ for (const s of C.sets.filter(s => !only || s.id === only)) for (const voice of 
     clips.map((c, k) => `[${k + 1}]adelay=${Math.round(c.at * 1000)}:all=1[v${k}]`).join(";") + ";" + clips.map((_, k) => `[v${k}]`).join("") + `amix=inputs=${clips.length}:normalize=0:dropout_transition=0,loudnorm=I=-14:TP=-1.5,apad[a]`, ...enc]);
   else if (s.music) { const L = secs.toFixed(2); // 무료 음원(assets/music, CC0): 길이에 맞춰 자르고 앞뒤 페이드
     run(["-i", silent, "-i", new URL("assets/music/" + s.music, import.meta.url).pathname, "-filter_complex",
-      `[1]atrim=0:${L},asetpts=PTS-STARTPTS,afade=t=in:d=.3,afade=t=out:st=${(secs - 1.2).toFixed(2)}:d=1.2,loudnorm=I=-16:TP=-1.5,apad[a]`, ...enc]) }
+      `[1]atrim=0:${L},asetpts=PTS-STARTPTS,afade=t=in:d=0.3,afade=t=out:st=${(secs - 1.2).toFixed(2)}:d=1.2,loudnorm=I=-16:TP=-1.5,apad[a]`, ...enc]) }
   else run(["-i", silent, "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-filter_complex", "[1]anull[a]", ...enc]);
   console.log("릴스", `out/${date}/${s.id}-reel${tag}.mp4`, secs.toFixed(1) + "초", voice ? `대사 ${clips.length}마디` : "");
 }
