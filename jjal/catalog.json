@@ -1,908 +1,1159 @@
 {
-  "_설명": "한국 짤 사전. meaning(진짜 뜻)과 use(어울리는 뉴스 상황)를 보고 그날 짤을 고름. image가 비어 있으면 fetch.mjs가 후보를 모음 → 사람이 한 번 골라서(pick.mjs) assets/jjal/에 저장",
-  "items": [
-    {
-      "id": "double",
-      "name": "묻고 더블로 가",
-      "source": "타짜 (곽철용)",
-      "meaning": "잃은 판에서 판돈을 더 올림",
-      "use": [
-        "물타기",
-        "하락장 추가 매수",
-        "몰빵"
-      ],
-      "query": "타짜 곽철용 묻고 더블로 가",
-      "image": "jjal/double.png",
-      "kw": [
-        "묻고 더블로",
-        "곽철용"
-      ],
-      "from": "https://r2.jjalbot.com/2023/03/TPGLFQ47V6.png",
-      "space": "top",
-      "burned": false
-    },
-    {
-      "id": "mapo",
-      "name": "마포대교는 무너졌냐",
-      "source": "타짜 (곽철용)",
-      "meaning": "상황이 어떤지 확인",
-      "use": [
-        "장 시작 전",
-        "계좌 열기 전",
-        "안부"
-      ],
-      "query": "마포대교는 무너졌냐",
-      "image": "",
-      "kw": [
-        "타짜 곽철용",
-        "타짜"
-      ]
-    },
-    {
-      "id": "drueowa",
-      "name": "드루와 드루와",
-      "source": "신세계 (황정민)",
-      "meaning": "덤빌 테면 덤벼라, 자신감",
-      "use": [
-        "하락장 버티기",
-        "공매도 세력",
-        "도발"
-      ],
-      "query": "신세계 황정민 드루와 짤",
-      "image": "",
-      "kw": [
-        "신세계 황정민",
-        "신세계 영화"
-      ]
-    },
-    {
-      "id": "eoiga",
-      "name": "어이가 없네",
-      "source": "베테랑 (유아인)",
-      "meaning": "상식 밖이라 황당함",
-      "use": [
-        "물가 상승",
-        "월급 그대로",
-        "황당한 정책"
-      ],
-      "query": "베테랑 어이가 없네 짤",
-      "image": "jjal/eoiga.jpg",
-      "kw": [
-        "어이가 없네",
-        "베테랑 유아인"
-      ],
-      "from": "https://r2.jjalbot.com/2023/03/95-I_C0RJ2.jpeg",
-      "space": "top",
-      "burned": false
-    },
-    {
-      "id": "truthroom",
-      "name": "진실의 방으로",
-      "source": "범죄도시 (마동석)",
-      "meaning": "추궁해서 사실을 밝혀내겠다",
-      "use": [
-        "분식회계",
-        "실적 발표",
-        "성과급 행방"
-      ],
-      "query": "진실의 방으로 마동석",
-      "image": "",
-      "kw": [
-        "범죄도시 진실의 방",
-        "범죄도시 마석도"
-      ]
-    },
-    {
-      "id": "mojito",
-      "name": "모히또 가서 몰디브 한잔",
-      "source": "내부자들 (이병헌)",
-      "meaning": "김칫국 마시는 행복 회로",
-      "use": [
-        "성과급 전 여행 계획",
-        "수익 나기 전 행복 회로"
-      ],
-      "query": "모히또 가서 몰디브 한잔",
-      "image": "",
-      "kw": [
-        "모히또",
-        "몰디브"
-      ]
-    },
-    {
-      "id": "best",
-      "name": "이게 최선입니까? 확실해요?",
-      "source": "시크릿가든 (현빈)",
-      "meaning": "결과물이 마음에 안 듦",
-      "use": [
-        "연봉 협상 결과",
-        "실망스러운 실적",
-        "정책 발표"
-      ],
-      "query": "시크릿가든 이게 최선입니까 짤",
-      "image": "",
-      "kw": [
-        "시크릿가든 현빈",
-        "김주원"
-      ]
-    },
-    {
-      "id": "bravo",
-      "name": "브라보, 멋지다 연진아",
-      "source": "더 글로리",
-      "meaning": "비꼬는 칭찬",
-      "use": [
-        "혼자 수익 낸 동기",
-        "자화자찬 발표"
-      ],
-      "query": "브라보 멋지다 연진아",
-      "image": "jjal/bravo.jpg",
-      "kw": [
-        "브라보 멋지다 연진아",
-        "연진아"
-      ],
-      "from": "https://r2.jjalbot.com/2023/07/wYBsQTpX2c.jpeg",
-      "space": "top",
-      "burned": false
-    },
-    {
-      "id": "kkanbu",
-      "name": "우린 깐부잖아",
-      "source": "오징어게임",
-      "meaning": "의리 강조, 배신 직전",
-      "use": [
-        "동맹",
-        "같이 물린 동기",
-        "기업 협력"
-      ],
-      "query": "오징어게임 깐부 짤",
-      "image": "jjal/kkanbu.jpg",
-      "kw": [
-        "깐부",
-        "오징어게임 오일남"
-      ],
-      "from": "https://r2.jjalbot.com/2023/03/EaCuXN_0Ej.jpeg",
-      "space": "top",
-      "burned": true
-    },
-    {
-      "id": "trembling",
-      "name": "나 지금 떨고 있니",
-      "source": "모래시계",
-      "meaning": "긴장, 두려움",
-      "use": [
-        "실적 발표 직전",
-        "금리 발표 직전",
-        "계좌 열기 직전"
-      ],
-      "query": "모래시계 나 지금 떨고 있니 짤",
-      "image": "",
-      "kw": [
-        "모래시계 최민수",
-        "모래시계"
-      ]
-    },
-    {
-      "id": "poor",
-      "name": "가난하게 컸어?",
-      "source": "작은 아씨들",
-      "meaning": "어이없는 무시, 계급 차이",
-      "use": [
-        "물가",
-        "명품 소비",
-        "편의점 점심"
-      ],
-      "query": "작은 아씨들 가난하게 컸어 짤",
-      "image": "",
-      "kw": [
-        "작은아씨들",
-        "작은 아씨들 드라마"
-      ]
-    },
-    {
-      "id": "mooyaho",
-      "name": "무야호~",
-      "source": "무한도전 (알래스카 할아버지)",
-      "meaning": "순수한 환호",
-      "use": [
-        "월급날",
-        "코스피 급등",
-        "좋은 소식"
-      ],
-      "query": "무야호 짤",
-      "image": "jjal/mooyaho.jpg",
-      "kw": [
-        "무야호"
-      ],
-      "from": "https://r2.jjalbot.com/2023/03/eA3u1HqsU.jpeg",
-      "space": "top",
-      "burned": true
-    },
-    {
-      "id": "notme",
-      "name": "나만 아니면 돼",
-      "source": "1박2일 (강호동)",
-      "meaning": "남의 불행에 안도",
-      "use": [
-        "금리 인상인데 대출 없음",
-        "남의 회사 구조조정"
-      ],
-      "query": "나만 아니면 돼 강호동",
-      "image": "",
-      "kw": [
-        "1박2일 복불복",
-        "복불복"
-      ]
-    },
-    {
-      "id": "luckyvicky",
-      "name": "럭키비키잖아",
-      "source": "장원영",
-      "meaning": "나쁜 일도 긍정 회로",
-      "use": [
-        "하락장 = 싸게 살 기회",
-        "월급 동결 = 지출 줄일 기회"
-      ],
-      "query": "장원영 럭키비키 짤",
-      "image": "",
-      "kw": [
-        "장원영 웃음",
-        "원영적 사고"
-      ]
-    },
-    {
-      "id": "late",
-      "name": "늦었다고 생각할 때가 진짜 늦은 거다",
-      "source": "무한도전 (박명수)",
-      "meaning": "팩폭, 이미 늦었음",
-      "use": [
-        "뒤늦은 매수",
-        "청약 막차"
-      ],
-      "kw": [
-        "늦었다고 생각할 때"
-      ],
-      "query": "늦었다고 생각할 때",
-      "image": "jjal/late.jpg",
-      "from": "https://r2.jjalbot.com/2023/03/fFDw6xG3Gc.jpeg"
-    },
-    {
-      "id": "stopsearch",
-      "name": "그만 알아보도록 하자",
-      "source": "인터넷 밈",
-      "meaning": "더 알면 괴로우니 덮기",
-      "use": [
-        "계좌 수익률",
-        "카드 명세서"
-      ],
-      "kw": [
-        "그만 알아보도록 하자",
-        "그만 알아보자"
-      ],
-      "query": "그만 알아보도록 하자",
-      "image": ""
-    },
-    {
-      "id": "gogo",
-      "name": "가보자고",
-      "source": "인터넷 밈",
-      "meaning": "의욕, 도전",
-      "use": [
-        "상승장",
-        "새 투자"
-      ],
-      "kw": [
-        "가보자고"
-      ],
-      "query": "가보자고",
-      "image": ""
-    },
-    {
-      "id": "jkm",
-      "name": "중요한 건 꺾이지 않는 마음",
-      "source": "데프트 인터뷰",
-      "meaning": "버티기, 존버",
-      "use": [
-        "하락장 존버",
-        "적금 유지"
-      ],
-      "kw": [
-        "중꺾마",
-        "꺾이지 않는 마음"
-      ],
-      "query": "중꺾마",
-      "image": ""
-    },
-    {
-      "id": "kingbad",
-      "name": "킹받네",
-      "source": "인터넷 밈",
-      "meaning": "얄밉고 약 오름",
-      "use": [
-        "팔자마자 상승",
-        "물가 인상"
-      ],
-      "kw": [
-        "킹받네"
-      ],
-      "query": "킹받네",
-      "image": ""
-    },
-    {
-      "id": "t",
-      "name": "너 T야?",
-      "source": "MBTI 밈",
-      "meaning": "공감 없이 숫자만 따짐",
-      "use": [
-        "기쁜 뉴스에 월급 질문"
-      ],
-      "kw": [
-        "너 T야"
-      ],
-      "query": "너 T야",
-      "image": ""
-    },
-    {
-      "id": "propulsion",
-      "name": "추진력을 얻기 위함이었다",
-      "source": "인터넷 밈",
-      "meaning": "하락을 상승 준비로 포장하는 정신승리",
-      "use": [
-        "반등",
-        "하락 후 상승"
-      ],
-      "kw": [
-        "추진력",
-        "정신승리"
-      ],
-      "query": "추진력을 얻기",
-      "image": ""
-    },
-    {
-      "id": "gomahae",
-      "name": "고마해라 마이 묵었다 아이가",
-      "source": "친구 (장동건)",
-      "meaning": "이제 그만해, 충분히 당했다",
-      "use": [
-        "연속 하락",
-        "연속 인상"
-      ],
-      "kw": [
-        "고마해라"
-      ],
-      "query": "고마해라",
-      "image": ""
-    },
-    {
-      "id": "spoon",
-      "name": "밥상 다 차려 놨는데 숟가락만 얹었을 뿐",
-      "source": "황정민 수상 소감",
-      "meaning": "남의 공을 가져감 / 겸손",
-      "use": [
-        "팀 성과 가로채기"
-      ],
-      "kw": [
-        "숟가락만 얹었을 뿐",
-        "숟가락"
-      ],
-      "query": "숟가락만 얹었을 뿐",
-      "image": ""
-    },
-    {
-      "id": "hurt",
-      "name": "아프냐 나도 아프다",
-      "source": "다모",
-      "meaning": "동병상련",
-      "use": [
-        "같이 물린 개미"
-      ],
-      "kw": [
-        "아프냐 나도 아프다"
-      ],
-      "query": "아프냐 나도 아프다",
-      "image": ""
-    },
-    {
-      "id": "hawaii",
-      "name": "니가 가라 하와이",
-      "source": "친구 (유오성)",
-      "meaning": "떠넘기기",
-      "use": [
-        "독박 업무",
-        "손실 떠넘기기"
-      ],
-      "kw": [
-        "니가 가라 하와이"
-      ],
-      "query": "니가 가라 하와이",
-      "image": ""
-    },
-    {
-      "id": "insult",
-      "name": "넌 나에게 모욕감을 줬어",
-      "source": "달콤한 인생 (김영철)",
-      "meaning": "자존심 상함",
-      "use": [
-        "쥐꼬리 성과급",
-        "연봉 동결"
-      ],
-      "kw": [
-        "모욕감을 줬어"
-      ],
-      "query": "모욕감을 줬어",
-      "image": ""
-    },
-    {
-      "id": "spare",
-      "name": "살려는 드릴게",
-      "source": "신세계 (황정민)",
-      "meaning": "봐줄 테니 감사해라",
-      "use": [
-        "찔끔 인상",
-        "선심성 정책"
-      ],
-      "kw": [
-        "살려는 드릴게"
-      ],
-      "query": "살려는 드릴게",
-      "image": ""
-    },
-    {
-      "id": "whatmatters",
-      "name": "뭣이 중헌디",
-      "source": "곡성",
-      "meaning": "핵심이 뭔지 모름",
-      "use": [
-        "본질 흐린 뉴스",
-        "우선순위"
-      ],
-      "kw": [
-        "뭣이 중헌디"
-      ],
-      "query": "뭣이 중헌디",
-      "image": ""
-    },
-    {
-      "id": "sadollar",
-      "name": "사딸라",
-      "source": "야인시대 (김영철)",
-      "meaning": "단호한 가격 제시",
-      "use": [
-        "가격 협상",
-        "연봉 협상"
-      ],
-      "kw": [
-        "사딸라"
-      ],
-      "query": "사딸라",
-      "image": ""
-    },
-    {
-      "id": "jayeonin",
-      "name": "나는 자연인이다",
-      "source": "MBN 예능",
-      "meaning": "도시 떠나 소박하게, 절약",
-      "use": [
-        "짠테크",
-        "조기 은퇴"
-      ],
-      "kw": [
-        "나는 자연인이다"
-      ],
-      "query": "나는 자연인이다",
-      "image": ""
-    },
-    {
-      "id": "stop",
-      "name": "멈춰!",
-      "source": "학교폭력 예방 영상 밈",
-      "meaning": "당장 그만",
-      "use": [
-        "과소비",
-        "충동구매"
-      ],
-      "kw": [
-        "멈춰"
-      ],
-      "query": "멈춰",
-      "image": ""
-    },
-    {
-      "id": "realq",
-      "name": "실화냐",
-      "source": "인터넷 밈",
-      "meaning": "믿기 힘들 만큼 놀람",
-      "use": [
-        "역대급 수치",
-        "폭등 폭락"
-      ],
-      "kw": [
-        "실화냐"
-      ],
-      "query": "실화냐",
-      "image": ""
-    },
-    {
-      "id": "legeno",
-      "name": "레게노",
-      "source": "인터넷 밈",
-      "meaning": "전설, 대단함",
-      "use": [
-        "역대 최고치"
-      ],
-      "kw": [
-        "레게노"
-      ],
-      "query": "레게노",
-      "image": ""
-    },
-    {
-      "id": "gazua",
-      "name": "가즈아",
-      "source": "코인 밈",
-      "meaning": "상승 기대, 풀매수",
-      "use": [
-        "코인",
-        "급등"
-      ],
-      "kw": [
-        "가즈아"
-      ],
-      "query": "가즈아",
-      "image": ""
-    },
-    {
-      "id": "jonber",
-      "name": "존버",
-      "source": "주식 밈",
-      "meaning": "끝까지 버티기",
-      "use": [
-        "장기 보유",
-        "하락장"
-      ],
-      "kw": [
-        "존버"
-      ],
-      "query": "존버",
-      "image": ""
-    },
-    {
-      "id": "ddeoksang",
-      "name": "떡상",
-      "source": "주식 밈",
-      "meaning": "급등",
-      "use": [
-        "급등주",
-        "지수 급등"
-      ],
-      "kw": [
-        "떡상"
-      ],
-      "query": "떡상",
-      "image": ""
-    },
-    {
-      "id": "ddeokrak",
-      "name": "떡락",
-      "source": "주식 밈",
-      "meaning": "급락",
-      "use": [
-        "급락",
-        "폭락"
-      ],
-      "kw": [
-        "떡락"
-      ],
-      "query": "떡락",
-      "image": ""
-    },
-    {
-      "id": "ikjeol",
-      "name": "익절",
-      "source": "주식 밈",
-      "meaning": "수익 내고 팖",
-      "use": [
-        "차익 실현"
-      ],
-      "kw": [
-        "익절"
-      ],
-      "query": "익절",
-      "image": ""
-    },
-    {
-      "id": "sonjeol",
-      "name": "손절",
-      "source": "주식 밈",
-      "meaning": "손해 보고 팖 / 관계 끊기",
-      "use": [
-        "손절매",
-        "손절 타이밍"
-      ],
-      "kw": [
-        "손절"
-      ],
-      "query": "손절",
-      "image": ""
-    },
-    {
-      "id": "mul",
-      "name": "물타기",
-      "source": "주식 밈",
-      "meaning": "떨어질 때 더 사서 평단 낮춤",
-      "use": [
-        "추가 매수"
-      ],
-      "kw": [
-        "물타기"
-      ],
-      "query": "물타기",
-      "image": ""
-    },
-    {
-      "id": "lupin",
-      "name": "월급 루팡",
-      "source": "직장인 밈",
-      "meaning": "일 안 하고 월급만 받기",
-      "use": [
-        "직장인 일상"
-      ],
-      "kw": [
-        "월급루팡"
-      ],
-      "query": "월급루팡",
-      "image": ""
-    },
-    {
-      "id": "quit",
-      "name": "퇴사",
-      "source": "직장인 밈",
-      "meaning": "회사 그만두고 싶음",
-      "use": [
-        "성과급 실망",
-        "연봉 동결"
-      ],
-      "kw": [
-        "퇴사"
-      ],
-      "query": "퇴사",
-      "image": ""
-    },
-    {
-      "id": "mondaysick",
-      "name": "월요병",
-      "source": "직장인 밈",
-      "meaning": "월요일 출근 우울",
-      "use": [
-        "월요일 아침"
-      ],
-      "kw": [
-        "월요병",
-        "출근하기 싫다"
-      ],
-      "query": "월요병",
-      "image": ""
-    },
-    {
-      "id": "bulgeum",
-      "name": "불금",
-      "source": "직장인 밈",
-      "meaning": "금요일 저녁 해방감",
-      "use": [
-        "금요일",
-        "주간 결산"
-      ],
-      "kw": [
-        "불금"
-      ],
-      "query": "불금",
-      "image": ""
-    },
-    {
-      "id": "kaltoe",
-      "name": "칼퇴",
-      "source": "직장인 밈",
-      "meaning": "정시 퇴근의 기쁨",
-      "use": [
-        "퇴근",
-        "워라밸"
-      ],
-      "kw": [
-        "칼퇴"
-      ],
-      "query": "칼퇴",
-      "image": ""
-    },
-    {
-      "id": "yageun",
-      "name": "야근",
-      "source": "직장인 밈",
-      "meaning": "야근의 피로",
-      "use": [
-        "야근",
-        "실적 압박"
-      ],
-      "kw": [
-        "야근"
-      ],
-      "query": "야근",
-      "image": ""
-    },
-    {
-      "id": "tteongjang",
-      "name": "텅장",
-      "source": "직장인 밈",
-      "meaning": "월급이 스쳐 지나간 빈 통장",
-      "use": [
-        "월급날 다음 날",
-        "카드값"
-      ],
-      "kw": [
-        "텅장"
-      ],
-      "query": "텅장",
-      "image": ""
-    },
-    {
-      "id": "cardbill",
-      "name": "카드값",
-      "source": "직장인 밈",
-      "meaning": "카드 명세서 충격",
-      "use": [
-        "카드값",
-        "할부"
-      ],
-      "kw": [
-        "카드값"
-      ],
-      "query": "카드값",
-      "image": ""
-    },
-    {
-      "id": "bonus",
-      "name": "성과급",
-      "source": "직장인 밈",
-      "meaning": "성과급 기대와 실망",
-      "use": [
-        "성과급 시즌"
-      ],
-      "kw": [
-        "성과급"
-      ],
-      "query": "성과급",
-      "image": ""
-    },
-    {
-      "id": "yunjung",
-      "name": "윤정아 윤정아 / 왜요 쌤",
-      "source": "윤정아 챌린지 (2026)",
-      "meaning": "~하지 말랬지! 잔소리",
-      "use": [
-        "하지 말란 투자 한 사람"
-      ],
-      "kw": [
-        "윤정아"
-      ],
-      "query": "윤정아",
-      "image": ""
-    },
-    {
-      "id": "ssuk",
-      "name": "좋🤙다👍",
-      "source": "쑥부르스 아저씨 (2026)",
-      "meaning": "소소한 만족",
-      "use": [
-        "작은 수익",
-        "월급날"
-      ],
-      "kw": [
-        "쑥부르스",
-        "좋다"
-      ],
-      "query": "쑥부르스",
-      "image": ""
-    },
-    {
-      "id": "clapcat",
-      "name": "박수 치는 검은 고양이",
-      "source": "AI 숏폼 (2026)",
-      "meaning": "얄미운 일에 비꼬는 박수",
-      "use": [
-        "찔끔 인상",
-        "실망스러운 발표"
-      ],
-      "kw": [
-        "박수 치는 고양이",
-        "박수 고양이"
-      ],
-      "query": "박수 치는 고양이",
-      "image": ""
-    },
-    {
-      "id": "jhj",
-      "name": "장항준적 사고",
-      "source": "장항준 감독 (2026)",
-      "meaning": "남 시선보다 내 행복 우선",
-      "use": [
-        "손실도 긍정 회로"
-      ],
-      "kw": [
-        "장항준 감독",
-        "장항준 웃음"
-      ],
-      "query": "장항준",
-      "image": ""
-    },
-    {
-      "id": "cat-shock",
-      "name": "깜짝 놀란 고양이",
-      "source": "동물 짤",
-      "meaning": "생각지 못한 사실에 놀람",
-      "use": [
-        "몰랐던 규칙",
-        "카드 명세서",
-        "예상 밖 숫자"
-      ],
-      "kw": [
-        "고양이 놀람",
-        "놀란 고양이",
-        "고양이 충격"
-      ],
-      "query": "놀란 고양이",
-      "image": "jjal/cat-shock.jpg",
-      "from": "https://r2.jjalbot.com/2023/03/2tRkSiH7f0.jpeg"
-    },
-    {
-      "id": "dog-think",
-      "name": "고민하는 강아지",
-      "source": "동물 짤",
-      "meaning": "뭘 골라야 할지 고민",
-      "use": [
-        "카드 고르기",
-        "선택 장애"
-      ],
-      "kw": [
-        "강아지 고민",
-        "고민하는 강아지",
-        "갸우뚱 강아지"
-      ],
-      "query": "고민하는 강아지",
-      "image": ""
-    },
-    {
-      "id": "cat-calc",
-      "name": "계산하는 고양이",
-      "source": "동물 짤",
-      "meaning": "열심히 따져 보는 중",
-      "use": [
-        "연말정산",
-        "가계부",
-        "카드값 계산"
-      ],
-      "kw": [
-        "고양이 계산",
-        "계산기 고양이",
-        "고양이 공부"
-      ],
-      "query": "계산하는 고양이",
-      "image": ""
-    },
-    {
-      "id": "dog-happy",
-      "name": "신난 강아지",
-      "source": "동물 짤",
-      "meaning": "좋은 소식에 신남",
-      "use": [
-        "환급",
-        "월급날",
-        "좋은 소식"
-      ],
-      "kw": [
-        "신난 강아지",
-        "행복한 강아지",
-        "강아지 웃음"
-      ],
-      "query": "신난 강아지",
-      "image": ""
-    }
-  ]
+ "_설명": "한국 짤 사전. meaning(진짜 뜻)과 use(어울리는 뉴스 상황)를 보고 그날 짤을 고름. image가 비어 있으면 fetch.mjs가 후보를 모음 → 사람이 한 번 골라서(pick.mjs) assets/jjal/에 저장",
+ "items": [
+  {
+   "id": "double",
+   "name": "묻고 더블로 가",
+   "source": "타짜 (곽철용)",
+   "meaning": "잃은 판에서 판돈을 더 올림",
+   "use": [
+    "물타기",
+    "하락장 추가 매수",
+    "몰빵"
+   ],
+   "query": "타짜 곽철용 묻고 더블로 가",
+   "image": "jjal/double.png",
+   "kw": [
+    "묻고 더블로",
+    "곽철용"
+   ],
+   "from": "https://r2.jjalbot.com/2023/03/TPGLFQ47V6.png",
+   "space": "top",
+   "burned": false
+  },
+  {
+   "id": "mapo",
+   "name": "마포대교는 무너졌냐",
+   "source": "타짜 (곽철용)",
+   "meaning": "상황이 어떤지 확인",
+   "use": [
+    "장 시작 전",
+    "계좌 열기 전",
+    "안부"
+   ],
+   "query": "마포대교는 무너졌냐",
+   "image": "",
+   "kw": [
+    "타짜 곽철용",
+    "타짜"
+   ]
+  },
+  {
+   "id": "drueowa",
+   "name": "드루와 드루와",
+   "source": "신세계 (황정민)",
+   "meaning": "덤빌 테면 덤벼라, 자신감",
+   "use": [
+    "하락장 버티기",
+    "공매도 세력",
+    "도발"
+   ],
+   "query": "신세계 황정민 드루와 짤",
+   "image": "",
+   "kw": [
+    "신세계 황정민",
+    "신세계 영화"
+   ]
+  },
+  {
+   "id": "eoiga",
+   "name": "어이가 없네",
+   "source": "베테랑 (유아인)",
+   "meaning": "상식 밖이라 황당함",
+   "use": [
+    "물가 상승",
+    "월급 그대로",
+    "황당한 정책"
+   ],
+   "query": "베테랑 어이가 없네 짤",
+   "image": "jjal/eoiga.jpg",
+   "kw": [
+    "어이가 없네",
+    "베테랑 유아인"
+   ],
+   "from": "https://r2.jjalbot.com/2023/03/95-I_C0RJ2.jpeg",
+   "space": "top",
+   "burned": false
+  },
+  {
+   "id": "truthroom",
+   "name": "진실의 방으로",
+   "source": "범죄도시 (마동석)",
+   "meaning": "추궁해서 사실을 밝혀내겠다",
+   "use": [
+    "분식회계",
+    "실적 발표",
+    "성과급 행방"
+   ],
+   "query": "진실의 방으로 마동석",
+   "image": "",
+   "kw": [
+    "범죄도시 진실의 방",
+    "범죄도시 마석도"
+   ]
+  },
+  {
+   "id": "mojito",
+   "name": "모히또 가서 몰디브 한잔",
+   "source": "내부자들 (이병헌)",
+   "meaning": "김칫국 마시는 행복 회로",
+   "use": [
+    "성과급 전 여행 계획",
+    "수익 나기 전 행복 회로"
+   ],
+   "query": "모히또 가서 몰디브 한잔",
+   "image": "",
+   "kw": [
+    "모히또",
+    "몰디브"
+   ]
+  },
+  {
+   "id": "best",
+   "name": "이게 최선입니까? 확실해요?",
+   "source": "시크릿가든 (현빈)",
+   "meaning": "결과물이 마음에 안 듦",
+   "use": [
+    "연봉 협상 결과",
+    "실망스러운 실적",
+    "정책 발표"
+   ],
+   "query": "시크릿가든 이게 최선입니까 짤",
+   "image": "",
+   "kw": [
+    "시크릿가든 현빈",
+    "김주원"
+   ]
+  },
+  {
+   "id": "bravo",
+   "name": "브라보, 멋지다 연진아",
+   "source": "더 글로리",
+   "meaning": "비꼬는 칭찬",
+   "use": [
+    "혼자 수익 낸 동기",
+    "자화자찬 발표"
+   ],
+   "query": "브라보 멋지다 연진아",
+   "image": "jjal/bravo.jpg",
+   "kw": [
+    "브라보 멋지다 연진아",
+    "연진아"
+   ],
+   "from": "https://r2.jjalbot.com/2023/07/wYBsQTpX2c.jpeg",
+   "space": "top",
+   "burned": false
+  },
+  {
+   "id": "kkanbu",
+   "name": "우린 깐부잖아",
+   "source": "오징어게임",
+   "meaning": "의리 강조, 배신 직전",
+   "use": [
+    "동맹",
+    "같이 물린 동기",
+    "기업 협력"
+   ],
+   "query": "오징어게임 깐부 짤",
+   "image": "jjal/kkanbu.jpg",
+   "kw": [
+    "깐부",
+    "오징어게임 오일남"
+   ],
+   "from": "https://r2.jjalbot.com/2023/03/EaCuXN_0Ej.jpeg",
+   "space": "top",
+   "burned": true
+  },
+  {
+   "id": "trembling",
+   "name": "나 지금 떨고 있니",
+   "source": "모래시계",
+   "meaning": "긴장, 두려움",
+   "use": [
+    "실적 발표 직전",
+    "금리 발표 직전",
+    "계좌 열기 직전"
+   ],
+   "query": "모래시계 나 지금 떨고 있니 짤",
+   "image": "",
+   "kw": [
+    "모래시계 최민수",
+    "모래시계"
+   ]
+  },
+  {
+   "id": "poor",
+   "name": "가난하게 컸어?",
+   "source": "작은 아씨들",
+   "meaning": "어이없는 무시, 계급 차이",
+   "use": [
+    "물가",
+    "명품 소비",
+    "편의점 점심"
+   ],
+   "query": "작은 아씨들 가난하게 컸어 짤",
+   "image": "",
+   "kw": [
+    "작은아씨들",
+    "작은 아씨들 드라마"
+   ]
+  },
+  {
+   "id": "mooyaho",
+   "name": "무야호~",
+   "source": "무한도전 (알래스카 할아버지)",
+   "meaning": "순수한 환호",
+   "use": [
+    "월급날",
+    "코스피 급등",
+    "좋은 소식"
+   ],
+   "query": "무야호 짤",
+   "image": "jjal/mooyaho.jpg",
+   "kw": [
+    "무야호"
+   ],
+   "from": "https://r2.jjalbot.com/2023/03/eA3u1HqsU.jpeg",
+   "space": "top",
+   "burned": true
+  },
+  {
+   "id": "notme",
+   "name": "나만 아니면 돼",
+   "source": "1박2일 (강호동)",
+   "meaning": "남의 불행에 안도",
+   "use": [
+    "금리 인상인데 대출 없음",
+    "남의 회사 구조조정"
+   ],
+   "query": "나만 아니면 돼 강호동",
+   "image": "",
+   "kw": [
+    "1박2일 복불복",
+    "복불복"
+   ]
+  },
+  {
+   "id": "luckyvicky",
+   "name": "럭키비키잖아",
+   "source": "장원영",
+   "meaning": "나쁜 일도 긍정 회로",
+   "use": [
+    "하락장 = 싸게 살 기회",
+    "월급 동결 = 지출 줄일 기회"
+   ],
+   "query": "장원영 럭키비키 짤",
+   "image": "",
+   "kw": [
+    "장원영 웃음",
+    "원영적 사고"
+   ]
+  },
+  {
+   "id": "late",
+   "name": "늦었다고 생각할 때가 진짜 늦은 거다",
+   "source": "무한도전 (박명수)",
+   "meaning": "팩폭, 이미 늦었음",
+   "use": [
+    "뒤늦은 매수",
+    "청약 막차"
+   ],
+   "kw": [
+    "늦었다고 생각할 때"
+   ],
+   "query": "늦었다고 생각할 때",
+   "image": "jjal/late.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/fFDw6xG3Gc.jpeg"
+  },
+  {
+   "id": "stopsearch",
+   "name": "그만 알아보도록 하자",
+   "source": "인터넷 밈",
+   "meaning": "더 알면 괴로우니 덮기",
+   "use": [
+    "계좌 수익률",
+    "카드 명세서"
+   ],
+   "kw": [
+    "그만 알아보도록 하자",
+    "그만 알아보자"
+   ],
+   "query": "그만 알아보도록 하자",
+   "image": ""
+  },
+  {
+   "id": "gogo",
+   "name": "가보자고",
+   "source": "인터넷 밈",
+   "meaning": "의욕, 도전",
+   "use": [
+    "상승장",
+    "새 투자"
+   ],
+   "kw": [
+    "가보자고"
+   ],
+   "query": "가보자고",
+   "image": ""
+  },
+  {
+   "id": "jkm",
+   "name": "중요한 건 꺾이지 않는 마음",
+   "source": "데프트 인터뷰",
+   "meaning": "버티기, 존버",
+   "use": [
+    "하락장 존버",
+    "적금 유지"
+   ],
+   "kw": [
+    "중꺾마",
+    "꺾이지 않는 마음"
+   ],
+   "query": "중꺾마",
+   "image": ""
+  },
+  {
+   "id": "kingbad",
+   "name": "킹받네",
+   "source": "인터넷 밈",
+   "meaning": "얄밉고 약 오름",
+   "use": [
+    "팔자마자 상승",
+    "물가 인상"
+   ],
+   "kw": [
+    "킹받네"
+   ],
+   "query": "킹받네",
+   "image": ""
+  },
+  {
+   "id": "t",
+   "name": "너 T야?",
+   "source": "MBTI 밈",
+   "meaning": "공감 없이 숫자만 따짐",
+   "use": [
+    "기쁜 뉴스에 월급 질문"
+   ],
+   "kw": [
+    "너 T야"
+   ],
+   "query": "너 T야",
+   "image": ""
+  },
+  {
+   "id": "propulsion",
+   "name": "추진력을 얻기 위함이었다",
+   "source": "인터넷 밈",
+   "meaning": "하락을 상승 준비로 포장하는 정신승리",
+   "use": [
+    "반등",
+    "하락 후 상승"
+   ],
+   "kw": [
+    "추진력",
+    "정신승리"
+   ],
+   "query": "추진력을 얻기",
+   "image": ""
+  },
+  {
+   "id": "gomahae",
+   "name": "고마해라 마이 묵었다 아이가",
+   "source": "친구 (장동건)",
+   "meaning": "이제 그만해, 충분히 당했다",
+   "use": [
+    "연속 하락",
+    "연속 인상"
+   ],
+   "kw": [
+    "고마해라"
+   ],
+   "query": "고마해라",
+   "image": ""
+  },
+  {
+   "id": "spoon",
+   "name": "밥상 다 차려 놨는데 숟가락만 얹었을 뿐",
+   "source": "황정민 수상 소감",
+   "meaning": "남의 공을 가져감 / 겸손",
+   "use": [
+    "팀 성과 가로채기"
+   ],
+   "kw": [
+    "숟가락만 얹었을 뿐",
+    "숟가락"
+   ],
+   "query": "숟가락만 얹었을 뿐",
+   "image": ""
+  },
+  {
+   "id": "hurt",
+   "name": "아프냐 나도 아프다",
+   "source": "다모",
+   "meaning": "동병상련",
+   "use": [
+    "같이 물린 개미"
+   ],
+   "kw": [
+    "아프냐 나도 아프다"
+   ],
+   "query": "아프냐 나도 아프다",
+   "image": ""
+  },
+  {
+   "id": "hawaii",
+   "name": "니가 가라 하와이",
+   "source": "친구 (유오성)",
+   "meaning": "떠넘기기",
+   "use": [
+    "독박 업무",
+    "손실 떠넘기기"
+   ],
+   "kw": [
+    "니가 가라 하와이"
+   ],
+   "query": "니가 가라 하와이",
+   "image": ""
+  },
+  {
+   "id": "insult",
+   "name": "넌 나에게 모욕감을 줬어",
+   "source": "달콤한 인생 (김영철)",
+   "meaning": "자존심 상함",
+   "use": [
+    "쥐꼬리 성과급",
+    "연봉 동결"
+   ],
+   "kw": [
+    "모욕감을 줬어"
+   ],
+   "query": "모욕감을 줬어",
+   "image": ""
+  },
+  {
+   "id": "spare",
+   "name": "살려는 드릴게",
+   "source": "신세계 (황정민)",
+   "meaning": "봐줄 테니 감사해라",
+   "use": [
+    "찔끔 인상",
+    "선심성 정책"
+   ],
+   "kw": [
+    "살려는 드릴게"
+   ],
+   "query": "살려는 드릴게",
+   "image": ""
+  },
+  {
+   "id": "whatmatters",
+   "name": "뭣이 중헌디",
+   "source": "곡성",
+   "meaning": "핵심이 뭔지 모름",
+   "use": [
+    "본질 흐린 뉴스",
+    "우선순위"
+   ],
+   "kw": [
+    "뭣이 중헌디"
+   ],
+   "query": "뭣이 중헌디",
+   "image": ""
+  },
+  {
+   "id": "sadollar",
+   "name": "사딸라",
+   "source": "야인시대 (김영철)",
+   "meaning": "단호한 가격 제시",
+   "use": [
+    "가격 협상",
+    "연봉 협상"
+   ],
+   "kw": [
+    "사딸라"
+   ],
+   "query": "사딸라",
+   "image": ""
+  },
+  {
+   "id": "jayeonin",
+   "name": "나는 자연인이다",
+   "source": "MBN 예능",
+   "meaning": "도시 떠나 소박하게, 절약",
+   "use": [
+    "짠테크",
+    "조기 은퇴"
+   ],
+   "kw": [
+    "나는 자연인이다"
+   ],
+   "query": "나는 자연인이다",
+   "image": ""
+  },
+  {
+   "id": "stop",
+   "name": "멈춰!",
+   "source": "학교폭력 예방 영상 밈",
+   "meaning": "당장 그만",
+   "use": [
+    "과소비",
+    "충동구매"
+   ],
+   "kw": [
+    "멈춰"
+   ],
+   "query": "멈춰",
+   "image": ""
+  },
+  {
+   "id": "realq",
+   "name": "실화냐",
+   "source": "인터넷 밈",
+   "meaning": "믿기 힘들 만큼 놀람",
+   "use": [
+    "역대급 수치",
+    "폭등 폭락"
+   ],
+   "kw": [
+    "실화냐"
+   ],
+   "query": "실화냐",
+   "image": ""
+  },
+  {
+   "id": "legeno",
+   "name": "레게노",
+   "source": "인터넷 밈",
+   "meaning": "전설, 대단함",
+   "use": [
+    "역대 최고치"
+   ],
+   "kw": [
+    "레게노"
+   ],
+   "query": "레게노",
+   "image": ""
+  },
+  {
+   "id": "gazua",
+   "name": "가즈아",
+   "source": "코인 밈",
+   "meaning": "상승 기대, 풀매수",
+   "use": [
+    "코인",
+    "급등"
+   ],
+   "kw": [
+    "가즈아"
+   ],
+   "query": "가즈아",
+   "image": ""
+  },
+  {
+   "id": "jonber",
+   "name": "존버",
+   "source": "주식 밈",
+   "meaning": "끝까지 버티기",
+   "use": [
+    "장기 보유",
+    "하락장"
+   ],
+   "kw": [
+    "존버"
+   ],
+   "query": "존버",
+   "image": ""
+  },
+  {
+   "id": "ddeoksang",
+   "name": "떡상",
+   "source": "주식 밈",
+   "meaning": "급등",
+   "use": [
+    "급등주",
+    "지수 급등"
+   ],
+   "kw": [
+    "떡상"
+   ],
+   "query": "떡상",
+   "image": ""
+  },
+  {
+   "id": "ddeokrak",
+   "name": "떡락",
+   "source": "주식 밈",
+   "meaning": "급락",
+   "use": [
+    "급락",
+    "폭락"
+   ],
+   "kw": [
+    "떡락"
+   ],
+   "query": "떡락",
+   "image": ""
+  },
+  {
+   "id": "ikjeol",
+   "name": "익절",
+   "source": "주식 밈",
+   "meaning": "수익 내고 팖",
+   "use": [
+    "차익 실현"
+   ],
+   "kw": [
+    "익절"
+   ],
+   "query": "익절",
+   "image": ""
+  },
+  {
+   "id": "sonjeol",
+   "name": "손절",
+   "source": "주식 밈",
+   "meaning": "손해 보고 팖 / 관계 끊기",
+   "use": [
+    "손절매",
+    "손절 타이밍"
+   ],
+   "kw": [
+    "손절"
+   ],
+   "query": "손절",
+   "image": ""
+  },
+  {
+   "id": "mul",
+   "name": "물타기",
+   "source": "주식 밈",
+   "meaning": "떨어질 때 더 사서 평단 낮춤",
+   "use": [
+    "추가 매수"
+   ],
+   "kw": [
+    "물타기"
+   ],
+   "query": "물타기",
+   "image": ""
+  },
+  {
+   "id": "lupin",
+   "name": "월급 루팡",
+   "source": "직장인 밈",
+   "meaning": "일 안 하고 월급만 받기",
+   "use": [
+    "직장인 일상"
+   ],
+   "kw": [
+    "월급루팡"
+   ],
+   "query": "월급루팡",
+   "image": ""
+  },
+  {
+   "id": "quit",
+   "name": "퇴사",
+   "source": "직장인 밈",
+   "meaning": "회사 그만두고 싶음",
+   "use": [
+    "성과급 실망",
+    "연봉 동결"
+   ],
+   "kw": [
+    "퇴사"
+   ],
+   "query": "퇴사",
+   "image": ""
+  },
+  {
+   "id": "mondaysick",
+   "name": "월요병",
+   "source": "직장인 밈",
+   "meaning": "월요일 출근 우울",
+   "use": [
+    "월요일 아침"
+   ],
+   "kw": [
+    "월요병",
+    "출근하기 싫다"
+   ],
+   "query": "월요병",
+   "image": ""
+  },
+  {
+   "id": "bulgeum",
+   "name": "불금",
+   "source": "직장인 밈",
+   "meaning": "금요일 저녁 해방감",
+   "use": [
+    "금요일",
+    "주간 결산"
+   ],
+   "kw": [
+    "불금"
+   ],
+   "query": "불금",
+   "image": ""
+  },
+  {
+   "id": "kaltoe",
+   "name": "칼퇴",
+   "source": "직장인 밈",
+   "meaning": "정시 퇴근의 기쁨",
+   "use": [
+    "퇴근",
+    "워라밸"
+   ],
+   "kw": [
+    "칼퇴"
+   ],
+   "query": "칼퇴",
+   "image": ""
+  },
+  {
+   "id": "yageun",
+   "name": "야근",
+   "source": "직장인 밈",
+   "meaning": "야근의 피로",
+   "use": [
+    "야근",
+    "실적 압박"
+   ],
+   "kw": [
+    "야근"
+   ],
+   "query": "야근",
+   "image": ""
+  },
+  {
+   "id": "tteongjang",
+   "name": "텅장",
+   "source": "직장인 밈",
+   "meaning": "월급이 스쳐 지나간 빈 통장",
+   "use": [
+    "월급날 다음 날",
+    "카드값"
+   ],
+   "kw": [
+    "텅장"
+   ],
+   "query": "텅장",
+   "image": ""
+  },
+  {
+   "id": "cardbill",
+   "name": "카드값",
+   "source": "직장인 밈",
+   "meaning": "카드 명세서 충격",
+   "use": [
+    "카드값",
+    "할부"
+   ],
+   "kw": [
+    "카드값"
+   ],
+   "query": "카드값",
+   "image": ""
+  },
+  {
+   "id": "bonus",
+   "name": "성과급",
+   "source": "직장인 밈",
+   "meaning": "성과급 기대와 실망",
+   "use": [
+    "성과급 시즌"
+   ],
+   "kw": [
+    "성과급"
+   ],
+   "query": "성과급",
+   "image": ""
+  },
+  {
+   "id": "yunjung",
+   "name": "윤정아 윤정아 / 왜요 쌤",
+   "source": "윤정아 챌린지 (2026)",
+   "meaning": "~하지 말랬지! 잔소리",
+   "use": [
+    "하지 말란 투자 한 사람"
+   ],
+   "kw": [
+    "윤정아"
+   ],
+   "query": "윤정아",
+   "image": ""
+  },
+  {
+   "id": "ssuk",
+   "name": "좋🤙다👍",
+   "source": "쑥부르스 아저씨 (2026)",
+   "meaning": "소소한 만족",
+   "use": [
+    "작은 수익",
+    "월급날"
+   ],
+   "kw": [
+    "쑥부르스",
+    "좋다"
+   ],
+   "query": "쑥부르스",
+   "image": ""
+  },
+  {
+   "id": "clapcat",
+   "name": "박수 치는 검은 고양이",
+   "source": "AI 숏폼 (2026)",
+   "meaning": "얄미운 일에 비꼬는 박수",
+   "use": [
+    "찔끔 인상",
+    "실망스러운 발표"
+   ],
+   "kw": [
+    "박수 치는 고양이",
+    "박수 고양이"
+   ],
+   "query": "박수 치는 고양이",
+   "image": ""
+  },
+  {
+   "id": "jhj",
+   "name": "장항준적 사고",
+   "source": "장항준 감독 (2026)",
+   "meaning": "남 시선보다 내 행복 우선",
+   "use": [
+    "손실도 긍정 회로"
+   ],
+   "kw": [
+    "장항준 감독",
+    "장항준 웃음"
+   ],
+   "query": "장항준",
+   "image": ""
+  },
+  {
+   "id": "cat-shock",
+   "name": "깜짝 놀란 고양이",
+   "source": "동물 짤",
+   "meaning": "생각지 못한 사실에 놀람",
+   "use": [
+    "몰랐던 규칙",
+    "카드 명세서",
+    "예상 밖 숫자"
+   ],
+   "kw": [
+    "고양이 놀람",
+    "놀란 고양이",
+    "고양이 충격"
+   ],
+   "query": "놀란 고양이",
+   "image": "jjal/cat-shock.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/2tRkSiH7f0.jpeg"
+  },
+  {
+   "id": "dog-think",
+   "name": "고민하는 강아지",
+   "source": "동물 짤",
+   "meaning": "뭘 골라야 할지 고민",
+   "use": [
+    "카드 고르기",
+    "선택 장애"
+   ],
+   "kw": [
+    "강아지 고민",
+    "고민하는 강아지",
+    "갸우뚱 강아지"
+   ],
+   "query": "고민하는 강아지",
+   "image": ""
+  },
+  {
+   "id": "cat-calc",
+   "name": "계산하는 고양이",
+   "source": "동물 짤",
+   "meaning": "열심히 따져 보는 중",
+   "use": [
+    "연말정산",
+    "가계부",
+    "카드값 계산"
+   ],
+   "kw": [
+    "고양이 계산",
+    "계산기 고양이",
+    "고양이 공부"
+   ],
+   "query": "계산하는 고양이",
+   "image": ""
+  },
+  {
+   "id": "dog-happy",
+   "name": "신난 강아지",
+   "source": "동물 짤",
+   "meaning": "좋은 소식에 신남",
+   "use": [
+    "환급",
+    "월급날",
+    "좋은 소식"
+   ],
+   "kw": [
+    "신난 강아지",
+    "행복한 강아지",
+    "강아지 웃음"
+   ],
+   "query": "신난 강아지",
+   "image": ""
+  },
+  {
+   "id": "mudo-absurd-laugh",
+   "name": "내가 웃는 게 말도 안 돼서 웃는다",
+   "source": "무한도전 (유재석)",
+   "meaning": "어이없어서 웃음",
+   "use": [
+    "물가",
+    "월급 그대로",
+    "어이없는 숫자"
+   ],
+   "kw": [
+    "말도 안 돼서 웃는다"
+   ],
+   "query": "말도 안 돼서 웃는다",
+   "image": "jjal/mudo-absurd-laugh.jpg",
+   "from": "https://r2.jjalbot.com/2026/03/y5aYev2pk.jpg",
+   "burned": true
+  },
+  {
+   "id": "mudo-justplay",
+   "name": "꿈은 없고요 그냥 놀고 싶습니다",
+   "source": "무한도전 (박명수)",
+   "meaning": "일하기 싫은 직장인 마음",
+   "use": [
+    "조기 은퇴",
+    "파이어족",
+    "월요일"
+   ],
+   "kw": [
+    "꿈은 없고요 그냥 놀고 싶습니다"
+   ],
+   "query": "꿈은 없고요 그냥 놀고 싶습니다",
+   "image": "jjal/mudo-justplay.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/psu1Os75Ng.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-envy",
+   "name": "부러움에 굳어버린 얼굴",
+   "source": "무한도전 (박명수)",
+   "meaning": "남이 잘돼서 부러움",
+   "use": [
+    "남의 성과급",
+    "남의 수익",
+    "동기 연봉"
+   ],
+   "kw": [
+    "부러움에 굳어버린"
+   ],
+   "query": "부러움에 굳어버린",
+   "image": "jjal/mudo-envy.jpg",
+   "from": "https://r2.jjalbot.com/2023/07/iCRFYA-GK.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-exhausted",
+   "name": "바닥에 뻗음 (무기력)",
+   "source": "무한도전 (정준하)",
+   "meaning": "지쳐서 다 내려놓음",
+   "use": [
+    "연속 하락",
+    "야근",
+    "월요일"
+   ],
+   "kw": [
+    "무기력 지쳤다 지침"
+   ],
+   "query": "무기력 지쳤다 지침",
+   "image": "jjal/mudo-exhausted.jpg",
+   "from": "https://r2.jjalbot.com/2026/03/KjMf3TDXF.jpg",
+   "burned": true
+  },
+  {
+   "id": "mudo-earth",
+   "name": "이러다가 진짜 지구 망하겠다",
+   "source": "무한도전 (박명수)",
+   "meaning": "상황이 극단적임",
+   "use": [
+    "물가 폭등",
+    "역대급 수치",
+    "폭염"
+   ],
+   "kw": [
+    "지구 망하겠다"
+   ],
+   "query": "지구 망하겠다",
+   "image": "jjal/mudo-earth.jpg",
+   "from": "https://r2.jjalbot.com/2024/01/ImQ8yDxaM.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-sogleum",
+   "name": "소름",
+   "source": "무한도전 (유재석)",
+   "meaning": "놀라서 소름 돋음",
+   "use": [
+    "역대급 기록",
+    "예상 밖 숫자"
+   ],
+   "kw": [
+    "소름 소름쫙"
+   ],
+   "query": "소름 소름쫙",
+   "image": "jjal/mudo-sogleum.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/w5O-vZP5Af.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-enough",
+   "name": "오늘은 여기까지",
+   "source": "무한도전 (유재석)",
+   "meaning": "그만, 마무리",
+   "use": [
+    "장 마감",
+    "손절",
+    "정리"
+   ],
+   "kw": [
+    "오늘은 여기까지 그만 끝"
+   ],
+   "query": "오늘은 여기까지 그만 끝",
+   "image": "jjal/mudo-enough.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/bI8F8-i4SW.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-notthis",
+   "name": "이건 아니다",
+   "source": "무한도전 (정형돈)",
+   "meaning": "실망, 납득 불가",
+   "use": [
+    "실망스러운 정책",
+    "연봉 협상",
+    "세금"
+   ],
+   "kw": [
+    "이건 아니다 이건아니다"
+   ],
+   "query": "이건 아니다 이건아니다",
+   "image": "jjal/mudo-notthis.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/KP1jJJRMoS.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-whythere",
+   "name": "형이 왜 거기서 나와",
+   "source": "무한도전 (정형돈)",
+   "meaning": "예상 못한 등장",
+   "use": [
+    "의외의 1위",
+    "뜻밖의 종목",
+    "예상 밖 상승"
+   ],
+   "kw": [
+    "형이 왜 거기서 나와"
+   ],
+   "query": "형이 왜 거기서 나와",
+   "image": "jjal/mudo-whythere.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/8A5-0_3VB_.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-overtime",
+   "name": "오늘은 다들 야근 좀 해야겠어요",
+   "source": "무한도전 무한상사 (유재석)",
+   "meaning": "퇴근 못 하는 직장인",
+   "use": [
+    "야근",
+    "연말 업무"
+   ],
+   "kw": [
+    "무한상사 야근",
+    "여전히 근무 중"
+   ],
+   "query": "여전히 근무 중 야근",
+   "image": "jjal/mudo-overtime.jpg",
+   "from": "https://r2.jjalbot.com/2023/03/-6HOJ482_.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-quit",
+   "name": "그만두시게요?",
+   "source": "무한도전 무한상사",
+   "meaning": "퇴사 각",
+   "use": [
+    "퇴사",
+    "이직",
+    "성과급 실망"
+   ],
+   "kw": [
+    "그만 두시게요 퇴사"
+   ],
+   "query": "그만 두시게요 퇴사",
+   "image": "jjal/mudo-quit.jpg",
+   "from": "https://r2.jjalbot.com/2023/09/zY-Dm4_Wpt.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-future",
+   "name": "여러분 미래는 정말 알 수 없습니다",
+   "source": "무한도전 무한상사 (장항준 감독)",
+   "meaning": "앞날은 모름",
+   "use": [
+    "시장 전망",
+    "금리 전망",
+    "예측 실패"
+   ],
+   "kw": [
+    "미래는 정말 알수없습니다"
+   ],
+   "query": "미래는 정말 알수없습니다",
+   "image": "jjal/mudo-future.jpg",
+   "from": "https://r2.jjalbot.com/2023/12/Bs3VOV-pl.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-payback",
+   "name": "한두 달만 시간을 주세요, 갚을게요",
+   "source": "무한도전 무한상사 (정준하)",
+   "meaning": "돈 갚을 시간 애원",
+   "use": [
+    "카드값",
+    "대출 상환",
+    "할부"
+   ],
+   "kw": [
+    "한두 달만 시간을 주세요"
+   ],
+   "query": "한두 달만 시간을 주세요",
+   "image": "jjal/mudo-payback.jpg",
+   "from": "https://r2.jjalbot.com/2023/07/2Jl1_kZTm.jpeg",
+   "burned": true
+  },
+  {
+   "id": "mudo-coffee",
+   "name": "저는 커피 곱빼기입니다",
+   "source": "무한도전 무한상사 (노홍철)",
+   "meaning": "피곤해서 커피 수혈",
+   "use": [
+    "월요일",
+    "커피값",
+    "출근"
+   ],
+   "kw": [
+    "커피 곱빼기"
+   ],
+   "query": "커피 곱빼기",
+   "image": "jjal/mudo-coffee.jpg",
+   "from": "https://r2.jjalbot.com/2023/12/--wXCZgno.jpeg",
+   "burned": true
+  }
+ ]
 }
