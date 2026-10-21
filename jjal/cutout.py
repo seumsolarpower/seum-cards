@@ -3,7 +3,7 @@
 #   (모두 0~1 비율. crop은 원본 기준, keep은 crop한 뒤 기준. r은 폭 기준)
 #   crop: 두 칸짜리 짤에서 한 칸만 쓸 때 | drop: [[x,y,w,h], …] 인물 누끼에 딸려 온 배경을 지울 사각형 (keep보다 먼저) | keep: 자막을 살릴 자리. shape:
 #     rect | round(둥근 상자 자막) | ellipse(구름 말풍선) | text(상자 없는 글자 자막: 칸 테두리 색과 다른 픽셀만 남김, t=문턱.
-#     "color": [r,g,b] 를 주면 그 글자색(±tol)과, 그 바로 옆의 흰 픽셀(외곽선)만 남김 — 배경이 얼룩덜룩할 때)
+#     "color": [r,g,b] 를 주면 그 글자색(색상 ±tol, 0~255 눈금)과, 그 바로 옆의 밝은 픽셀(글자 속·외곽선)만 남김 — 배경이 얼룩덜룩할 때)
 # 확인용: out/cut-debug/<id>.jpg (왼쪽 = 원본에 keep 표시, 오른쪽 = 검정 바탕에 누끼)
 # 실행: python jjal/cutout.py yoo-shock park-ruined   (MODEL=birefnet-portrait 기본)
 import json, os, sys
@@ -22,7 +22,7 @@ def far(reg, color):
     return ImageChops.lighter(ImageChops.lighter(r, g), b)
 
 
-def text_mask(im, b, t, color=None, tol=70):
+def text_mask(im, b, t, color=None, tol=18):
     # 칸 테두리 픽셀의 중간값을 배경색으로 보고, 그 색에서 t 이상 떨어진 픽셀(글자·외곽선·반짝이)만 남김
     reg = im.crop(b)
     w, h = reg.size
@@ -32,12 +32,20 @@ def text_mask(im, b, t, color=None, tol=70):
     diff = far(reg, bg)
     m = diff.point(lambda v: 255 if v > t else 0)
     if color:
-        main = far(reg, color).point(lambda v: 255 if v < tol else 0)
+        # 글자색은 색상(hue)과 채도로 찾음 — RGB 거리로 보면 칙칙한 배경 분홍빛도 걸림
+        th = Image.new("RGB", (1, 1), tuple(color)).convert("HSV").getpixel((0, 0))[0]
+        h, sat, val = reg.convert("HSV").split()
+        hue_ok = h.point(lambda v: 255 if min(abs(v - th), 256 - abs(v - th)) < tol else 0)
+        main = ImageChops.multiply(ImageChops.multiply(hue_ok, sat.point(lambda v: 255 if v > 100 else 0)), val.point(lambda v: 255 if v > 90 else 0))
         near = main.filter(ImageFilter.MaxFilter(7))
         r, g, b2 = reg.split()
-        white = ImageChops.darker(ImageChops.darker(r, g), b2).point(lambda v: 255 if v > 225 else 0)
+        white = ImageChops.darker(ImageChops.darker(r, g), b2).point(lambda v: 255 if v > 175 else 0)
         m = ImageChops.lighter(main, ImageChops.multiply(near, white))
-    m = m.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1))
+        return paste_full(im, b, m.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(.8)))
+    return paste_full(im, b, m.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1)))
+
+
+def paste_full(im, b, m):
     full = Image.new("L", im.size, 0)
     full.paste(m, b[:2])
     return full
@@ -63,7 +71,7 @@ for id in sys.argv[1:]:
         boxes.append(b)
         shape = k.get("shape", "rect")
         if shape == "text":
-            alpha = ImageChops.lighter(alpha, text_mask(im, b, k.get("t", 60), k.get("color"), k.get("tol", 70)))
+            alpha = ImageChops.lighter(alpha, text_mask(im, b, k.get("t", 60), k.get("color"), k.get("tol", 18)))
             continue
         mk = Image.new("L", (W, H), 0)
         d = ImageDraw.Draw(mk)
