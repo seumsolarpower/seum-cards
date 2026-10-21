@@ -83,10 +83,13 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
 const css = cardCss(C.palette) + STAGE;
 
-// 대사 한 마디를 읽혀서 mp3 + 길이(초)
+// 대사 한 마디를 읽혀서 wav + 길이(초). edge-tts mp3는 길이 정보가 부정확해서 wav로 바꾸고 앞뒤 무음도 잘라냄
 const RATE = process.env.VOICE_RATE || "+12%";
+const TRIM = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse";
 function say(voice, text, file) {
-  execFileSync("edge-tts", ["--voice", voice, "--rate", RATE, "--text", text, "--write-media", file], { stdio: "ignore" });
+  const mp3 = file.replace(/\.wav$/, ".mp3");
+  execFileSync("edge-tts", ["--voice", voice, "--rate", RATE, "--text", text, "--write-media", mp3], { stdio: "ignore" });
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", mp3, "-af", TRIM, "-ar", "44100", "-ac", "1", file]);
   return +execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file]).toString().trim();
 }
 const run = (args) => execFileSync("ffmpeg", ["-y", "-loglevel", "error", ...args], { stdio: "inherit" });
@@ -104,8 +107,9 @@ for (const s of C.sets.filter(s => !only || s.id === only)) for (const voice of 
     // 대사: 0.3초부터 한 마디씩, 사이 0.12초
     const beats = []; let cur = .3;
     if (voice) for (const [k, line] of (c.voice || []).entries()) {
-      const file = new URL(`voice/${s.id}${tag}-${i + 1}-${k + 1}.mp3`, dir).pathname, len = say(voice, line, file);
+      const file = new URL(`voice/${s.id}${tag}-${i + 1}-${k + 1}.wav`, dir).pathname, len = say(voice, line, file);
       beats.push(+cur.toFixed(2)); clips.push({ file, at: secs + cur }); cur += len + .12;
+      console.log(`    ${len.toFixed(2)}s ${line}`);
     }
     const prog = `<div class="prog">${s.cards.map(() => "<i><b></b></i>").join("")}</div>`;
     const html = d => `<!doctype html><html lang="ko"><head><meta charset="utf-8"><style>${css}</style></head><body>${prog}<div class="stage">${cardInner(c, i + 1, s.cards.length, C.brand)}</div><script>${pageScript(plan, d, i, beats)}</script></body></html>`;
