@@ -3,7 +3,7 @@
 #   (모두 0~1 비율. crop은 원본 기준, keep은 crop한 뒤 기준. r은 폭 기준)
 #   crop: 두 칸짜리 짤에서 한 칸만 쓸 때 | keep: 자막을 살릴 자리. shape:
 #     rect | round(둥근 상자 자막) | ellipse(구름 말풍선) | text(상자 없는 글자 자막: 칸 테두리 색과 다른 픽셀만 남김, t=문턱.
-#     "color": [r,g,b] 를 주면 그 글자색(±tol)과, 그 바로 옆에서 배경과 다른 픽셀(외곽선)만 남김 — 배경이 얼룩덜룩할 때)
+#     "color": [r,g,b] 를 주면 그 글자색(±tol)과, 그 바로 옆의 흰 픽셀(외곽선)만 남김 — 배경이 얼룩덜룩할 때)
 # 확인용: out/cut-debug/<id>.jpg (왼쪽 = 원본에 keep 표시, 오른쪽 = 검정 바탕에 누끼)
 # 실행: python jjal/cutout.py yoo-shock park-ruined   (MODEL=birefnet-portrait 기본)
 import json, os, sys
@@ -34,7 +34,9 @@ def text_mask(im, b, t, color=None, tol=70):
     if color:
         main = far(reg, color).point(lambda v: 255 if v < tol else 0)
         near = main.filter(ImageFilter.MaxFilter(7))
-        m = ImageChops.lighter(main, ImageChops.multiply(near, m))
+        r, g, b2 = reg.split()
+        white = ImageChops.darker(ImageChops.darker(r, g), b2).point(lambda v: 255 if v > 225 else 0)
+        m = ImageChops.lighter(main, ImageChops.multiply(near, white))
     m = m.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1))
     full = Image.new("L", im.size, 0)
     full.paste(m, b[:2])
