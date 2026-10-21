@@ -1,7 +1,7 @@
 # 짤 누끼: 인물은 rembg로 오리고, 자막 상자는 사각형 그대로 살림 → assets/jjal/cut/<id>.png (투명 PNG, 여백 잘라냄)
 # catalog 항목에 "cut": {"crop": [x,y,w,h], "keep": [{"box": [x,y,w,h], "shape": "round", "r": .03}, …]}
 #   (모두 0~1 비율. crop은 원본 기준, keep은 crop한 뒤 기준. r은 폭 기준)
-#   crop: 두 칸짜리 짤에서 한 칸만 쓸 때 | keep: 자막을 살릴 자리. shape:
+#   crop: 두 칸짜리 짤에서 한 칸만 쓸 때 | drop: [[x,y,w,h], …] 인물 누끼에 딸려 온 배경을 지울 사각형 (keep보다 먼저) | keep: 자막을 살릴 자리. shape:
 #     rect | round(둥근 상자 자막) | ellipse(구름 말풍선) | text(상자 없는 글자 자막: 칸 테두리 색과 다른 픽셀만 남김, t=문턱.
 #     "color": [r,g,b] 를 주면 그 글자색(±tol)과, 그 바로 옆의 흰 픽셀(외곽선)만 남김 — 배경이 얼룩덜룩할 때)
 # 확인용: out/cut-debug/<id>.jpg (왼쪽 = 원본에 keep 표시, 오른쪽 = 검정 바탕에 누끼)
@@ -53,6 +53,8 @@ for id in sys.argv[1:]:
         im = im.crop((round(x * W), round(y * H), round((x + w) * W), round((y + h) * H)))
         W, H = im.size
     alpha = remove(im, session=session, only_mask=True, post_process_mask=True).convert("L")
+    for x, y, w, h in cfg.get("drop", []):
+        alpha.paste(0, (round(x * W), round(y * H), round((x + w) * W), round((y + h) * H)))
     keeps = [k if isinstance(k, dict) else {"box": k} for k in cfg.get("keep", [])]
     boxes = []
     for k in keeps:
