@@ -122,7 +122,7 @@ function sceneHtml(sc, dur) {
   else if (sc.type === "end") body = `<div class="sc"><div class="en" data-a="in .45s .05s">${sc.text}<small>seum<i>.</i></small></div></div>`;
   else if (sc.type === "jjal") {
     const m = CAT.find(x => x.id === sc.jjal); if (!m?.image) throw new Error("짤 없음: " + sc.jjal);
-    body = `<div class="sc">${LOGO}<div class="cap" data-a="in .4s .05s">${sc.top || ""}</div><div class="ph" data-a="pop .45s .2s"><img src="${b64(m.image)}" data-a="kb ${dur}s 0s linear"></div></div>`;
+    body = `<div class="sc">${LOGO}<div class="cap" data-a="in .4s .05s"><span>${sc.top || ""}</span></div><div class="ph" data-a="pop .45s .2s"><img src="${b64(m.image)}" data-a="kb ${dur}s 0s linear"></div></div>`;
   } else throw new Error("모르는 장면: " + sc.type);
   return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><style>${cardCss(C.palette)}${SCSS}</style></head><body>${body}<script>(() => {
 document.querySelectorAll("[data-a]").forEach(el => { const [k, d, at, ease] = el.dataset.a.split(" "); el.style.animation = k + " " + d + " " + (ease || "cubic-bezier(.2,.8,.2,1)") + " " + at + " both" });
