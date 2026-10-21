@@ -28,10 +28,28 @@ async function insights(id) {
 }
 
 const now = new Date().toISOString(), cutoff = new Date(Date.now() - DAYS * 864e5 + 9 * 3600e3).toISOString().slice(0, 10);
-const dates = readdirSync(root).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= cutoff && existsSync(join(root, d, "posted")));
+// 앱에서 직접 올린 것(릴스 등)도 재려고, 계정의 최근 게시물 중 기록에 없는 건 날짜/manual/ 에 기록을 만듦
+// (posted/ 는 publish 가 세트 id 로 쓰는 곳이라 따로 둠). 이름: 그날 자동 게시 세트가 하나면 "세트-reel", 아니면 "종류-id끝6자리"
+try {
+  const known = new Set();
+  for (const d of readdirSync(root).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d))) for (const k of ["posted", "manual"]) if (existsSync(join(root, d, k)))
+    for (const f of readdirSync(join(root, d, k))) known.add(readFileSync(join(root, d, k, f), "utf8").trim().split(" ")[1]);
+  for (const m of (await get(`${uid}/media`, { fields: "id,timestamp,media_product_type", limit: "25" })).data) {
+    const d = new Date(Date.parse(m.timestamp) + 9 * 3600e3).toISOString().slice(0, 10);
+    if (known.has(m.id) || d < cutoff) continue;
+    const sets = existsSync(join(root, d, "posted")) ? readdirSync(join(root, d, "posted")).filter(f => f.endsWith(".instagram")) : [];
+    const kind = (m.media_product_type || "post").toLowerCase();
+    const name = kind === "reels" && sets.length === 1 ? sets[0].replace(/\.instagram$/, "") + "-reel" : `${kind}-${m.id.slice(-6)}`;
+    mkdirSync(join(root, d, "manual"), { recursive: true });
+    writeFileSync(join(root, d, "manual", `${name}.instagram`), `${new Date(m.timestamp).toISOString()} ${m.id}\n`);
+    console.log("직접 올린 게시물 기록", d, name, m.id);
+  }
+} catch (e) { console.log("최근 게시물 목록 실패", e.message.slice(0, 160)) }
+
+const dates = readdirSync(root).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= cutoff);
 let n = 0, fail = 0;
-for (const d of dates) for (const f of readdirSync(join(root, d, "posted")).filter(f => f.endsWith(".instagram"))) {
-  const set = f.replace(/\.instagram$/, ""), [postedAt, id] = readFileSync(join(root, d, "posted", f), "utf8").trim().split(" ");
+for (const d of dates) for (const [k, f] of ["posted", "manual"].flatMap(k => existsSync(join(root, d, k)) ? readdirSync(join(root, d, k)).filter(f => f.endsWith(".instagram")).map(f => [k, f]) : [])) {
+  const set = f.replace(/\.instagram$/, ""), [postedAt, id] = readFileSync(join(root, d, k, f), "utf8").trim().split(" ");
   try {
     const meta = await get(id, { fields: "permalink,like_count,comments_count,timestamp" });
     const c = await get(`${id}/comments`, { fields: "id,text,timestamp,like_count,username", limit: "50" }).catch(e => (console.log("  댓글 실패", e.message.slice(0, 120)), { data: [] }));

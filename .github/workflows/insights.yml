@@ -27,4 +27,4 @@ jobs:
       - name: 저장
         run: |
           git config user.name "seum-bot"; git config user.email "bot@seum.invalid"
-          cd media && git add -A stats && (git diff --cached --quiet || git commit -qm "stats $(TZ=Asia/Seoul date +%F_%H%M)") && git push -q origin media
+          cd media && git add -A && (git diff --cached --quiet || git commit -qm "stats $(TZ=Asia/Seoul date +%F_%H%M)") && git push -q origin media
