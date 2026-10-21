@@ -16,6 +16,12 @@ session = new_session(os.environ.get("MODEL", "birefnet-portrait"))
 os.makedirs(os.path.join(root, "assets/jjal/cut"), exist_ok=True)
 os.makedirs(os.path.join(root, "out/cut-debug"), exist_ok=True)
 
+def far(reg, color):
+    # 채널별 차이 중 가장 큰 값 (밝기로 섞으면 분홍과 베이지처럼 색이 다른데도 가깝게 나옴)
+    r, g, b = ImageChops.difference(reg, Image.new("RGB", reg.size, tuple(color))).split()
+    return ImageChops.lighter(ImageChops.lighter(r, g), b)
+
+
 def text_mask(im, b, t, color=None, tol=70):
     # 칸 테두리 픽셀의 중간값을 배경색으로 보고, 그 색에서 t 이상 떨어진 픽셀(글자·외곽선·반짝이)만 남김
     reg = im.crop(b)
@@ -23,10 +29,10 @@ def text_mask(im, b, t, color=None, tol=70):
     px = reg.load()
     edge = [px[i, 0] for i in range(w)] + [px[i, h - 1] for i in range(w)] + [px[0, j] for j in range(h)] + [px[w - 1, j] for j in range(h)]
     bg = [sorted(c[i] for c in edge)[len(edge) // 2] for i in range(3)]
-    diff = ImageChops.difference(reg, Image.new("RGB", reg.size, tuple(bg))).convert("L")
+    diff = far(reg, bg)
     m = diff.point(lambda v: 255 if v > t else 0)
     if color:
-        main = ImageChops.difference(reg, Image.new("RGB", reg.size, tuple(color))).convert("L").point(lambda v: 255 if v < tol else 0)
+        main = far(reg, color).point(lambda v: 255 if v < tol else 0)
         near = main.filter(ImageFilter.MaxFilter(7))
         m = ImageChops.lighter(main, ImageChops.multiply(near, m))
     m = m.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1))
