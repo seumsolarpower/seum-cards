@@ -1,4 +1,4 @@
-// 찍어 둔 카드를 인스타·스레드·X에 올림. content/날짜.json 의 "approved": true 일 때만 (사람 검수 후).
+// 찍어 둔 카드를 인스타·스레드·X에 올림. content/날짜.json 의 "approved": true 이고 세트의 "at" 시각이 지났을 때만 (사람 검수 후).
 // 실행: MEDIA_BASE_URL=https://.../media node publish.mjs 2026-10-20
 //   PLATFORMS=instagram,threads,x (기본 셋 다)  DRY=1: 올릴 내용만 출력  FORCE=1: 승인 없이 (테스트용)
 // 같은 날·같은 세트·같은 플랫폼은 out/날짜/posted/ 에 기록해서 두 번 안 올림 (워크플로가 media 브랜치에 보관)
@@ -13,14 +13,21 @@ const want = (process.env.PLATFORMS || "instagram,threads,x").split(",").map(s =
 const NEED = { instagram: ["IG_USER_ID", "IG_TOKEN"], threads: ["THREADS_USER_ID", "THREADS_TOKEN"], x: ["X_API_KEY", "X_API_SECRET", "X_ACCESS_TOKEN", "X_ACCESS_SECRET"] };
 
 // 승인: 파일 전체("approved": true) 또는 세트별(sets[].approved: true)
-const ok = s => C.approved || s.approved || process.env.FORCE === "1";
-if (!C.sets.some(ok)) { console.log(`${date}: 아직 승인 안 됨 ("approved": true 로 바꾸면 올라감). 건너뜀`); process.exit(0) }
+// 게시 시각: 세트의 "at": "12:10" (한국 시각). 그 시각이 지나야 올림. 없으면 승인되자마자
+const nowKst = new Date(Date.now() + 9 * 3600e3).toISOString(), today = nowKst.slice(0, 10), hhmm = nowKst.slice(11, 16);
+const due = s => !s.at || date < today || (date === today && hhmm >= s.at);
+const ok = s => process.env.FORCE === "1" || ((C.approved || s.approved) && due(s));
+// CHECK=1: 지금 올릴 세트 수만 출력 (워크플로가 카드 찍기 전에 확인용). 인스타 기록 기준
+if (process.env.CHECK === "1") {
+  console.log(C.sets.filter(s => ok(s) && !existsSync(new URL(`posted/${s.id}.instagram`, dir))).length); process.exit(0);
+}
+if (!C.sets.some(ok)) { console.log(`${date}: 지금 올릴 세트 없음 (승인 안 됐거나 "at" 시각 전). 건너뜀`); process.exit(0) }
 if (!DRY && !base && want.some(p => p !== "x")) throw new Error("MEDIA_BASE_URL 이 없음 (인스타·스레드는 공개 이미지 주소가 필요)");
 mkdirSync(new URL("posted/", dir), { recursive: true });
 
 let fail = 0;
 for (const s of C.sets) {
-  if (!ok(s)) { console.log("승인 안 된 세트 건너뜀:", s.id); continue }
+  if (!ok(s)) { console.log(due(s) ? "승인 안 된 세트 건너뜀:" : `${s.at} 전이라 건너뜀:`, s.id); continue }
   const files = s.cards.map((_, i) => `${s.id}-${i + 1}.jpg`);
   const urls = files.map(f => `${base}/${date}/${f}`), paths = files.map(f => new URL(f, dir).pathname);
   // X는 사진 4장까지: 5장 이상이면 앞 3장 + 마지막(요약) 장

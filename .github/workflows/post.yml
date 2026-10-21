@@ -1,11 +1,12 @@
-# 평일 08:10(한국 시각) 그날 카드를 찍어서 인스타·스레드·X에 올림.
-# 릴스 영상(세트id-reel.mp4)도 같이 만들어 Artifacts에 넣음 → 폰에 받아서 인스타 앱에서 유행 음원 붙여 직접 올림.
-# content/날짜.json 이 "approved": true 일 때만 게시. 아니면 카드만 찍어서 Artifacts(cards-날짜)로 남김 → 폰으로 확인 후 승인.
+# 07:05~23:35(한국 시각) 30분마다 깨어나서, 승인됐고 게시 시각("at")이 지난 세트를 인스타·스레드·X에 올림.
+# 올릴 게 없으면 카드도 안 찍고 바로 끝남. 수동 실행(workflow_dispatch)은 올릴 게 없어도 카드를 찍어 Artifacts(cards-날짜)에 남김 → 폰으로 확인.
+# GitHub 예약 실행은 늦게 돌 때가 많아서, 실제 게시는 "at" 보다 몇 분~30분 정도 늦을 수 있음.
 # 인스타·스레드는 공개 이미지 주소가 필요해서 카드 JPG를 media 브랜치에 올리고 raw.githubusercontent 주소를 씀 (저장소가 공개여야 함).
+# 릴스 영상은 reel 워크플로로 따로 만듦 (유행 음원은 인스타 앱에서 직접 붙여 올림).
 name: post
 on:
   schedule:
-    - cron: "10 23 * * 0-4"
+    - cron: "5,35 0-14,22,23 * * *"
   workflow_dispatch:
     inputs:
       date: { description: "날짜 YYYY-MM-DD (비우면 오늘)", required: false, default: "" }
@@ -24,33 +25,34 @@ jobs:
         run: |
           D="${{ inputs.date }}"; [ -n "$D" ] || D=$(TZ=Asia/Seoul date +%F)
           echo "D=$D" >> $GITHUB_ENV
-          if [ -f "content/$D.json" ]; then echo "HAS=1" >> $GITHUB_ENV; else echo "content/$D.json 없음 → 오늘은 쉼"; fi
-      - uses: actions/setup-node@v4
-        if: env.HAS == '1'
-        with: { node-version: 22 }
-      - if: env.HAS == '1'
-        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium && node test.mjs
-      - name: 카드 찍기
-        if: env.HAS == '1'
-        run: node render.mjs "$D" && node preview.mjs "$D" && node profile.mjs
-      - name: 릴스 영상 (실패해도 게시는 계속)
-        if: env.HAS == '1'
-        continue-on-error: true
-        run: sudo apt-get install -y -qq ffmpeg >/dev/null && node reel.mjs "$D"
-      - uses: actions/upload-artifact@v4
-        if: env.HAS == '1'
-        with: { name: "cards-${{ env.D }}", path: "out/${{ env.D }}/*.jpg\nout/${{ env.D }}/*.mp4\nout/${{ env.D }}/reel-stills/\nout/${{ env.D }}/preview.html\nout/profile.png" }
-      - name: 이미지를 media 브랜치에 올리기 (+ 지난 게시 기록 가져오기)
+          if [ -f "content/$D.json" ]; then echo "HAS=1" >> $GITHUB_ENV; else echo "content/$D.json 없음 → 쉼"; fi
+      - name: 올릴 차례인 세트 확인 (+ 지난 게시 기록 가져오기)
         if: env.HAS == '1'
         run: |
-          git config user.name "seum-bot"; git config user.email "bot@seum.invalid"
           if git ls-remote --exit-code --heads origin media >/dev/null; then git fetch -q origin media && git worktree add -q -B media media FETCH_HEAD
           else git worktree add -q --orphan -b media media; fi
+          mkdir -p "out/$D"; [ -d "media/$D/posted" ] && cp -r "media/$D/posted" "out/$D/" || true
+          N=$(CHECK=1 node publish.mjs "$D"); echo "올릴 세트 $N개"
+          if [ "$N" != "0" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "GO=1" >> $GITHUB_ENV; fi
+      - uses: actions/setup-node@v4
+        if: env.GO == '1'
+        with: { node-version: 22 }
+      - if: env.GO == '1'
+        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium && node test.mjs
+      - name: 카드 찍기
+        if: env.GO == '1'
+        run: node render.mjs "$D" && node preview.mjs "$D" && node profile.mjs
+      - uses: actions/upload-artifact@v4
+        if: env.GO == '1'
+        with: { name: "cards-${{ env.D }}", path: "out/${{ env.D }}/*.jpg\nout/${{ env.D }}/preview.html\nout/profile.png", overwrite: true }
+      - name: 이미지를 media 브랜치에 올리기
+        if: env.GO == '1'
+        run: |
+          git config user.name "seum-bot"; git config user.email "bot@seum.invalid"
           mkdir -p "media/$D" && cp out/"$D"/*.jpg "media/$D/"
-          [ -d "media/$D/posted" ] && cp -r "media/$D/posted" "out/$D/" || true
           cd media && git add -A && (git diff --cached --quiet || git commit -qm "cards $D") && git push -q origin media
       - name: 게시
-        if: env.HAS == '1'
+        if: env.GO == '1'
         env:
           MEDIA_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/media
           PLATFORMS: ${{ inputs.platforms || 'instagram,threads,x' }}
@@ -65,7 +67,7 @@ jobs:
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
         run: node publish.mjs "$D"
       - name: 게시 기록 저장 (두 번 안 올리게)
-        if: always() && env.HAS == '1'
+        if: always() && env.GO == '1'
         run: |
           [ -d "out/$D/posted" ] || exit 0
           mkdir -p "media/$D" && cp -r "out/$D/posted" "media/$D/"
