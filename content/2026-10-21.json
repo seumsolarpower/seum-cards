@@ -23,10 +23,10 @@
           "photo": "osaka-dotonbori.jpg",
           "pos": "60% 50%",
           "credit": "Sakai Yayoi, CC0",
-          "say": {
+          "bubble": {
             "side": "l",
-            "top": 16,
-            "text": "일본 <em>언제</em> 가지…?"
+            "top": 13,
+            "text": "일본 언제<br>가지…?"
           },
           "tags": [
             {
