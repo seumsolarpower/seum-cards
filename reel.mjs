@@ -111,8 +111,7 @@ html,body{margin:0;background:#0e0f10;overflow:hidden;font-family:Pretendard,san
 .ph img{width:1080px;height:auto;max-height:1000px;object-fit:cover;display:block}
 .cut{position:absolute;left:0;right:0;top:640px;height:860px}
 .cut .pn{position:absolute;left:54px;right:54px;bottom:0;height:560px;border-radius:44px;background:#1fd8a4}
-.cut img{position:absolute;left:50%;bottom:0;max-width:972px;max-height:860px;translate:-50% 0;display:block}
-.cut.none img{max-width:1080px}
+.cut img{position:absolute;left:54px;bottom:0;width:972px;height:860px;object-fit:contain;object-position:50% 100%;display:block}
 .en{margin:auto 72px;text-align:center;font:800 76px/1.35 Pretendard;letter-spacing:-.035em;word-break:keep-all}
 .en small{display:block;margin-top:40px;font:800 56px/1 Pretendard}.en small i{color:#1fd8a4;font-style:normal}
 mk{background:#1fd8a4;color:#0e0f10;padding:0 .12em;border-radius:.08em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
