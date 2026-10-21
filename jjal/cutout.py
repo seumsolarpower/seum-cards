@@ -2,7 +2,8 @@
 # catalog 항목에 "cut": {"crop": [x,y,w,h], "keep": [{"box": [x,y,w,h], "shape": "round", "r": .03}, …]}
 #   (모두 0~1 비율. crop은 원본 기준, keep은 crop한 뒤 기준. r은 폭 기준)
 #   crop: 두 칸짜리 짤에서 한 칸만 쓸 때 | keep: 자막을 살릴 자리. shape:
-#     rect | round(둥근 상자 자막) | ellipse(구름 말풍선) | text(상자 없는 글자 자막: 칸 테두리 색과 다른 픽셀만 남김, t=문턱)
+#     rect | round(둥근 상자 자막) | ellipse(구름 말풍선) | text(상자 없는 글자 자막: 칸 테두리 색과 다른 픽셀만 남김, t=문턱.
+#     "color": [r,g,b] 를 주면 그 글자색(±tol)과, 그 바로 옆에서 배경과 다른 픽셀(외곽선)만 남김 — 배경이 얼룩덜룩할 때)
 # 확인용: out/cut-debug/<id>.jpg (왼쪽 = 원본에 keep 표시, 오른쪽 = 검정 바탕에 누끼)
 # 실행: python jjal/cutout.py yoo-shock park-ruined   (MODEL=birefnet-portrait 기본)
 import json, os, sys
@@ -15,7 +16,7 @@ session = new_session(os.environ.get("MODEL", "birefnet-portrait"))
 os.makedirs(os.path.join(root, "assets/jjal/cut"), exist_ok=True)
 os.makedirs(os.path.join(root, "out/cut-debug"), exist_ok=True)
 
-def text_mask(im, b, t):
+def text_mask(im, b, t, color=None, tol=70):
     # 칸 테두리 픽셀의 중간값을 배경색으로 보고, 그 색에서 t 이상 떨어진 픽셀(글자·외곽선·반짝이)만 남김
     reg = im.crop(b)
     w, h = reg.size
@@ -23,7 +24,12 @@ def text_mask(im, b, t):
     edge = [px[i, 0] for i in range(w)] + [px[i, h - 1] for i in range(w)] + [px[0, j] for j in range(h)] + [px[w - 1, j] for j in range(h)]
     bg = [sorted(c[i] for c in edge)[len(edge) // 2] for i in range(3)]
     diff = ImageChops.difference(reg, Image.new("RGB", reg.size, tuple(bg))).convert("L")
-    m = diff.point(lambda v: 255 if v > t else 0).filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1))
+    m = diff.point(lambda v: 255 if v > t else 0)
+    if color:
+        main = ImageChops.difference(reg, Image.new("RGB", reg.size, tuple(color))).convert("L").point(lambda v: 255 if v < tol else 0)
+        near = main.filter(ImageFilter.MaxFilter(7))
+        m = ImageChops.lighter(main, ImageChops.multiply(near, m))
+    m = m.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1))
     full = Image.new("L", im.size, 0)
     full.paste(m, b[:2])
     return full
@@ -47,7 +53,7 @@ for id in sys.argv[1:]:
         boxes.append(b)
         shape = k.get("shape", "rect")
         if shape == "text":
-            alpha = ImageChops.lighter(alpha, text_mask(im, b, k.get("t", 60)))
+            alpha = ImageChops.lighter(alpha, text_mask(im, b, k.get("t", 60), k.get("color"), k.get("tol", 70)))
             continue
         mk = Image.new("L", (W, H), 0)
         d = ImageDraw.Draw(mk)
