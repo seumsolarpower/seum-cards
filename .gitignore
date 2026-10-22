@@ -3,3 +3,4 @@ out/
 jjal/candidates/
 jjal/review.html
 .media/
+.env
