@@ -74,7 +74,7 @@ jobs:
           mkdir -p "media/$D" && cp -r "out/$D/posted" "media/$D/"
           cd media && git add -A && (git diff --cached --quiet || git commit -qm "posted $D") && git push -q origin media
       - name: 게시된 세트의 릴스를 media 브랜치에 올리기 (다른 폰에서 주소로 받아 앱에서 음원 붙여 올림)
-        if: env.GO == '1' && inputs.dry != '1'
+        if: env.GO == '1' && inputs.dry != '1' && vars.REEL == '1'  # 릴스는 꺼 둠 (캐러셀만, 2026-10-22). 다시 켜려면 저장소 변수 REEL=1
         continue-on-error: true
         run: |
           ids=""; for f in out/"$D"/posted/*.instagram; do [ -e "$f" ] || continue
