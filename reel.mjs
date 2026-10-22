@@ -7,7 +7,7 @@
 // 짤 릴스: 세트에 "jreel": [장면…] 이 있으면 카드 대신 장면을 이어 붙임 (전체 화면, 진행 막대 없음). 장면 종류:
 //   {type:"hook", text}  검정 바탕 큰 한 줄 | {type:"jjal", jjal:id, top}  위 자막 + 짤 | {type:"card", n}  세트 n번째 카드 | {type:"end", text}
 //   짤은 assets/jjal/cut/<id>.png(누끼, jjal/cutout.py)가 있으면 화면 대신 인물+자막만 얹음. 바탕: 장면 "cutbg" 또는 CUTBG= → panel(민트 판 위로 튀어나옴, 기본) | none
-//   {type:"board", kick, count:[from,to], unit, char|jjal, bub}  흰 정보 보드 + 왼쪽 아래 리액션 (notes/reel-design.md). 숫자는 카운트업
+//   {type:"board", kick, count:[from,to], unit, char|jjal, bub}  흰 정보 보드 + 리액션 (char 없이 bub만 주면 보드 아래 흰 글씨 한마디) (notes/reel-design.md). 숫자는 카운트업
 //   {type:"board", kick, chart:{bars:[[이름, 값, 표시]…], delta, src}, jjal}  막대 비교 (0부터, 차이는 괄호) | end에 char·bub를 주면 보드형 끝 장면
 //   char: 세움이 표정(lib/char.mjs) shock | happy
 //   길이는 "dur"(초), 기본 2초씩(카드 4초) — 2초 = 120BPM 한 마디라 어떤 음원을 붙여도 컷이 박자에 대충 맞음
@@ -132,6 +132,7 @@ em{color:#1fd8a4;font-style:normal}
 .ch{position:absolute;left:64px;bottom:440px;width:380px;height:auto;transform-origin:50% 100%}
 .rb{position:absolute;left:480px;top:1170px;max-width:420px;background:#fff;color:#0e0f10;font:800 54px/1.25 Pretendard;letter-spacing:-.03em;padding:30px 38px;border-radius:40px;word-break:keep-all;transform-origin:0 50%}
 .rb::before{content:"";position:absolute;left:-22px;top:50px;border:18px solid transparent;border-right:26px solid #fff;border-left:0}
+.rt{position:absolute;left:64px;right:180px;top:1110px;font:800 64px/1.3 Pretendard;letter-spacing:-.035em;color:#fff;word-break:keep-all}
 .rj{position:absolute;left:30px;bottom:440px;width:640px;height:420px;object-fit:contain;object-position:0 100%;transform-origin:50% 100%}
 .cht{position:absolute;left:64px;top:250px;width:844px;height:420px}
 .cht .cb{position:absolute;bottom:70px;width:220px;border-radius:16px 16px 0 0;transform-origin:50% 100%;background:#d3d6d9}.cht .cb.now{background:#1fd8a4}
@@ -158,12 +159,14 @@ ${c.src ? `<div class="csrc">${c.src}</div>` : ""}</div>`;
 function react(sc) {
   if (sc.jjal) { const m = CAT.find(x => x.id === sc.jjal); if (!m) throw new Error("짤 없음: " + sc.jjal);
     const cut = `jjal/cut/${m.id}.png`; return `<img class="rj" src="${b64(existsSync(new URL("assets/" + cut, import.meta.url)) ? cut : m.image)}" data-a="boing .6s .35s">` }
-  return (sc.char ? CHAR(sc.char).replace('class="ch"', 'class="ch" data-a="boing .6s .35s"') : "") + (sc.bub ? `<div class="rb" data-a="boing .5s .7s">${sc.bub}</div>` : "");
+  // 캐릭터 없이 bub만 있으면 보드 아래 흰 글씨 한마디 (말풍선 대신)
+  if (!sc.char) return sc.bub ? `<div class="rt" data-a="in .4s .6s">${sc.bub}</div>` : "";
+  return CHAR(sc.char).replace('class="ch"', 'class="ch" data-a="boing .6s .35s"') + (sc.bub ? `<div class="rb" data-a="boing .5s .7s">${sc.bub}</div>` : "");
 }
 function sceneHtml(sc, dur) {
   let body;
   if (sc.type === "board") body = `<div class="sc">${LOGO}<div class="bd" data-a="in .45s 0s"><div class="kk">${sc.kick}</div>${sc.chart ? chartHtml(sc.chart)
-    : `<div class="nm" data-count="${sc.count.join(",")}" data-unit="${sc.unit || ""}">${sc.count[1]}<small>${sc.unit || ""}</small></div>`}</div>${react(sc)}</div>`;
+    : `<div class="nm" data-count="${sc.count.join(",")}" data-unit="${sc.unit || ""}">${sc.count[1].toLocaleString("ko-KR")}<small>${sc.unit || ""}</small></div>`}</div>${react(sc)}</div>`;
   else if (sc.type === "end" && (sc.char || sc.bub)) body = `<div class="sc">${LOGO}<div class="bd bend" data-a="in .45s 0s"><div class="kk">${sc.text}<span>seum<i>.</i></span></div></div>${react(sc)}</div>`;
   else if (sc.type === "hook") body = `<div class="sc">${LOGO}<div class="hk" data-a="pop .45s .05s">${sc.text}</div></div>`;
   else if (sc.type === "end") body = `<div class="sc"><div class="en" data-a="in .45s .05s">${sc.text}<small>seum<i>.</i></small></div></div>`;
@@ -180,7 +183,7 @@ document.querySelectorAll("[data-a]").forEach(el => { const [k, d, at, ease] = e
 const anims = document.getAnimations(); anims.forEach(a => a.pause());
 const cnt = [...document.querySelectorAll("[data-count]")].map(el => { const [a, b] = el.dataset.count.split(",").map(Number); return { el, a, b } });
 window.__seek = t => { anims.forEach(a => a.currentTime = t * 1000);
-  for (const c of cnt) { const p = Math.min(1, Math.max(0, (t - .3) / 1)), e = 1 - Math.pow(1 - p, 3); c.el.innerHTML = Math.round(c.a + (c.b - c.a) * e) + "<small>" + c.el.dataset.unit + "</small>" } };
+  for (const c of cnt) { const p = Math.min(1, Math.max(0, (t - .3) / 1)), e = 1 - Math.pow(1 - p, 3); c.el.innerHTML = Math.round(c.a + (c.b - c.a) * e).toLocaleString("ko-KR") + "<small>" + c.el.dataset.unit + "</small>" } };
 })()</script></body></html>`;
 }
 
