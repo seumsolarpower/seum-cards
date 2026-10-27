@@ -17,12 +17,12 @@ if (process.env.HTML === "1") {
 
 const { chromium } = await import("playwright");
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1080, height: 1350 }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: { width: 1080, height: 1080 }, deviceScaleFactor: 1 });
 for (const j of jobs) {
   await page.setContent(j.html, { waitUntil: "load" });
   await page.evaluate(() => document.fonts.ready);
   // 인스타 게시는 JPG만 받음
-  await page.screenshot({ path: new URL(j.file, dir).pathname, type: "jpeg", quality: 92, clip: { x: 0, y: 0, width: 1080, height: 1350 } });
+  await page.screenshot({ path: new URL(j.file, dir).pathname, type: "jpeg", quality: 92, clip: { x: 0, y: 0, width: 1080, height: 1080 } });
   console.log("찍음", j.file);
 }
 await browser.close();
