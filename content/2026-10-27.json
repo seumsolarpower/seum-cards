@@ -24,20 +24,18 @@
      "photo": "px-hamster-chubby.jpg",
      "pos": "55% 50%",
      "credit": "mordilla-net, Pixabay",
-     "face": "shocked",
-     "char": "shock",
+     "scrap": true,
      "bubble": {
       "side": "r",
       "top": 13,
-      "text": "볼에 저축했는데<br>40만원 순삭…?"
+      "text": "이거 봐봐!<br>40만원이나!?"
      },
      "small": "다들 실수령 얼마야?",
-     "title": "연봉 5천<br>보험료만 무려<br><em class='pen'>매달 40만원!?</em>"
+     "title": "연봉 5천<br>보험료만<br><em class='pen'>매달 40만원!?</em>"
     },
     {
      "type": "facts",
-     "face": "worried",
-     "char": "shock",
+     "scrap": true,
      "kick": "월급명세서 뜯어보면",
      "big": "소득세 빼기 전에<br><mk class='pen'>무려 40만원</mk>이<br>먼저 쏙~ 빠져요",
      "hero": {
