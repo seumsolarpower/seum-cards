@@ -7,9 +7,9 @@
 
 | 곳 | 라이선스 | 출처 표기 | 자동 검색 | 메모 |
 |---|---|---|---|---|
-| **Pexels** (pexels.com) | Pexels License, 상업 사용 OK | 필요 없음 (해 주면 좋음) | API 키 무료, 바로 발급 | 사진+영상. 아시아 인물·카페 사진 꽤 있음. **1순위** |
+| **Pexels** (pexels.com) | Pexels License, 상업 사용 OK | 필요 없음 (해 주면 좋음) | **새 API 키 발급 중단 (2026-10-27 확인)** | 사진+영상. 키 없이 웹 검색도 막힘 (403) |
 | **Unsplash** (unsplash.com) | Unsplash License, 상업 사용 OK | 필요 없음 | API 키 무료 (앱 등록, 시간당 50회) | 감성 제일 좋음. **Unsplash+ 표시 사진은 유료라 제외** |
-| **Pixabay** (pixabay.com) | Content License, 상업 사용 OK | 필요 없음 | API 키 무료 | 사진·일러스트·벡터·영상·음원까지. 품질은 섞여 있음 |
+| **Pixabay** (pixabay.com) | Content License, 상업 사용 OK | 필요 없음 | API 키 무료, 가입하면 api/docs에 바로 보임. **1순위** | 사진·일러스트·벡터·영상·음원까지. 품질은 섞여 있음 |
 | StockSnap (stocksnap.io) | CC0 | 필요 없음 | 없음 | 양은 적지만 깔끔 |
 | Burst (burst.shopify.com) | 무료 상업 사용 | 필요 없음 | 없음 | 쇼핑·소품·결제 사진에 강함 |
 | **공공누리** (kogl.or.kr) | 1유형: 출처 표시하면 상업 OK | 필요 | 없음 | 정부·공공기관 사진. 2~4유형은 상업 금지·변경 금지라 **1유형만** |
