@@ -24,18 +24,20 @@
      "photo": "px-hamster-chubby.jpg",
      "pos": "55% 50%",
      "credit": "mordilla-net, Pixabay",
+     "char": "shock",
      "bubble": {
       "side": "r",
       "top": 13,
       "text": "볼에 저축했는데<br>40만원 순삭…?"
      },
-     "small": "다들 실수령 얼마야? 💸",
-     "title": "연봉 5천 🧾<br>보험료만 무려 💰<br><em>매달 40만원!?</em>"
+     "small": "다들 실수령 얼마야?",
+     "title": "연봉 5천<br>보험료만 무려<br><em>매달 40만원!?</em>"
     },
     {
      "type": "facts",
-     "kick": "💼 월급명세서 뜯어보면",
-     "big": "소득세 빼기 전에<br><mk>무려 40만원</mk>이<br>먼저 쏙~ 빠져요 😱",
+     "char": "shock",
+     "kick": "월급명세서 뜯어보면",
+     "big": "소득세 빼기 전에<br><mk>무려 40만원</mk>이<br>먼저 쏙~ 빠져요",
      "hero": {
       "value": "40.5만원",
       "label": "연봉 5천 · 4대보험 내 몫 (월)"
@@ -53,8 +55,9 @@
      "photo": "px-cat-coins.jpg",
      "pos": "50% 40%",
      "credit": "osedliar, Pixabay",
-     "kick": "✨ 그나마 다행인 건",
-     "big": "낸 보험료는<br>연말정산 때<br><mk>전액 소득공제 💯</mk>",
+     "char": "happy",
+     "kick": "그나마 다행인 건",
+     "big": "낸 보험료는<br>연말정산 때<br><mk>전액 소득공제</mk>",
      "rows": [
       [
        "국민연금",
@@ -77,13 +80,14 @@
      "photo": "px-puppy-white.jpg",
      "pos": "50% 50%",
      "credit": "Pixabay",
-     "kick": "⏱️ 점심시간 3초 요약",
+     "char": "happy",
+     "kick": "점심시간 3초 요약",
      "items": [
       "연봉 5천, 4대보험 <mk>월 40만원</mk>",
       "낸 보험료는 연말정산 때 <b>전액 소득공제</b>",
       "연금저축·IRP 900만원이면 <b>최대 148.5만원</b> 환급"
      ],
-     "quote": "💬 댓글 달아주시면",
+     "quote": "댓글 달아주시면",
      "cta": "연봉별 실수령액표 DM으로 보내드려요!"
     }
    ]
