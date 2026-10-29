@@ -101,10 +101,18 @@ const TRIM = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silen
 async function say(voice, text, file) {
   const mp3 = file.replace(/\.wav$/, voice.startsWith("gemini:") ? ".raw.wav" : ".mp3");
   if (voice.startsWith("gemini:")) {
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${process.env.GEMINI_TTS || "gemini-3.8-flash-tts"}:generateContent`, {
-      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_KEY },
-      body: JSON.stringify({ contents: [{ parts: [{ text }] }], generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice.slice(7) } } } } }) });
-    const d = await r.json(), p = d.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+    // 무료 등급은 분당 호출 수 한도가 있음 → 429면 알려 준 시간(없으면 30초)만큼 쉬고 다시 (최대 6번)
+    let d;
+    for (let t = 0; t < 6; t++) {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${process.env.GEMINI_TTS || "gemini-3.8-flash-tts"}:generateContent`, {
+        method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_KEY },
+        body: JSON.stringify({ contents: [{ parts: [{ text }] }], generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice.slice(7) } } } } }) });
+      d = await r.json();
+      if (d.error?.code !== 429) break;
+      const wait = parseFloat(d.error.details?.find(x => x.retryDelay)?.retryDelay) || 30;
+      console.log(`    Gemini 한도, ${wait}초 쉬고 다시`); await new Promise(ok => setTimeout(ok, (wait + 2) * 1000));
+    }
+    const p = d.candidates?.[0]?.content?.parts?.[0]?.inlineData;
     if (!p) throw new Error("Gemini TTS 실패: " + JSON.stringify(d).slice(0, 300));
     writeFileSync(mp3, Buffer.from(p.data, "base64"));
   } else execFileSync("edge-tts", ["--voice", voice, "--rate", RATE, "--text", text, "--write-media", mp3], { stdio: "ignore" });
