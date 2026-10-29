@@ -110,6 +110,7 @@ async function say(voice, text, file) {
       d = await r.json();
       if (d.error?.code !== 429) break;
       const wait = parseFloat(d.error.details?.find(x => x.retryDelay)?.retryDelay) || 30;
+      if (wait > 120) throw new Error(`Gemini TTS 하루 한도 소진 (약 ${Math.round(wait / 3600)}시간 뒤 풀림)`);
       console.log(`    Gemini 한도, ${wait}초 쉬고 다시`); await new Promise(ok => setTimeout(ok, (wait + 2) * 1000));
     }
     const p = d.candidates?.[0]?.content?.parts?.[0]?.inlineData;
