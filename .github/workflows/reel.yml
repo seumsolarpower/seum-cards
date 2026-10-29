@@ -22,6 +22,7 @@ jobs:
         env:
           VOICES: ${{ inputs.voices }}
           CUTBG: ${{ inputs.cutbg }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         run: node reel.mjs "${{ inputs.date }}" "${{ inputs.set }}"
       - uses: actions/upload-artifact@v4
         with: { name: "reels-${{ inputs.date }}-${{ inputs.cutbg }}", path: "out/${{ inputs.date }}/*.mp4\nout/${{ inputs.date }}/reel-stills/" }

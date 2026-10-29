@@ -1,6 +1,7 @@
 // 세트 하나를 릴스 영상(1080×1920, 30fps)으로 만듦 → out/날짜/세트id-reel.mp4 (목소리 넣으면 세트id-reel-목소리.mp4)
 // 카드 HTML을 그대로 세로 화면에 얹고, 장마다 등장 움직임을 넣어 프레임을 찍은 뒤 ffmpeg으로 합침.
 // 실행: node reel.mjs 2026-10-20 [세트id]   (ffmpeg 필요. 세트를 안 주면 전부)
+//   VOICES=gemini:Leda,gemini:Aoede → Gemini TTS (GEMINI_KEY). 장면(jreel)에는 "voice": "대사 한 줄"
 //   VOICES=ko-KR-SunHiNeural,ko-KR-InJoonNeural: 카드의 "voice" 대사를 edge-tts로 읽혀 넣음 (목소리마다 영상 하나)
 // 목소리: 카드에 "voice": ["대사1", "대사2", …]. 대사 한 마디 = 한 박자. 박자가 시작할 때 다음 요소가 튀어나옴 (PLAN의 {b: 박자})
 // 음악: 세트에 "music": "파일.mp3"(assets/music, CC0)이면 깔아 줌. 없으면 유행 음원은 인스타 앱에서 직접 고름. 목소리가 없으면 무음 트랙 (오디오 없는 영상을 거부하는 경우 대비)
@@ -14,7 +15,7 @@
 //   char: 세움이 표정(lib/char.mjs) shock | happy
 //   길이는 "dur"(초), 기본 2초씩(카드 4초) — 2초 = 120BPM 한 마디라 어떤 음원을 붙여도 컷이 박자에 대충 맞음
 // 장 길이는 카드에 "reel": {"dur": 3} 로 바꿀 수 있음. 없으면 종류별 기본값, 마지막 등장 뒤 1.3초, 대사 끝 0.5초 중 가장 긴 것.
-import { readFileSync, mkdirSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
 import { spawn, execFileSync } from "child_process";
 import { cardInner, cardCss } from "./lib/cards.mjs";
 import { CHAR } from "./lib/char.mjs";
@@ -96,10 +97,19 @@ const css = cardCss(C.palette) + STAGE;
 // 대사 한 마디를 읽혀서 wav + 길이(초). edge-tts mp3는 길이 정보가 부정확해서 wav로 바꾸고 앞뒤 무음도 잘라냄
 const RATE = process.env.VOICE_RATE || "+20%";
 const TRIM = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse";
-function say(voice, text, file) {
-  const mp3 = file.replace(/\.wav$/, ".mp3");
-  execFileSync("edge-tts", ["--voice", voice, "--rate", RATE, "--text", text, "--write-media", mp3], { stdio: "ignore" });
-  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", mp3, "-af", TRIM, "-ar", "44100", "-ac", "1", file]);
+// VOICES에 "gemini:Leda"처럼 쓰면 Gemini TTS(GEMINI_KEY, 모델 GEMINI_TTS)로 읽음. 지시문을 붙이면 지시문까지 읽어서 대사만 보냄 → 빠르기는 GEMINI_TEMPO(atempo)로
+async function say(voice, text, file) {
+  const mp3 = file.replace(/\.wav$/, voice.startsWith("gemini:") ? ".raw.wav" : ".mp3");
+  if (voice.startsWith("gemini:")) {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${process.env.GEMINI_TTS || "gemini-3.8-flash-tts"}:generateContent`, {
+      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_KEY },
+      body: JSON.stringify({ contents: [{ parts: [{ text }] }], generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice.slice(7) } } } } }) });
+    const d = await r.json(), p = d.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+    if (!p) throw new Error("Gemini TTS 실패: " + JSON.stringify(d).slice(0, 300));
+    writeFileSync(mp3, Buffer.from(p.data, "base64"));
+  } else execFileSync("edge-tts", ["--voice", voice, "--rate", RATE, "--text", text, "--write-media", mp3], { stdio: "ignore" });
+  const af = voice.startsWith("gemini:") ? TRIM + ",atempo=" + (process.env.GEMINI_TEMPO || "1.15") : TRIM;
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", mp3, "-af", af, "-ar", "44100", "-ac", "1", file]);
   return +execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file]).toString().trim();
 }
 const run = (args) => execFileSync("ffmpeg", ["-y", "-loglevel", "error", ...args], { stdio: "inherit" });
@@ -202,7 +212,7 @@ window.__seek = t => { anims.forEach(a => a.currentTime = t * 1000);
 
 const voices = (process.env.VOICES || "").split(",").map(v => v.trim()).filter(Boolean);
 for (const s of C.sets.filter(s => !only || s.id === only)) for (const voice of voices.length ? voices : [null]) {
-  const tag = voice ? "-" + voice.split("-")[2].replace(/Neural$/, "").replace(/Multilingual$/, "") : "";
+  const tag = !voice ? "" : voice.startsWith("gemini:") ? "-" + voice.slice(7) : "-" + voice.split("-")[2].replace(/Neural$/, "").replace(/Multilingual$/, "");
   const out = new URL(`${s.id}-reel${tag}.mp4`, dir).pathname, silent = new URL(`voice/${s.id}${tag}-video.mp4`, dir).pathname;
   const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "mjpeg", "-i", "-",
     "-c:v", "libx264", "-pix_fmt", "yuv420p", "-profile:v", "high", "-preset", "medium", "-crf", "19", "-r", String(FPS), "-an", silent], { stdio: ["pipe", "inherit", "inherit"] });
@@ -211,7 +221,13 @@ for (const s of C.sets.filter(s => !only || s.id === only)) for (const voice of 
   const list = s.jreel ? s.jreel.map(sc => sc.type === "card" ? { c: { ...s.cards[sc.n - 1], reel: { dur: sc.dur ?? 4 } }, i: sc.n - 1 } : { sc }) : s.cards.map((c, i) => ({ c, i }));
   for (const [k, it] of list.entries()) {
     if (it.sc) {
-      const dur = it.sc.dur ?? 2;
+      let dur = it.sc.dur ?? 2;
+      // 장면 대사("voice": 한 줄): 0.25초부터 읽고, 길면 장면을 늘림
+      if (voice && it.sc.voice) {
+        const file = new URL(`voice/${s.id}${tag}-j${k + 1}.wav`, dir).pathname, len = await say(voice, it.sc.voice, file);
+        clips.push({ file, at: secs + .25 }); dur = +Math.max(dur, .25 + len + .35).toFixed(2);
+        console.log(`    ${len.toFixed(2)}s ${it.sc.voice}`);
+      }
       await page.setContent(sceneHtml(it.sc, dur), { waitUntil: "load" }); await page.evaluate(() => document.fonts.ready);
       const n = Math.round(dur * FPS);
       for (let f = 0; f < n; f++) {
@@ -227,7 +243,7 @@ for (const s of C.sets.filter(s => !only || s.id === only)) for (const voice of 
     // 대사: 0.3초부터 한 마디씩, 사이 0.12초
     const beats = []; let cur = .3;
     if (voice) for (const [k, line] of (c.voice || []).entries()) {
-      const file = new URL(`voice/${s.id}${tag}-${i + 1}-${k + 1}.wav`, dir).pathname, len = say(voice, line, file);
+      const file = new URL(`voice/${s.id}${tag}-${i + 1}-${k + 1}.wav`, dir).pathname, len = await say(voice, line, file);
       beats.push(+cur.toFixed(2)); clips.push({ file, at: secs + cur }); cur += len + .12;
       console.log(`    ${len.toFixed(2)}s ${line}`);
     }
