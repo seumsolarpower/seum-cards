@@ -55,7 +55,7 @@ function Lost({ b, f, fps }) {
       </div>
       {bills.map(([dx, dy, r], k) => {
         const t = interpolate(f, [fly + k * 4, fly + k * 4 + 22], [0, 1], clamp), e = t * t;
-        return <Bill key={k} x={540 + dx + dx * 3 * e} y={760 + dy - 140 - 700 * e} r={r + 160 * e * (k % 2 ? 1 : -1)} o={1 - t} />;
+        return <Bill key={k} x={540 + dx + dx * 3 * e} y={700 + dy * .5 - 200 * e - 500 * e * e} r={r + 160 * e * (k % 2 ? 1 : -1)} o={1 - t} />;
       })}
       <Drawer cx={540} cy={840} label="회사 서랍" open={interpolate(f, [fly - 6, fly], [0, 1], clamp)} />
     </>

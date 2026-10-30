@@ -3,7 +3,8 @@
 import React from "react";
 import { AbsoluteFill, Logo, MINT, INK, Sfx, Src, Voices, clamp, curCap, ease, interpolate, marks, num, plain, spring, useCurrentFrame, useFont, useVideoConfig } from "./common.jsx";
 
-const sizeOf = t => { const L = [...plain(t)].length; return L <= 3 ? 300 : L <= 5 ? 240 : L <= 8 ? 168 : L <= 12 ? 128 : 104 };
+// 한글은 글자 폭이 넓어서 960px 안에 한 줄로 들어가게 (글자당 약 1em)
+const sizeOf = t => { const L = [...plain(t)].length; return Math.min(300, Math.floor(900 / Math.max(L, 1))) };
 const NUM = /^\*([\d,]+)([^\d*]*)\*$/;
 
 function Slam({ c, f, rot, fg = "#fff", accent = MINT }) {
