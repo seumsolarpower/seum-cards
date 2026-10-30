@@ -34,7 +34,7 @@ function Caption({ cap }) {
     <div style={{ position: "absolute", left: 60, right: 170, top: 1160, display: "flex", justifyContent: "center" }}>
       <div style={{ transform: `scale(${interpolate(s, [0, 1], [.55, 1])}) rotate(${interpolate(s, [0, 1], [-4, 0])}deg)`, opacity: interpolate(s, [0, .3], [0, 1], clamp),
         font: "900 86px/1.22 P", letterSpacing: "-.04em", color: "#fff", textAlign: "center", wordBreak: "keep-all",
-        textShadow: "0 6px 0 #000, 0 -3px 0 #000, 4px 0 0 #000, -4px 0 0 #000, 0 0 30px rgba(0,0,0,.55)" }}>{marks(c.txt)}</div>
+        WebkitTextStroke: "16px #000", paintOrder: "stroke fill", textShadow: "0 8px 0 #000, 0 0 34px rgba(0,0,0,.5)" }}>{marks(c.txt)}</div>
     </div>
   );
 }
@@ -101,7 +101,7 @@ function Receipt({ plan, f }) {
 function Stamp({ s, f }) {
   const sc = interpolate(f, [0, 6], [2.4, 1], { ...clamp, easing: t => 1 - Math.pow(1 - t, 3) });
   return (
-    <div style={{ position: "absolute", right: -150, bottom: 40, transform: `rotate(-12deg) scale(${sc})`, opacity: interpolate(f, [0, 3], [0, 1], clamp),
+    <div style={{ position: "absolute", right: -40, bottom: -150, transform: `rotate(-8deg) scale(${sc})`, opacity: interpolate(f, [0, 3], [0, 1], clamp),
       background: MINT, color: INK, border: `6px solid ${INK}`, borderRadius: 28, padding: "18px 28px", textAlign: "center", boxShadow: "0 12px 30px rgba(0,0,0,.4)" }}>
       <div style={{ font: "800 28px/1 P", letterSpacing: "-.02em" }}>{s.top}</div>
       <div style={{ marginTop: 8, font: "900 64px/1 P", letterSpacing: "-.05em" }}>{s.big}</div>
