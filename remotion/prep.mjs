@@ -1,7 +1,7 @@
 // Remotion 릴스 재료 준비: content/날짜.json 세트의 "remo" → public/(목소리·B롤·효과음·글꼴) + src/plan.json
 // 실행: node prep.mjs 2026-10-30 youth-savings   (ffmpeg, FISH_KEY 필요)
 // remo: { voice: "fish:<id>", music, receipt: {title, sub, rows:[{k, v, u, note, plain}]} (plain: 연도처럼 쉼표·카운트업 없이), src,
-// style: "receipt"(기본, Reel.jsx) | "pov" | "typo" | "vault" (src/styles/), extra: 스타일별 추가 값
+// style: "receipt"(기본, Reel.jsx) | "pov" | "typo" | "vault" | "earn" (src/styles/), extra: 스타일별 추가 값, images: ["people/x.jpg"]
 //         beats: [{ say: "읽을 말", cap: ["자막 덩어리", "*강조*는 민트"], broll: {url, from, x}, mode: "big"|"row"|"stamp"|"cta", big, row, stamp }] }
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from "fs";
 import { execFileSync } from "child_process";
@@ -40,6 +40,8 @@ const sfx = {
 };
 for (const [k, a] of Object.entries(sfx)) ff(...a, "-ar", "44100", "-ac", "1", pub + `sfx/${k}.wav`);
 copyFileSync(new URL("../fonts/PretendardVariable.woff2", import.meta.url), pub + "Pretendard.woff2");
+// 사진(assets/ 기준 경로, 예: people/lip-bu-tan.jpg) → public/ 같은 경로
+for (const im of R.images || []) { mkdirSync(pub + im.replace(/[^/]+$/, ""), { recursive: true }); copyFileSync(new URL("../assets/" + im, import.meta.url), pub + im) }
 if (R.music) copyFileSync(new URL("../assets/music/" + R.music, import.meta.url), pub + "music.mp3");
 
 // 자막 덩어리 시각: 대사 길이를 덩어리 글자 수(숫자는 더 길게 읽힘) 비율로 나눔
