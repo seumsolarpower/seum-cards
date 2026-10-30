@@ -66,7 +66,7 @@ function Score({ b, f, fps }) {
 function Gap({ b, f, fps }) {
   const H = 500, base = 1060, max = Math.max(...b.bars.map(x => x.hi ?? x.v));
   const grow = k => ease(interpolate(f, [6 + k * 10, 30 + k * 10], [0, 1], clamp));
-  const xs = [250, 560], W = 210, h = v => H * v / max;
+  const xs = [170, 450], W = 210, h = v => H * v / max;
   const br = b.cap[2] ? b.cap[2].from : 40, bs = sp(f - br, fps, 12, 200);
   const top = b.bars[0].v, low = b.bars[1].v, yTop = base - h(top), yLow = base - h(low);
   return (
