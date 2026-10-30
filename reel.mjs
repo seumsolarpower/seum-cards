@@ -11,6 +11,7 @@
 //   {type:"board", kick, count:[from,to], unit, char|jjal, bub}  흰 정보 보드 + 리액션 (char 없이 bub만 주면 보드 아래 흰 글씨 한마디) (notes/reel-design.md). 숫자는 카운트업
 //   {type:"board", kick, chart:{bars:[[이름, 값, 표시]…], delta, src}, jjal}  막대 비교 (0부터, 차이는 괄호) | end에 char·bub를 주면 보드형 끝 장면
 //   {type:"duo", kick, people:[{name, title, dept, photo?, credit?}×2], bub}  흰 보드 + 명함 두 장 (photo 없으면 성 한 글자)
+//   {type:"cal", kick, year, month, span:[첫날, 끝날], leave:[연차 날…], hol:[공휴일…], photo?, bub|jjal}  흰 보드 + 한 달 달력. 쉬는 구간은 민트 띠로 칠해지고 연차 날은 검정 칸으로 튀어나옴
 //   count 끝값에 소수점이 있으면 그 자리수까지 올라감 (예: 106.5, -0.8)
 //   char: 세움이 표정(lib/char.mjs) shock | happy
 //   길이는 "dur"(초), 기본 2초씩(카드 4초) — 2초 = 120BPM 한 마디라 어떤 음원을 붙여도 컷이 박자에 대충 맞음
@@ -171,6 +172,17 @@ em{color:#1fd8a4;font-style:normal}
 .nc .nt{margin-top:14px;font:700 32px/1.2 Pretendard;color:#6b7077;letter-spacing:-.02em}
 .nc .nd{position:absolute;left:34px;bottom:34px;font:800 40px/1 Pretendard;letter-spacing:-.03em;box-shadow:inset 0 -.32em 0 #1fd8a4}
 .nc .ncr{position:absolute;right:20px;top:18px;font:500 20px/1 Pretendard;color:#9aa0a6}
+.cph{position:absolute;right:36px;top:36px;width:300px;height:200px;border-radius:28px;overflow:hidden;transform-origin:100% 0}
+.cph img{width:100%;height:100%;object-fit:cover;display:block}
+.cal .kk{right:360px;font-size:60px}
+.cg{position:absolute;left:40px;right:40px;top:272px;display:grid;grid-template-columns:repeat(7,1fr);row-gap:6px}
+.cg b{font:700 28px/40px Pretendard;color:#9aa0a6;text-align:center}
+.cg i{position:relative;height:60px;font:800 40px/60px Pretendard;font-style:normal;text-align:center;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:#0e0f10}
+.cg i.lv{z-index:2}.cg i.we{color:#8a9096}.cg i.ho{color:#08795a}
+.cg i span{position:relative;z-index:1}
+.cg .bar{position:absolute;height:54px;border-radius:27px;background:#1fd8a4;transform-origin:0 50%;z-index:0}
+.cg i.lv span{display:inline-block;width:54px;height:54px;margin-top:3px;line-height:54px;border-radius:50%;background:#0e0f10;color:#fff}
+@keyframes fill{from{scale:0 1}to{scale:1 1}}
 @keyframes boing{0%{opacity:0;scale:.3}55%{opacity:1;scale:1.12}75%{scale:.94}100%{opacity:1;scale:1}}
 @keyframes grow{from{scale:1 0}to{scale:1 1}}
 @keyframes fade{from{opacity:0}to{opacity:1}}`;
@@ -185,6 +197,23 @@ function chartHtml(c) {
 <div class="cbr" style="bottom:${70 + h0 - 3}px;height:${h1 - h0}px" data-a="fade .3s 1.3s"></div><div class="cbl" style="bottom:${70 + h0 - 12}px" data-a="fade .3s 1.3s">${c.delta}</div>
 ${c.src ? `<div class="csrc">${c.src}</div>` : ""}</div>`;
 }
+// 달력 장면: 한 달 칸을 그리고, 쉬는 구간(span)은 주마다 민트 띠, 연차 날은 검정 동그라미
+function calHtml(sc) {
+  const first = new Date(sc.year, sc.month - 1, 1).getDay(), days = new Date(sc.year, sc.month, 0).getDate(), [a, b] = sc.span, colW = 892 / 7, rowH = 66;
+  const pos = d => ({ c: (first + d - 1) % 7, r: Math.floor((first + d - 1) / 7) });
+  let cells = "", bars = "";
+  for (let d = 1; d <= days; d++) {
+    const { c } = pos(d), cls = sc.leave?.includes(d) ? "lv" : sc.hol?.includes(d) ? "ho" : c === 0 || c === 6 ? "we" : "";
+    cells += `<i class="${cls}" style="grid-column:${c + 1}"${cls === "lv" ? ` data-a="boing .5s ${(1.3 + sc.leave.indexOf(d) * .15).toFixed(2)}s"` : ""}><span>${d}</span></i>`;
+  }
+  // 쉬는 구간을 주(줄)마다 끊어서 띠 하나씩, 위 줄부터 차례로 칠함
+  for (let d = a, n = 0; d <= Math.min(b, days); n++) {
+    const { c, r } = pos(d), e = Math.min(b, days, d + 6 - c);
+    bars += `<div class="bar" style="left:${c * colW + 6}px;width:${(e - d + 1) * colW - 12}px;top:${46 + r * rowH + 3}px" data-a="fill .45s ${(.6 + n * .2).toFixed(2)}s"></div>`;
+    d = e + 1;
+  }
+  return `<div class="cg" data-a="fade .4s .2s">${"일월화수목금토".split("").map(x => `<b>${x}</b>`).join("")}${cells}${bars}</div>`;
+}
 function react(sc) {
   if (sc.jjal) { const m = CAT.find(x => x.id === sc.jjal); if (!m) throw new Error("짤 없음: " + sc.jjal);
     const cut = `jjal/cut/${m.id}.png`; return `<img class="rj" src="${b64(existsSync(new URL("assets/" + cut, import.meta.url)) ? cut : m.image)}" data-a="boing .6s .35s">` }
@@ -196,6 +225,7 @@ function sceneHtml(sc, dur) {
   let body;
   if (sc.type === "board") body = `<div class="sc">${LOGO}<div class="bd" data-a="in .45s 0s"><div class="kk">${sc.kick}</div>${sc.chart ? chartHtml(sc.chart)
     : `<div class="nm" data-count="${sc.count.join(",")}" data-unit="${sc.unit || ""}">${sc.count[1].toLocaleString("ko-KR")}<small>${sc.unit || ""}</small></div>`}</div>${react(sc)}</div>`;
+  else if (sc.type === "cal") body = `<div class="sc">${LOGO}<div class="bd cal" data-a="in .45s 0s"><div class="kk">${sc.kick}</div>${sc.photo ? `<div class="cph" data-a="pop .5s .3s"><img src="${b64(sc.photo)}" data-a="kb ${dur}s 0s linear"></div>` : ""}${calHtml(sc)}</div>${react(sc)}</div>`;
   else if (sc.type === "duo") body = `<div class="sc">${LOGO}<div class="bd" data-a="in .45s 0s"><div class="kk">${sc.kick}</div><div class="duo">${sc.people.map((p, i) =>
     `<div class="nc" data-a="boing .6s ${.35 + i * .3}s">${p.photo ? `<img class="av" src="${b64(p.photo)}">` : `<div class="av mono">${p.name[0]}</div>`}<div class="nn">${p.name}</div><div class="nt">${p.title}</div><div class="nd">${p.dept}</div>${p.credit ? `<div class="ncr">${p.credit}</div>` : ""}</div>`).join("")}</div></div>${react(sc)}</div>`;
   else if (sc.type === "end" && (sc.char || sc.bub)) body = `<div class="sc">${LOGO}<div class="bd bend" data-a="in .45s 0s"><div class="kk">${sc.text}<span>seum<i>.</i></span></div></div>${react(sc)}</div>`;
