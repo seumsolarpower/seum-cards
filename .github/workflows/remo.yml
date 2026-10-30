@@ -1,0 +1,27 @@
+# Remotion 릴스 (remotion/): 실제 영상 배경 + 단어 자막 + 영수증. 세트에 "remo" 가 있어야 함
+# 결과: Artifacts(remo-날짜-세트) 에 mp4 + 정지 화면
+name: remo
+on:
+  workflow_dispatch:
+    inputs:
+      date: { description: "날짜 YYYY-MM-DD", required: true }
+      set: { description: "세트 id", required: true }
+jobs:
+  remo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults: { run: { working-directory: remotion } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: sudo apt-get install -y -qq ffmpeg >/dev/null && npm install --no-audit --no-fund
+      - name: 재료 준비 (목소리·B롤·효과음)
+        env: { FISH_KEY: "${{ secrets.FISH_KEY }}" }
+        run: node prep.mjs "${{ inputs.date }}" "${{ inputs.set }}"
+      - name: 렌더
+        run: |
+          npx remotion render src/index.js Reel "out/${{ inputs.set }}-remo.mp4" --crf 18
+          for s in 2 6 10 14 18 22; do npx remotion still src/index.js Reel "out/still-$s.jpg" --frame=$((s*30)) --image-format=jpeg || true; done
+      - uses: actions/upload-artifact@v4
+        with: { name: "remo-${{ inputs.date }}-${{ inputs.set }}", path: "remotion/out/" }
