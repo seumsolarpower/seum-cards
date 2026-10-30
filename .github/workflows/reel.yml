@@ -7,7 +7,7 @@ on:
       date: { description: "날짜 YYYY-MM-DD", required: true }
       set: { description: "세트 id (비우면 전부)", required: false, default: "" }
       cutbg: { description: "누끼 짤 바탕 (panel | none)", required: false, default: "panel" }
-      voices: { description: "목소리 (예: ko-KR-SunHiNeural,ko-KR-InJoonNeural). 비우면 무음", required: false, default: "" }
+      voices: { description: "목소리 (예: fish:4e118bfbb83e401c84699c09b5f08257, gemini:Leda, ko-KR-SunHiNeural). 비우면 무음", required: false, default: "" }
 jobs:
   reel:
     runs-on: ubuntu-latest
@@ -23,6 +23,7 @@ jobs:
           VOICES: ${{ inputs.voices }}
           CUTBG: ${{ inputs.cutbg }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+          FISH_KEY: ${{ secrets.FISH_KEY }}
         run: node reel.mjs "${{ inputs.date }}" "${{ inputs.set }}"
       - name: DM 정리 이미지
         run: 'if [ -d "content/${{ inputs.date }}-dm" ]; then node shot.mjs "content/${{ inputs.date }}-dm" "out/${{ inputs.date }}/dm"; fi'

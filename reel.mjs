@@ -1,6 +1,7 @@
 // 세트 하나를 릴스 영상(1080×1920, 30fps)으로 만듦 → out/날짜/세트id-reel.mp4 (목소리 넣으면 세트id-reel-목소리.mp4)
 // 카드 HTML을 그대로 세로 화면에 얹고, 장마다 등장 움직임을 넣어 프레임을 찍은 뒤 ffmpeg으로 합침.
 // 실행: node reel.mjs 2026-10-20 [세트id]   (ffmpeg 필요. 세트를 안 주면 전부)
+//   VOICES=fish:<목소리 id> → Fish Audio TTS (FISH_KEY, 모델 FISH_MODEL 기본 s2.1-pro-free, 빠르기 FISH_SPEED 기본 1.1)
 //   VOICES=gemini:Leda,gemini:Aoede → Gemini TTS (GEMINI_KEY). 장면(jreel)에는 "voice": "대사 한 줄"
 //   VOICES=ko-KR-SunHiNeural,ko-KR-InJoonNeural: 카드의 "voice" 대사를 edge-tts로 읽혀 넣음 (목소리마다 영상 하나)
 // 목소리: 카드에 "voice": ["대사1", "대사2", …]. 대사 한 마디 = 한 박자. 박자가 시작할 때 다음 요소가 튀어나옴 (PLAN의 {b: 박자})
@@ -101,7 +102,19 @@ const TRIM = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silen
 // VOICES에 "gemini:Leda"처럼 쓰면 Gemini TTS(GEMINI_KEY, 모델 GEMINI_TTS)로 읽음. 지시문을 붙이면 지시문까지 읽어서 대사만 보냄 → 빠르기는 GEMINI_TEMPO(atempo)로
 async function say(voice, text, file) {
   const mp3 = file.replace(/\.wav$/, voice.startsWith("gemini:") ? ".raw.wav" : ".mp3");
-  if (voice.startsWith("gemini:")) {
+  if (voice.startsWith("fish:")) {
+    // 무료 모델(s2.1-pro-free)은 하루 한도 없음(과도하면 속도 제한). 503·429면 잠깐 쉬고 다시
+    let r;
+    for (let t = 0; t < 5; t++) {
+      r = await fetch("https://api.fish.audio/v1/tts", { method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + process.env.FISH_KEY, model: process.env.FISH_MODEL || "s2.1-pro-free" },
+        body: JSON.stringify({ text, reference_id: voice.slice(5), format: "mp3", language: "ko", prosody: { speed: +(process.env.FISH_SPEED || 1.1) } }) });
+      if (r.status !== 429 && r.status !== 503) break;
+      console.log(`    Fish ${r.status}, 10초 쉬고 다시`); await new Promise(ok => setTimeout(ok, 10000));
+    }
+    if (!r.ok) throw new Error(`Fish TTS 실패 ${r.status}: ` + (await r.text()).slice(0, 300));
+    writeFileSync(mp3, Buffer.from(await r.arrayBuffer()));
+  } else if (voice.startsWith("gemini:")) {
     // 무료 등급은 분당 호출 수 한도가 있음 → 429면 알려 준 시간(없으면 30초)만큼 쉬고 다시 (최대 6번)
     let d;
     for (let t = 0; t < 6; t++) {
@@ -251,7 +264,7 @@ window.__seek = t => { anims.forEach(a => a.currentTime = t * 1000);
 
 const voices = (process.env.VOICES || "").split(",").map(v => v.trim()).filter(Boolean);
 for (const s of C.sets.filter(s => !only || s.id === only)) for (const voice of voices.length ? voices : [null]) {
-  const tag = !voice ? "" : voice.startsWith("gemini:") ? "-" + voice.slice(7) : "-" + voice.split("-")[2].replace(/Neural$/, "").replace(/Multilingual$/, "");
+  const tag = !voice ? "" : voice.startsWith("fish:") ? "-fish" : voice.startsWith("gemini:") ? "-" + voice.slice(7) : "-" + voice.split("-")[2].replace(/Neural$/, "").replace(/Multilingual$/, "");
   const out = new URL(`${s.id}-reel${tag}.mp4`, dir).pathname, silent = new URL(`voice/${s.id}${tag}-video.mp4`, dir).pathname;
   const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "mjpeg", "-i", "-",
     "-c:v", "libx264", "-pix_fmt", "yuv420p", "-profile:v", "high", "-preset", "medium", "-crf", "19", "-r", String(FPS), "-an", silent], { stdio: ["pipe", "inherit", "inherit"] });
@@ -261,10 +274,11 @@ for (const s of C.sets.filter(s => !only || s.id === only)) for (const voice of 
   for (const [k, it] of list.entries()) {
     if (it.sc) {
       let dur = it.sc.dur ?? 2;
-      // 장면 대사("voice": 한 줄): 0.25초부터 읽고, 길면 장면을 늘림
+      // 장면 대사("voice": 한 줄): 0.25초부터(첫 장면은 0.05초) 읽고, 길면 장면을 늘림
       if (voice && it.sc.voice) {
         const file = new URL(`voice/${s.id}${tag}-j${k + 1}.wav`, dir).pathname, len = await say(voice, it.sc.voice, file);
-        clips.push({ file, at: secs + .25 }); dur = +Math.max(dur, .25 + len + .35).toFixed(2);
+        const at = k ? .25 : .05; // 첫 장면은 바로 말을 시작 (첫 1~2초에 이탈이 많음)
+        clips.push({ file, at: secs + at }); dur = +Math.max(dur, at + len + .35).toFixed(2);
         console.log(`    ${len.toFixed(2)}s ${it.sc.voice}`);
       }
       await page.setContent(sceneHtml(it.sc, dur), { waitUntil: "load" }); await page.evaluate(() => document.fonts.ready);
