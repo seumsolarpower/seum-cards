@@ -24,5 +24,7 @@ jobs:
           CUTBG: ${{ inputs.cutbg }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         run: node reel.mjs "${{ inputs.date }}" "${{ inputs.set }}"
+      - name: DM 정리 이미지
+        run: 'if [ -d "content/${{ inputs.date }}-dm" ]; then node shot.mjs "content/${{ inputs.date }}-dm" "out/${{ inputs.date }}/dm"; fi'
       - uses: actions/upload-artifact@v4
-        with: { name: "reels-${{ inputs.date }}-${{ inputs.cutbg }}", path: "out/${{ inputs.date }}/*.mp4\nout/${{ inputs.date }}/reel-stills/" }
+        with: { name: "reels-${{ inputs.date }}-${{ inputs.cutbg }}", path: "out/${{ inputs.date }}/*.mp4\nout/${{ inputs.date }}/reel-stills/\nout/${{ inputs.date }}/dm/" }

@@ -203,7 +203,7 @@ function calHtml(sc) {
   const pos = d => ({ c: (first + d - 1) % 7, r: Math.floor((first + d - 1) / 7) });
   let cells = "", bars = "";
   for (let d = 1; d <= days; d++) {
-    const { c } = pos(d), cls = sc.leave?.includes(d) ? "lv" : sc.hol?.includes(d) ? "ho" : c === 0 || c === 6 ? "we" : "";
+    const { c } = pos(d), cls = sc.leave?.includes(d) ? "lv" : d >= a && d <= b ? "" : sc.hol?.includes(d) ? "ho" : c === 0 || c === 6 ? "we" : "";
     cells += `<i class="${cls}" style="grid-column:${c + 1}"${cls === "lv" ? ` data-a="boing .5s ${(1.3 + sc.leave.indexOf(d) * .15).toFixed(2)}s"` : ""}><span>${d}</span></i>`;
   }
   // 쉬는 구간을 주(줄)마다 끊어서 띠 하나씩, 위 줄부터 차례로 칠함
