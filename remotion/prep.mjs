@@ -1,6 +1,6 @@
 // Remotion 릴스 재료 준비: content/날짜.json 세트의 "remo" → public/(목소리·B롤·효과음·글꼴) + src/plan.json
 // 실행: node prep.mjs 2026-10-30 youth-savings   (ffmpeg, FISH_KEY 필요)
-// remo: { voice: "fish:<id>", music, receipt: {title, sub, rows:[{k, v, u, note}]}, src,
+// remo: { voice: "fish:<id>", music, receipt: {title, sub, rows:[{k, v, u, note, plain}]} (plain: 연도처럼 쉼표·카운트업 없이), src,
 //         beats: [{ say: "읽을 말", cap: ["자막 덩어리", "*강조*는 민트"], broll: {url, from, x}, mode: "big"|"row"|"stamp"|"cta", big, row, stamp }] }
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from "fs";
 import { execFileSync } from "child_process";

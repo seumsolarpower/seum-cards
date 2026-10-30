@@ -75,7 +75,7 @@ function Receipt({ plan, f }) {
         {rows.map((r, k) => {
           const g = interpolate(f, [r.at, r.at + 6], [0, 1], clamp);
           if (g <= 0) return null;
-          const p = interpolate(f, [r.at, r.at + 14], [0, 1], clamp), v = Math.round(r.v * (1 - Math.pow(1 - p, 3)));
+          const p = interpolate(f, [r.at, r.at + 14], [0, 1], clamp), v = r.plain ? r.v : Math.round(r.v * (1 - Math.pow(1 - p, 3)));
           const me = cta ? spring({ frame: f - (cta.start + 10 + k * 6), fps, config: { damping: 10, stiffness: 240 } }) : 0;
           return (
             <div key={k} style={{ height: 96 * g, overflow: "hidden", opacity: g }}>
@@ -84,7 +84,7 @@ function Receipt({ plan, f }) {
                   <div style={{ font: "800 36px/1.05 P", letterSpacing: "-.03em" }}>{r.k}</div>
                   {r.note && <div style={{ marginTop: 4, font: "700 20px/1 P", color: r.on ? INK : "#8a9096" }}>{r.note}</div>}
                 </div>
-                <div style={{ font: "900 52px/1 P", letterSpacing: "-.04em", fontVariantNumeric: "tabular-nums" }}>{num(v)}<span style={{ fontSize: 28 }}>{r.u}</span></div>
+                <div style={{ font: "900 52px/1 P", letterSpacing: "-.04em", fontVariantNumeric: "tabular-nums" }}>{r.plain ? v : num(v)}<span style={{ fontSize: 28 }}>{r.u}</span></div>
                 {cta && me > 0 && <div style={{ width: 130, height: 64, borderRadius: 14, border: `4px dashed ${INK}`, display: "grid", placeItems: "center", font: "900 30px/1 P", transform: `scale(${me})` }}>나</div>}
               </div>
             </div>
