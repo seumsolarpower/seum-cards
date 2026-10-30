@@ -1,6 +1,7 @@
 // Remotion 릴스 재료 준비: content/날짜.json 세트의 "remo" → public/(목소리·B롤·효과음·글꼴) + src/plan.json
 // 실행: node prep.mjs 2026-10-30 youth-savings   (ffmpeg, FISH_KEY 필요)
 // remo: { voice: "fish:<id>", music, receipt: {title, sub, rows:[{k, v, u, note, plain}]} (plain: 연도처럼 쉼표·카운트업 없이), src,
+// style: "receipt"(기본, Reel.jsx) | "pov" | "typo" | "vault" (src/styles/), extra: 스타일별 추가 값
 //         beats: [{ say: "읽을 말", cap: ["자막 덩어리", "*강조*는 민트"], broll: {url, from, x}, mode: "big"|"row"|"stamp"|"cta", big, row, stamp }] }
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from "fs";
 import { execFileSync } from "child_process";
@@ -50,15 +51,18 @@ for (const [i, b] of R.beats.entries()) {
   const ws = b.cap.map(weight), W = ws.reduce((a, c) => a + c, 0);
   let c = at; const cap = b.cap.map((txt, k) => { const from = c; c += vlen * ws[k] / W; return { txt, from: Math.round(from * FPS), to: Math.round(c * FPS) } });
   // B롤: 받아서 가운데(또는 x 비율) 세로로 잘라 1080×1920, 필요한 길이만
-  const raw = pub + `raw/b${i}.mp4`;
-  if (!existsSync(raw)) execFileSync("curl", ["-sfL", "--retry", "4", "-o", raw, b.broll.url]);
-  const x = b.broll.x ?? .5;
-  ff("-ss", String(b.broll.from || 0), "-i", raw, "-t", (dur + .5).toFixed(2), "-an", "-vf",
-    `scale=-2:1920,crop=1080:1920:(iw-1080)*${x}:0,fps=${FPS},eq=saturation=1.08`, "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p", pub + `broll/${i}.mp4`);
-  beats.push({ ...b, start: Math.round(t * FPS), dur: Math.round(dur * FPS), vo: { file: `vo/${i}.wav`, at: Math.round(at * FPS) }, broll: `broll/${i}.mp4`, cap });
+  // (style이 pov·typo·vault처럼 그림만 쓰는 세트는 broll 없음)
+  if (b.broll) {
+    const raw = pub + `raw/b${i}.mp4`;
+    if (!existsSync(raw)) execFileSync("curl", ["-sfL", "--retry", "4", "-o", raw, b.broll.url]);
+    const x = b.broll.x ?? .5;
+    ff("-ss", String(b.broll.from || 0), "-i", raw, "-t", (dur + .5).toFixed(2), "-an", "-vf",
+      `scale=-2:1920,crop=1080:1920:(iw-1080)*${x}:0,fps=${FPS},eq=saturation=1.08`, "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p", pub + `broll/${i}.mp4`);
+  }
+  beats.push({ ...b, start: Math.round(t * FPS), dur: Math.round(dur * FPS), vo: { file: `vo/${i}.wav`, at: Math.round(at * FPS) }, broll: b.broll && `broll/${i}.mp4`, cap });
   console.log(`${i} ${b.mode} ${dur.toFixed(2)}s  ${b.say}`);
   t += dur;
 }
-const plan = { fps: FPS, total: Math.round(t * FPS), music: !!R.music, receipt: R.receipt, src: R.src, beats };
+const plan = { fps: FPS, total: Math.round(t * FPS), style: R.style || "receipt", extra: R.extra || {}, music: !!R.music, receipt: R.receipt, src: R.src, beats };
 writeFileSync(new URL("src/plan.json", import.meta.url), JSON.stringify(plan, null, 1));
 console.log("총", t.toFixed(1) + "초");
