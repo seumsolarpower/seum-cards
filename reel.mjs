@@ -10,6 +10,7 @@
 //   {type:"hook", text}  검정 바탕 큰 한 줄 | {type:"jjal", jjal:id, top}  위 자막 + 짤 | {type:"card", n}  세트 n번째 카드 | {type:"end", text}
 //   짤은 assets/jjal/cut/<id>.png(누끼, jjal/cutout.py)가 있으면 화면 대신 인물+자막만 얹음. 바탕: 장면 "cutbg" 또는 CUTBG= → panel(민트 판 위로 튀어나옴, 기본) | none
 //   {type:"board", kick, count:[from,to], unit, char|jjal, bub}  흰 정보 보드 + 리액션 (char 없이 bub만 주면 보드 아래 흰 글씨 한마디) (notes/reel-design.md). 숫자는 카운트업
+//   board에 photo(assets 경로, pos=object-position)를 주면 보드 아래 빈 자리에 사진을 크게 (x 904까지라 오른쪽 버튼 자리는 비움)
 //   {type:"board", kick, chart:{bars:[[이름, 값, 표시]…], delta, src}, jjal}  막대 비교 (0부터, 차이는 괄호) | end에 char·bub를 주면 보드형 끝 장면
 //   {type:"duo", kick, people:[{name, title, dept, photo?, credit?}×2], bub}  흰 보드 + 명함 두 장 (photo 없으면 성 한 글자)
 //   {type:"cal", kick, year, month, span:[첫날, 끝날], leave:[연차 날…], hol:[공휴일…], photo?, bub|jjal}  흰 보드 + 한 달 달력. 쉬는 구간은 민트 띠로 칠해지고 연차 날은 검정 칸으로 튀어나옴
@@ -185,6 +186,7 @@ em{color:#1fd8a4;font-style:normal}
 .nc .nt{margin-top:14px;font:700 32px/1.2 Pretendard;color:#6b7077;letter-spacing:-.02em}
 .nc .nd{position:absolute;left:34px;bottom:34px;font:800 40px/1 Pretendard;letter-spacing:-.03em;box-shadow:inset 0 -.32em 0 #1fd8a4}
 .nc .ncr{position:absolute;right:20px;top:18px;font:500 20px/1 Pretendard;color:#9aa0a6}
+.bph{position:absolute;left:54px;width:850px;top:1230px;height:400px;border-radius:40px;overflow:hidden;transform-origin:0 0}.bph img{width:100%;height:100%;object-fit:cover;display:block}
 .cph{position:absolute;right:36px;top:36px;width:300px;height:200px;border-radius:28px;overflow:hidden;transform-origin:100% 0}
 .cph img{width:100%;height:100%;object-fit:cover;display:block}
 .cal .kk{right:360px;font-size:60px}
@@ -237,7 +239,7 @@ function react(sc) {
 function sceneHtml(sc, dur) {
   let body;
   if (sc.type === "board") body = `<div class="sc">${LOGO}<div class="bd" data-a="in .45s 0s"><div class="kk">${sc.kick}</div>${sc.chart ? chartHtml(sc.chart)
-    : `<div class="nm" data-count="${sc.count.join(",")}" data-unit="${sc.unit || ""}">${sc.count[1].toLocaleString("ko-KR")}<small>${sc.unit || ""}</small></div>`}</div>${react(sc)}</div>`;
+    : `<div class="nm" data-count="${sc.count.join(",")}" data-unit="${sc.unit || ""}">${sc.count[1].toLocaleString("ko-KR")}<small>${sc.unit || ""}</small></div>`}</div>${react(sc)}${sc.photo ? `<div class="bph" data-a="pop .5s .5s"><img src="${b64(sc.photo)}" style="object-position:${sc.pos || "50% 50%"}" data-a="kb ${dur}s 0s linear"></div>` : ""}</div>`;
   else if (sc.type === "cal") body = `<div class="sc">${LOGO}<div class="bd cal" data-a="in .45s 0s"><div class="kk">${sc.kick}</div>${sc.photo ? `<div class="cph" data-a="pop .5s .3s"><img src="${b64(sc.photo)}" data-a="kb ${dur}s 0s linear"></div>` : ""}${calHtml(sc)}</div>${react(sc)}</div>`;
   else if (sc.type === "duo") body = `<div class="sc">${LOGO}<div class="bd" data-a="in .45s 0s"><div class="kk">${sc.kick}</div><div class="duo">${sc.people.map((p, i) =>
     `<div class="nc" data-a="boing .6s ${.35 + i * .3}s">${p.photo ? `<img class="av" src="${b64(p.photo)}">` : `<div class="av mono">${p.name[0]}</div>`}<div class="nn">${p.name}</div><div class="nt">${p.title}</div><div class="nd">${p.dept}</div>${p.credit ? `<div class="ncr">${p.credit}</div>` : ""}</div>`).join("")}</div></div>${react(sc)}</div>`;
