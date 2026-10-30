@@ -44,13 +44,14 @@ function Big({ big }) {
   const f = useCurrentFrame(), { fps } = useVideoConfig();
   const p = interpolate(f, [2, 20], [0, 1], clamp), e = 1 - Math.pow(1 - p, 3);
   const s = spring({ frame: f - 20, fps, config: { damping: 9, stiffness: 260 } });
+  const long = num(big.to).length + big.unit.length > 5; // 8,229억원처럼 길면 줄여서 화면 안에
   return (
     <div style={{ position: "absolute", left: 0, right: 0, top: 330, textAlign: "center", color: "#fff" }}>
       <div style={{ display: "inline-block", padding: "10px 26px", borderRadius: 40, background: MINT, color: INK, font: "800 40px/1 P", letterSpacing: "-.02em",
         transform: `translateY(${interpolate(f, [0, 8], [-30, 0], clamp)}px)`, opacity: interpolate(f, [0, 6], [0, 1], clamp) }}>{big.label}</div>
-      <div style={{ marginTop: 16, font: "900 330px/1 P", letterSpacing: "-.06em", fontVariantNumeric: "tabular-nums",
+      <div style={{ marginTop: 16, font: `900 ${long ? 240 : 330}px/1 P`, letterSpacing: "-.06em", fontVariantNumeric: "tabular-nums",
         transform: `scale(${1 + .12 * Math.sin(Math.PI * Math.min(1, Math.max(0, s)))})`, textShadow: "0 10px 40px rgba(0,0,0,.45)" }}>
-        {num(Math.round(big.to * e))}<span style={{ fontSize: 120, marginLeft: 8 }}>{big.unit}</span>
+        {num(Math.round(big.to * e))}<span style={{ fontSize: long ? 96 : 120, marginLeft: 8 }}>{big.unit}</span>
       </div>
     </div>
   );
