@@ -395,9 +395,9 @@
        "너는 *넘어?*"
       ],
       "broll": {
-       "url": "https://cdn.pixabay.com/video/2023/03/15/154830-808562567_medium.mp4",
-       "from": 1,
-       "x": 0.28
+       "url": "https://cdn.pixabay.com/video/2019/06/23/24603-344986224_large.mp4",
+       "from": 0,
+       "x": 0.5
       }
      },
      {
@@ -409,9 +409,9 @@
        "*3,184만원*"
       ],
       "broll": {
-       "url": "https://cdn.pixabay.com/video/2016/06/27/3576-172488163_large.mp4",
-       "from": 3,
-       "x": 0.5
+       "url": "https://cdn.pixabay.com/video/2016/05/12/3174-166338976_large.mp4",
+       "from": 1,
+       "x": 0.62
       }
      },
      {
@@ -424,9 +424,9 @@
        "할부만 27만원"
       ],
       "broll": {
-       "url": "https://cdn.pixabay.com/video/2021/08/04/83861-584870632_large.mp4",
-       "from": 0,
-       "x": 0.55
+       "url": "https://cdn.pixabay.com/video/2016/05/12/3180-166339024_large.mp4",
+       "from": 1,
+       "x": 0.68
       }
      },
      {
@@ -438,9 +438,9 @@
        "한 달 *99만원*"
       ],
       "broll": {
-       "url": "https://cdn.pixabay.com/video/2021/10/27/93550-640240281_medium.mp4",
-       "from": 1,
-       "x": 0.5
+       "url": "https://cdn.pixabay.com/video/2022/11/09/138317-769163818_large.mp4",
+       "from": 2,
+       "x": 0.55
       }
      },
      {
@@ -453,9 +453,9 @@
        "너는 몇 점?"
       ],
       "broll": {
-       "url": "https://cdn.pixabay.com/video/2023/03/15/154835-808562582_medium.mp4",
+       "url": "https://cdn.pixabay.com/video/2020/07/16/44859-440261065_large.mp4",
        "from": 1,
-       "x": 0.28
+       "x": 0.45
       }
      },
      {
@@ -473,9 +473,9 @@
        "가입자 110만 vs 미가입 83만"
       ],
       "broll": {
-       "url": "https://cdn.pixabay.com/video/2023/03/15/154833-808562576_medium.mp4",
-       "from": 1,
-       "x": 0.28
+       "url": "https://cdn.pixabay.com/video/2019/05/03/23258-334228230_large.mp4",
+       "from": 2,
+       "x": 0.5
       }
      },
      {
@@ -488,9 +488,9 @@
        "비교표 보내 줄게"
       ],
       "broll": {
-       "url": "https://cdn.pixabay.com/video/2023/03/15/154829-808562563_medium.mp4",
+       "url": "https://cdn.pixabay.com/video/2016/06/27/3627-172488393_large.mp4",
        "from": 1,
-       "x": 0.28
+       "x": 0.35
       }
      }
     ]
